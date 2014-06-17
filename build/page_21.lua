@@ -44,6 +44,7 @@ function new()
 
        -- (TOP) External code will render here 
        local widget = require( "widget" )
+local facebook = require "facebook"
 -- Groups
 local groupImage = display.newGroup()
 local scrollView
@@ -192,19 +193,64 @@ local function updateFacebook( event )
 		end	
 	end
 
+	local function confirmUpdate( event )
+		-- You must use your own app id for this sample to work. Permiso: "android.permission.INTERNET"
+		local fbAppID = "1428997230712728"  --fake
+ 
+		local function onLoginSuccess()
+    		-- Upload 'iheartcorona.jpg' to current user's account
+    		if (updateTable) then
+    			local attachmentTable = {
+        			message = "Resultado de ".._G.NameUser.." para el ejercicio de igualacion de la muestra",
+        			source = { baseDir=system.ResourceDirectory, filename="iheartcorona.jpg", type="image" }
+    			}
+    
+    			facebook.request( "me/photos", "POST", attachmentTable )
+    		end
+
+    		if (updateImage) then
+    			local attachmentImage = {
+        			message = "Resultado de ".._G.NameUser.." para el ejercicio de dibujar la vocal",
+        			source = { baseDir=system.ResourceDirectory, filename="screen"..level..phase..".jpg", type="image" }
+    			}
+    
+    			facebook.request( "me/photos", "POST", attachmentImage )
+    		end
+    		
+		end
+ 
+		-- facebook listener
+		local function fbListener( event )
+    		if event.isError then
+        		native.showAlert( "ERROR", event.response, { "OK" } )
+    		else
+        		if event.type == "session" and event.phase == "login" then
+            		-- login was a success; call function
+            		onLoginSuccess()
+        		elseif event.type == "request" then
+        	    	-- this block is executed upon successful facebook.request() call
+            		native.showAlert( "Success", "The photo has been uploaded.", { "OK" } )
+        		end
+    		end
+		end
+ 
+		-- photo uploading requires the "publish_stream" permission
+		facebook.login( fbAppID, fbListener, { "publish_stream" } )
+	end
+
 	local rectangle = display.newRoundedRect( 0, 0, 670, 330, 25 )
 	rectangle.x = display.contentCenterX ; rectangle.y = display.contentCenterY
 	rectangle:setFillColor( 235 )
 	rectangle:addEventListener( "tap", nothing )
 
-	local text = display.newText( "Seleccione las imagenes de los resultados de los ejercicios que desea publicar en facebook :", rectangle.x - rectangle.width/2 + 10, rectangle.y - rectangle.height/2 + 20, rectangle.width-20, 50, native.systemFont, 23 )
+	local text = display.newText( " Seleccione las imagenes de los resultados de los ejercicios que desea publicar en facebook :", rectangle.x - rectangle.width/2 + 10, rectangle.y - rectangle.height/2 + 20, rectangle.width-30, 55, native.systemFont, 23 )
 	text:setFillColor( color.R, color.G, color.B )
 
 	if (object.index) then
-		local textTable = display.newText( "Publicar tabla resultados ejer. igualacion-muestra", rectangle.x - rectangle.width/2 + 20, rectangle.y - rectangle.height/2 + 100 , native.systemFont, 25 )
+		local textTable = display.newText( "Igualacion-muestra", rectangle.x - rectangle.width/2 + 20, rectangle.y - rectangle.height/2 + 100 , native.systemFont, 25 )
 		textTable:setFillColor( color.R, color.G, color.B )
 		local checkTable = widget.newSwitch{
-    		left = rectangle.x - rectangle.width/2 + textTable.width + 30,
+    		left = rectangle.x - 150,
     		top = rectangle.y - rectangle.height/2 + 100,
     		style = "checkbox",
     		id = "checkTable",
@@ -222,10 +268,10 @@ local function updateFacebook( event )
     			heightCheck = rectangle.y - rectangle.height/2 + 100
     	end
 
-		local textCapture = display.newText( "Publicar resultado dibujar letra", rectangle.x - rectangle.width/2 + 20, heightCheck, native.systemFont, 25 )
+		local textCapture = display.newText( "- Dibujar letra", rectangle.x - rectangle.width/2 + 20, heightCheck, native.systemFont, 25 )
 		textCapture:setFillColor( color.R, color.G, color.B )
 		local checkCapture = widget.newSwitch{
-    		left = rectangle.x - rectangle.width/2 + textCapture.width + 30,
+    		left = rectangle.x - 150,
     		top = heightCheck,
     		style = "checkbox",
     		id = "checkCapture",
@@ -245,7 +291,7 @@ local function updateFacebook( event )
     	onEvent = confirmUpdate
 	}
 	buttonConfirm.x = rectangle.x - buttonConfirm.width/2 - 25
-	buttonConfirm.y = rectangle.y + rectangle.height/2 - buttonConfirm.height/2 + 20
+	buttonConfirm.y = rectangle.y + rectangle.height/2 - buttonConfirm.height/2 - 20
 
 	local buttonCancel = widget.newButton{
     	width = 200,
@@ -257,7 +303,7 @@ local function updateFacebook( event )
     	onEvent = cancelUpdate
 	}
 	buttonCancel.x = rectangle.x + buttonCancel.width/2 + 25
-	buttonCancel.y = rectangle.y + rectangle.height/2 - buttonCancel.height/2 + 20
+	buttonCancel.y = rectangle.y + rectangle.height/2 - buttonCancel.height/2 - 20
 
     return true
 end
