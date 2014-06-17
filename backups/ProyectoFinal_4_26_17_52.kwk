@@ -1,0 +1,168 @@
+<project id="ProyectoFinal">
+  <settings>
+    <name>ProyectoFinal</name>
+    <media>Book</media>
+    <device>Galaxy Tab 10</device>
+    <OS>Android</OS>
+    <zoom>zoomStretch</zoom>
+    <width>1280</width>
+    <height>800</height>
+    <orientation>Landscape</orientation>
+    <resolution>169</resolution>
+    <bookmark>false</bookmark>
+    <swipe>true</swipe>
+    <pinch>false</pinch>
+    <thumbs>false</thumbs>
+    <navigation>false</navigation>
+    <swipeSpacer>120</swipeSpacer>
+    <thumbW>200</thumbW>
+    <navDirection>Top</navDirection>
+    <thumbH>125</thumbH>
+    <bidi>false</bidi>
+    <suspend>true</suspend>
+    <rotation>false</rotation>
+    <startPage>1</startPage>
+    <endPage>1</endPage>
+    <endAuto>true</endAuto>
+    <iconReady>false</iconReady>
+    <expansion>false</expansion>
+    <googleKey/>
+  </settings>
+  <pages>
+    <page id="page1">
+      <name>page1</name>
+      <number>1</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/page1.psd</file>
+      <fileName>page1.psd</fileName>
+      <swipePage>true</swipePage>
+      <swipeSpacer>120</swipeSpacer>
+      <scaleW>100</scaleW>
+      <scaleH>100</scaleH>
+      <alpha>100</alpha>
+      <showNav>true</showNav>
+      <inApp/>
+      <replacement id="cloud">
+        <name>cloud</name>
+        <type>Multiplier</type>
+        <layer>cloud</layer>
+        <copies>3</copies>
+        <interval>0</interval>
+        <distance>Random</distance>
+        <startX>0</startX>
+        <endX>1280</endX>
+        <startY>120</startY>
+        <endY>200</endY>
+        <startAlpha>60</startAlpha>
+        <endAlpha>80</endAlpha>
+        <scaleStartX>50</scaleStartX>
+        <scaleEndX>100</scaleEndX>
+        <scaleStartY>50</scaleStartY>
+        <scaleEndY>100</scaleEndY>
+        <physics>false</physics>
+        <forever>false</forever>
+        <rot1>0</rot1>
+        <rot2>0</rot2>
+        <event>When page starts</event>
+        <gravity>Normal</gravity>
+        <wind>0</wind>
+        <isSensor>false</isSensor>
+        <weightStart>3</weightStart>
+        <weightEnd>3</weightEnd>
+        <scaleLock>true</scaleLock>
+      </replacement>
+      <anim id="animSun">
+        <name>animSun</name>
+        <target>Layer</target>
+        <type>Linear</type>
+        <layer>sun</layer>
+        <endX>116</endX>
+        <endY>125</endY>
+        <endTarget>Fixed</endTarget>
+        <endAlpha>100</endAlpha>
+        <duration>3</duration>
+        <delay>0</delay>
+        <easing>Linear</easing>
+        <pause>false</pause>
+        <linearLoop>forever</linearLoop>
+        <linearReverse>true</linearReverse>
+        <rotate>0</rotate>
+        <anchor>MiddleCenter</anchor>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <event>When page starts</event>
+        <reStart>false</reStart>
+        <audio>None</audio>
+        <trigger>None</trigger>
+        <breadCrumb>false</breadCrumb>
+        <breadAnchor>Center</breadAnchor>
+        <breadShape>Rectangle</breadShape>
+        <breadWidth>10</breadWidth>
+        <breadHeight>10</breadHeight>
+        <breadColor>255, 255, 255</breadColor>
+        <breadInterval>50</breadInterval>
+        <breadDispose>true</breadDispose>
+        <breadSec>1</breadSec>
+        <groupControl>false</groupControl>
+      </anim>
+      <anim id="animPlane">
+        <name>animPlane</name>
+        <target>Layer</target>
+        <type>Path</type>
+        <layer>plane</layer>
+        <endX>1294</endX>
+        <endY>168</endY>
+        <path>airplaneTrace</path>
+        <closedPath>false</closedPath>
+        <autoTurn>false</autoTurn>
+        <angle>0</angle>
+        <adjAngle>180</adjAngle>
+        <endAlpha>100</endAlpha>
+        <duration>3</duration>
+        <delay>0</delay>
+        <easing>Linear</easing>
+        <pause>false</pause>
+        <linearLoop>forever</linearLoop>
+        <linearReverse>false</linearReverse>
+        <rotate>0</rotate>
+        <anchor>MiddleCenter</anchor>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <event>Wait request</event>
+        <reStart>true</reStart>
+        <audio>None</audio>
+        <trigger>None</trigger>
+        <breadCrumb>true</breadCrumb>
+        <breadAnchor>Center/Right</breadAnchor>
+        <breadShape>Circle</breadShape>
+        <breadWidth>10</breadWidth>
+        <breadHeight>10</breadHeight>
+        <breadColor>255,255,255</breadColor>
+        <breadInterval>20</breadInterval>
+        <breadDispose>true</breadDispose>
+        <breadSec>1</breadSec>
+      </anim>
+      <timer id="timerActivePlane">
+        <name>timerActivePlane</name>
+        <delay>0</delay>
+        <trigger>actAnimPlane</trigger>
+        <loop>forever</loop>
+      </timer>
+      <trigger id="actAnimPlane">
+        <name>actAnimPlane</name>
+        <action id="anim_214">
+          <name>anim_214</name>
+          <type>Play Animation</type>
+          <animation>animPlane</animation>
+        </action>
+        <action id="timer_617">
+          <name>timer_617</name>
+          <type>Start Timer</type>
+          <delay>0</delay>
+          <trigger>actAnimPlane</trigger>
+          <loop>1</loop>
+          <timer>0</timer>
+        </action>
+      </trigger>
+    </page>
+  </pages>
+</project>

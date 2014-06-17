@@ -1,0 +1,76 @@
+<project id="ProyectoFinal">
+  <settings>
+    <name>ProyectoFinal</name>
+    <media>Book</media>
+    <device>Galaxy Tab 10</device>
+    <OS>Android</OS>
+    <zoom>zoomStretch</zoom>
+    <width>1280</width>
+    <height>800</height>
+    <orientation>Landscape</orientation>
+    <resolution>169</resolution>
+    <bookmark>false</bookmark>
+    <swipe>true</swipe>
+    <pinch>false</pinch>
+    <thumbs>false</thumbs>
+    <navigation>false</navigation>
+    <swipeSpacer>120</swipeSpacer>
+    <thumbW>200</thumbW>
+    <navDirection>Top</navDirection>
+    <thumbH>125</thumbH>
+    <bidi>false</bidi>
+    <suspend>true</suspend>
+    <rotation>false</rotation>
+    <startPage>1</startPage>
+    <endPage>1</endPage>
+    <endAuto>true</endAuto>
+    <iconReady>false</iconReady>
+    <expansion>false</expansion>
+    <googleKey/>
+  </settings>
+  <pages>
+    <page id="page1">
+      <name>page1</name>
+      <number>1</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/page1.psd</file>
+      <fileName>page1.psd</fileName>
+      <swipePage>true</swipePage>
+      <swipeSpacer>120</swipeSpacer>
+      <scaleW>100</scaleW>
+      <scaleH>100</scaleH>
+      <alpha>100</alpha>
+      <showNav>true</showNav>
+      <inApp/>
+      <replacement id="cloud">
+        
+        <name>cloud</name>
+        <type>Multiplier</type>
+        <layer>cloud</layer>
+        <copies>2</copies>
+        <interval>0</interval>
+        <distance>Random</distance>
+        <startX>0</startX>
+        <endX>1280</endX>
+        <startY>0</startY>
+        <endY>800</endY>
+        <startAlpha>100</startAlpha>
+        <endAlpha>100</endAlpha>
+        <scaleStartX>50</scaleStartX>
+        <scaleEndX>100</scaleEndX>
+        <scaleStartY>50</scaleStartY>
+        <scaleEndY>100</scaleEndY>
+        <physics>false</physics>
+        <forever>false</forever>
+        <rot1>0</rot1>
+        <rot2>0</rot2>
+        <event>When page starts</event>
+        <gravity>Normal</gravity>
+        <wind>0</wind>
+        <isSensor>false</isSensor>
+        <weightStart>3</weightStart>
+        <weightEnd>3</weightEnd>
+        <scaleLock>true</scaleLock>
+      </replacement>
+    </page>
+  </pages>
+</project>
