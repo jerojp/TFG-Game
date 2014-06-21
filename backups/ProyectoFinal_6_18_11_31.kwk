@@ -1,0 +1,1263 @@
+<project id="ProyectoFinal">
+  <settings>
+    <name>ProyectoFinal</name>
+    <media>Book</media>
+    <device>Galaxy Tab 10</device>
+    <OS>Android</OS>
+    <zoom>zoomStretch</zoom>
+    <width>1280</width>
+    <height>800</height>
+    <orientation>Landscape</orientation>
+    <resolution>169</resolution>
+    <bookmark>false</bookmark>
+    <swipe>true</swipe>
+    <pinch>false</pinch>
+    <thumbs>true</thumbs>
+    <navigation>true</navigation>
+    <swipeSpacer>120</swipeSpacer>
+    <thumbW>200</thumbW>
+    <navDirection>Top</navDirection>
+    <thumbH>125</thumbH>
+    <bidi>false</bidi>
+    <suspend>true</suspend>
+    <rotation>false</rotation>
+    <startPage>1</startPage>
+    <endPage>1</endPage>
+    <endAuto>true</endAuto>
+    <iconReady>false</iconReady>
+    <expansion>false</expansion>
+    <googleKey/>
+    <navColor>255, 255, 255</navColor>
+    <navAlpha>100</navAlpha>
+    <codes>
+      <code id="code_487">
+        <name>code_487</name>
+        <code/>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/saveStateGame.lua</extFile>
+      </code>
+      <code id="codeGlobalVars">
+        <name>codeGlobalVars</name>
+        <code/>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/GlobalVars.lua</extFile>
+      </code>
+    </codes>
+  </settings>
+  <pages>
+    <page id="page1">
+      <name>page1</name>
+      <number>1</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/page1.psd</file>
+      <fileName>page1.psd</fileName>
+      <swipePage>false</swipePage>
+      <swipeSpacer>120</swipeSpacer>
+      <scaleW>100</scaleW>
+      <scaleH>100</scaleH>
+      <alpha>100</alpha>
+      <showNav>true</showNav>
+      <inApp/>
+      <replacement id="cloud">
+        <name>cloud</name>
+        <type>Multiplier</type>
+        <layer>cloud</layer>
+        <copies>3</copies>
+        <interval>0</interval>
+        <distance>Random</distance>
+        <startX>0</startX>
+        <endX>1280</endX>
+        <startY>120</startY>
+        <endY>200</endY>
+        <startAlpha>60</startAlpha>
+        <endAlpha>80</endAlpha>
+        <scaleStartX>50</scaleStartX>
+        <scaleEndX>100</scaleEndX>
+        <scaleStartY>50</scaleStartY>
+        <scaleEndY>100</scaleEndY>
+        <physics>false</physics>
+        <forever>false</forever>
+        <rot1>0</rot1>
+        <rot2>0</rot2>
+        <event>When page starts</event>
+        <gravity>Normal</gravity>
+        <wind>0</wind>
+        <isSensor>false</isSensor>
+        <weightStart>3</weightStart>
+        <weightEnd>3</weightEnd>
+        <scaleLock>true</scaleLock>
+      </replacement>
+      <anim id="animSun">
+        <name>animSun</name>
+        <target>Layer</target>
+        <type>Linear</type>
+        <layer>sun</layer>
+        <endX>116</endX>
+        <endY>125</endY>
+        <endTarget>Fixed</endTarget>
+        <endAlpha>100</endAlpha>
+        <duration>3</duration>
+        <delay>0</delay>
+        <easing>Linear</easing>
+        <pause>false</pause>
+        <linearLoop>forever</linearLoop>
+        <linearReverse>true</linearReverse>
+        <rotate>0</rotate>
+        <anchor>MiddleCenter</anchor>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <event>When page starts</event>
+        <reStart>false</reStart>
+        <audio>None</audio>
+        <trigger>None</trigger>
+        <breadCrumb>false</breadCrumb>
+        <breadAnchor>Center</breadAnchor>
+        <breadShape>Rectangle</breadShape>
+        <breadWidth>10</breadWidth>
+        <breadHeight>10</breadHeight>
+        <breadColor>255, 255, 255</breadColor>
+        <breadInterval>50</breadInterval>
+        <breadDispose>true</breadDispose>
+        <breadSec>1</breadSec>
+        <groupControl>false</groupControl>
+      </anim>
+      <anim id="animPlane">
+        <name>animPlane</name>
+        <target>Layer</target>
+        <type>Path</type>
+        <layer>plane</layer>
+        <endX>1294</endX>
+        <endY>168</endY>
+        <path>airplaneTrace</path>
+        <closedPath>false</closedPath>
+        <autoTurn>false</autoTurn>
+        <angle>0</angle>
+        <adjAngle>180</adjAngle>
+        <endAlpha>100</endAlpha>
+        <duration>3</duration>
+        <delay>0</delay>
+        <easing>Linear</easing>
+        <pause>false</pause>
+        <linearLoop>forever</linearLoop>
+        <linearReverse>false</linearReverse>
+        <rotate>0</rotate>
+        <anchor>MiddleCenter</anchor>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <event>When page starts</event>
+        <reStart>true</reStart>
+        <audio>None</audio>
+        <trigger>None</trigger>
+        <breadCrumb>true</breadCrumb>
+        <breadAnchor>Center/Right</breadAnchor>
+        <breadShape>Circle</breadShape>
+        <breadWidth>10</breadWidth>
+        <breadHeight>10</breadHeight>
+        <breadColor>255,255,255</breadColor>
+        <breadInterval>20</breadInterval>
+        <breadDispose>true</breadDispose>
+        <breadSec>1</breadSec>
+      </anim>
+      <variables/>
+      <button id="but_371">
+        <name>but_371</name>
+        <layer>meadow</layer>
+        <rollover>meadow</rollover>
+        <target>Layer</target>
+        <type>Tap</type>
+        <tap>1</tap>
+        <action id="nav_116">
+          <name>nav_116</name>
+          <type>Show/Hide Navigation</type>
+        </action>
+      </button>
+      <code id="codeButton">
+        <name>codeButton</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/buttonsIntro.lua</extFile>
+      </code>
+      <trigger id="act_Internet">
+        <name>act_Internet</name>
+        <action id="goURL_714">
+          <name>goURL_714</name>
+          <type>Go to URL</type>
+          <link>https://webmailest.ugr.es/</link>
+        </action>
+      </trigger>
+    </page>
+    <page id="Introduction">
+      <name>Introduction</name>
+      <number>3</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/Introduction.psd</file>
+      <fileName>Introduction.psd</fileName>
+      <timer id="timerNextPage">
+        <name>timerNextPage</name>
+        <delay>5</delay>
+        <trigger>actNextPage</trigger>
+        <loop>1</loop>
+      </timer>
+      <swipePage>true</swipePage>
+      <swipeSpacer>120</swipeSpacer>
+      <scaleW>100</scaleW>
+      <scaleH>100</scaleH>
+      <alpha>100</alpha>
+      <showNav>true</showNav>
+      <inApp/>
+      <trigger id="actNextPage">
+        <name>actNextPage</name>
+        <action id="var_610">
+          <name>var_610</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>4</value>
+        </action>
+        <action id="goPage_317">
+          <name>goPage_317</name>
+          <type>Go to Page</type>
+          <page>IntroductionMuseum</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="IntroductionMuseum">
+      <name>IntroductionMuseum</name>
+      <number>4</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/IntroductionMuseum.psd</file>
+      <fileName>IntroductionMuseum.psd</fileName>
+      <trigger id="actNextPage">
+        <name>actNextPage</name>
+        <action id="var_464">
+          <name>var_464</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>5</value>
+        </action>
+        <action id="goPage_176">
+          <name>goPage_176</name>
+          <type>Go to Page</type>
+          <page>IntroductionTalkMuseum</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+      <anim id="linearEntry">
+        <name>linearEntry</name>
+        <target>Layer</target>
+        <type>Linear</type>
+        <layer>kwkentradaMuseo</layer>
+        <endX>190</endX>
+        <endY>940</endY>
+        <endTarget>Fixed</endTarget>
+        <endAlpha>100</endAlpha>
+        <duration>5</duration>
+        <delay>1</delay>
+        <easing>Linear</easing>
+        <pause>false</pause>
+        <linearLoop>1</linearLoop>
+        <linearReverse>false</linearReverse>
+        <rotate>0</rotate>
+        <anchor>MiddleCenter</anchor>
+        <scaleW>360</scaleW>
+        <scaleH>360</scaleH>
+        <event>When page starts</event>
+        <reStart>false</reStart>
+        <audio>None</audio>
+        <trigger>actNextPage</trigger>
+        <breadCrumb>false</breadCrumb>
+        <breadAnchor>Center</breadAnchor>
+        <breadShape>Rectangle</breadShape>
+        <breadWidth>10</breadWidth>
+        <breadHeight>10</breadHeight>
+        <breadColor>255, 255, 255</breadColor>
+        <breadInterval>50</breadInterval>
+        <breadDispose>true</breadDispose>
+        <breadSec>1</breadSec>
+        <groupControl>false</groupControl>
+      </anim>
+    </page>
+    <page id="IntroductionTalkMuseum">
+      <name>IntroductionTalkMuseum</name>
+      <number>5</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/IntroductionTalkMuseum.psd</file>
+      <fileName>IntroductionTalkMuseum.psd</fileName>
+      <layer id="escenarioJefeMu">
+        <name>escenarioJefeMu</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>escenarioJefeMu</renderAs>
+      </layer>
+      <layer id="table">
+        <name>table</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>table</renderAs>
+      </layer>
+      <layer id="boss">
+        <name>boss</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>boss</renderAs>
+      </layer>
+      <layer id="kwkboss">
+        <name>kwkboss</name>
+        <scaleW>150</scaleW>
+        <scaleH>150</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkboss</renderAs>
+      </layer>
+      <replacement id="kwkboss">
+        <name>kwkboss</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkboss</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/jefe.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>189</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/JefeMuseo/JefeMuseo/jefe.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>32</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <trigger id="actNextPage">
+        <name>actNextPage</name>
+        <action id="var_606">
+          <name>var_606</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>6</value>
+        </action>
+        <action id="goPage_723">
+          <name>goPage_723</name>
+          <type>Go to Page</type>
+          <page>EnterName</page>
+          <transition>Move from right</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="EnterName">
+      <name>EnterName</name>
+      <number>6</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/EnterName.psd</file>
+      <fileName>EnterName.psd</fileName>
+      <code id="codeInputText">
+        <name>codeInputText</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/inputText.lua</extFile>
+      </code>
+    </page>
+    <page id="ConfirmName">
+      <name>ConfirmName</name>
+      <number>7</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/ConfirmName.psd</file>
+      <fileName>ConfirmName.psd</fileName>
+      <button id="butCancel">
+        <name>butCancel</name>
+        <layer>buttoncancel</layer>
+        <rollover>buttoncancel</rollover>
+        <target>Layer</target>
+        <type>Tap</type>
+        <tap>1</tap>
+        <action id="goPage_701">
+          <name>goPage_701</name>
+          <type>Go to Page</type>
+          <page>Previous (auto)</page>
+          <transition>Move from left</transition>
+          <wait>0</wait>
+        </action>
+      </button>
+      <button id="butConfirm">
+        <name>butConfirm</name>
+        <layer>kwkbuttonConfir</layer>
+        <rollover>kwkbuttonConfir</rollover>
+        <target>Layer</target>
+        <type>Tap</type>
+        <tap>1</tap>
+        <action id="var_235">
+          <name>var_235</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>8</value>
+        </action>
+        <action id="goPage_355">
+          <name>goPage_355</name>
+          <type>Go to Page</type>
+          <page>IntroductionTalkMuseum_2</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </button>
+      <code id="codeTextName">
+        <name>codeTextName</name>
+        <code/>
+        <position>middle</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/introName.lua</extFile>
+      </code>
+    </page>
+    <page id="IntroductionTalkMuseum_2">
+      <name>IntroductionTalkMuseum_2</name>
+      <number>8</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/IntroductionTalkMuseum_2.psd</file>
+      <fileName>IntroductionTalkMuseum_2.psd</fileName>
+      <variables/>
+      <layer id="boss">
+        <name>boss</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>boss</renderAs>
+      </layer>
+      <layer id="kwkboss">
+        <name>kwkboss</name>
+        <scaleW>150</scaleW>
+        <scaleH>150</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkboss</renderAs>
+      </layer>
+      <replacement id="kwkboss">
+        <name>kwkboss</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkboss</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/jefe.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>189</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/JefeMuseo/JefeMuseo/jefe.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>32</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <trigger id="act_139">
+        <name>act_139</name>
+        <action id="var_179">
+          <name>var_179</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>9</value>
+        </action>
+        <action id="goPage_456">
+          <name>goPage_456</name>
+          <type>Go to Page</type>
+          <page>IntroGenie</page>
+          <transition>Move from right</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="IntroGenie">
+      <name>IntroGenie</name>
+      <number>9</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/IntroGenie.psd</file>
+      <fileName>IntroGenie.psd</fileName>
+      <trigger id="act_892">
+        <name>act_892</name>
+        <action id="var_021">
+          <name>var_021</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>10</value>
+        </action>
+        <action id="goPage_918">
+          <name>goPage_918</name>
+          <type>Go to Page</type>
+          <page>PresentationGenius</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="PresentationGenius">
+      <name>PresentationGenius</name>
+      <number>10</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/PresentationGenius.psd</file>
+      <fileName>PresentationGenius.psd</fileName>
+      <replacement id="genius">
+        <name>genius</name>
+        <type>Sprite Sheet</type>
+        <layer>genius</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/genioHabla.png</file>
+        <frameWidth>283</frameWidth>
+        <frameHeight>615</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/Genio/Genio/genioHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>16</frameCount>
+        <frameLength>0.5</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <anim id="pathGenMove">
+        <name>pathGenMove</name>
+        <target>Layer</target>
+        <type>Path</type>
+        <layer>genius</layer>
+        <endX>574</endX>
+        <endY>65</endY>
+        <path>Trazado de trabajo</path>
+        <closedPath>false</closedPath>
+        <autoTurn>true</autoTurn>
+        <angle>0</angle>
+        <adjAngle>0</adjAngle>
+        <endAlpha>100</endAlpha>
+        <duration>10</duration>
+        <delay>0</delay>
+        <easing>Linear</easing>
+        <pause>false</pause>
+        <linearLoop>forever</linearLoop>
+        <linearReverse>false</linearReverse>
+        <rotate>0</rotate>
+        <anchor>MiddleCenter</anchor>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <event>When page starts</event>
+        <reStart>true</reStart>
+        <audio>None</audio>
+        <trigger>None</trigger>
+        <breadCrumb>false</breadCrumb>
+        <breadAnchor>Center</breadAnchor>
+        <breadShape>Rectangle</breadShape>
+        <breadWidth>10</breadWidth>
+        <breadHeight>10</breadHeight>
+        <breadColor>255,255,255</breadColor>
+        <breadInterval>50</breadInterval>
+        <breadDispose>true</breadDispose>
+        <breadSec>1</breadSec>
+      </anim>
+      <sync id="text1">
+        <layer>text1</layer>
+        <name>text1</name>
+        <hiColor>0, 128, 255</hiColor>
+        <useNative>true</useNative>
+        <padding>10</padding>
+        <offSet>0</offSet>
+        <readAudio>false</readAudio>
+        <audioFile>geniopr1</audioFile>
+        <rightLeft>false</rightLeft>
+        <wordTouch>false</wordTouch>
+        <starts>0,210431 0,714014 0,979592 1,172608 1,327891 1,697959 2,166712 2,385850 2,491791 2,689161</starts>
+        <ends>0,473107 0,979592 1,172608 1,327891 1,520907 2,166712 2,385850 2,491791 2,689161 3,147755</ends>
+        <files>undefined</files>
+        <action>undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined</action>
+        <showButton>false</showButton>
+      </sync>
+      <sync id="text2">
+        <layer>text2</layer>
+        <name>text2</name>
+        <hiColor>0, 128, 255</hiColor>
+        <useNative>true</useNative>
+        <padding>10</padding>
+        <offSet>0</offSet>
+        <readAudio>false</readAudio>
+        <audioFile>geniopr3</audioFile>
+        <rightLeft>false</rightLeft>
+        <wordTouch>false</wordTouch>
+        <starts>0,214785 0,458594 0,609524 0,769161 1,512200 1,692154 1,845206 2,357883 2,509307 2,740769 2,890029 3,004678 3,145286 3,487071 3,995422 4,231210 4,588137 5,066204 5,230606 5,369051</starts>
+        <ends>0,458594 0,609524 0,769161 1,294512 1,692154 1,845206 2,189154 2,509307 2,740769 2,890029 3,004678 3,145286 3,487071 3,995422 4,231210 4,588137 5,066204 5,230606 5,369051 5,734631</ends>
+        <files>undefined</files>
+        <action>undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined</action>
+        <showButton>false</showButton>
+      </sync>
+      <audio id="geniopr1">
+        <name>geniopr1</name>
+        <audio>/e/ProyectosKwik2/ProyectoFinal/geniopr1.mp3</audio>
+        <delay>0</delay>
+        <loop>1</loop>
+        <isShort>false</isShort>
+        <allowRepeat>false</allowRepeat>
+        <isReadMe>false</isReadMe>
+        <keep>false</keep>
+        <autoPlay>false</autoPlay>
+        <lang>All</lang>
+        <channel>1</channel>
+        <volume>10</volume>
+        <fadeIn>true</fadeIn>
+        <fadeInAmount>.5</fadeInAmount>
+      </audio>
+      <audio id="geniopr3">
+        <name>geniopr3</name>
+        <audio>/e/ProyectosKwik2/ProyectoFinal/geniopr3.mp3</audio>
+        <delay>0</delay>
+        <loop>1</loop>
+        <isShort>false</isShort>
+        <allowRepeat>false</allowRepeat>
+        <isReadMe>false</isReadMe>
+        <keep>false</keep>
+        <autoPlay>false</autoPlay>
+        <lang>All</lang>
+        <channel>2</channel>
+        <volume>10</volume>
+        <fadeIn>true</fadeIn>
+        <fadeInAmount>.5</fadeInAmount>
+      </audio>
+      <trigger id="act_194">
+        <name>act_194</name>
+        <action id="read_638">
+          <name>read_638</name>
+          <type>Read to Me</type>
+          <goNext>false</goNext>
+          <readMe>true</readMe>
+        </action>
+        <action id="sync_966">
+          <name>sync_966</name>
+          <type>Play Sync</type>
+          <playSync>text1</playSync>
+        </action>
+      </trigger>
+      <trigger id="actNextPage">
+        <name>actNextPage</name>
+        <action id="var_935">
+          <name>var_935</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>11</value>
+        </action>
+        <action id="goPage_648">
+          <name>goPage_648</name>
+          <type>Go to Page</type>
+          <page>selectionLevel</page>
+          <transition>Move from right</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+      <timer id="timer_534">
+        <name>timer_534</name>
+        <delay>1</delay>
+        <trigger>act_194</trigger>
+        <loop>1</loop>
+      </timer>
+    </page>
+    <page id="DifficultyLevelSelection">
+      <name>DifficultyLevelSelection</name>
+      <number>2</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/DifficultyLevelSelection.psd</file>
+      <fileName>DifficultyLevelSelection.psd</fileName>
+      <code id="codeListener">
+        <name>codeListener</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/listenerSelectedDifficult.lua</extFile>
+      </code>
+    </page>
+    <page id="selectionLevel">
+      <name>selectionLevel</name>
+      <number>11</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/selectionLevel.psd</file>
+      <fileName>selectionLevel.psd</fileName>
+      <layer id="E">
+        <name>E</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>E</renderAs>
+      </layer>
+      <button id="butLevelE">
+        <name>butLevelE</name>
+        <layer>kwkE</layer>
+        <rollover>kwkE</rollover>
+        <target>Layer</target>
+        <type>Tap</type>
+        <tap>1</tap>
+        <action id="var_819">
+          <name>var_819</name>
+          <type>Edit Variable</type>
+          <variable>Level</variable>
+          <value>2</value>
+        </action>
+        <action id="var_416">
+          <name>var_416</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>12</value>
+        </action>
+        <action id="goPage_077">
+          <name>goPage_077</name>
+          <type>Go to Page</type>
+          <page>levelE_Intro</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </button>
+    </page>
+    <page id="levelE_Intro">
+      <name>levelE_Intro</name>
+      <number>12</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/levelE_Intro.psd</file>
+      <fileName>levelE_Intro.psd</fileName>
+      <replacement id="explCall">
+        <name>explCall</name>
+        <type>Sprite Sheet</type>
+        <layer>explCall</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorTelefono.png</file>
+        <frameWidth>178</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorLlamando/exploradorTelefono.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>12</frameCount>
+        <frameLength>1</frameLength>
+        <loop>1</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <trigger id="act_413">
+        <name>act_413</name>
+        <action id="var_445">
+          <name>var_445</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>13</value>
+        </action>
+        <action id="goPage_068">
+          <name>goPage_068</name>
+          <type>Go to Page</type>
+          <page>levelE_Call</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="levelE_Call">
+      <name>levelE_Call</name>
+      <number>13</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/levelE_Call.psd</file>
+      <fileName>levelE_Call.psd</fileName>
+      <layer id="RectangleWhite">
+        <name>RectangleWhite</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>RectangleWhite</renderAs>
+      </layer>
+      <layer id="Rectangulo_1">
+        <name>Rectangulo_1</name>
+        <scaleW>200</scaleW>
+        <scaleH>200</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>Rectangulo_1</renderAs>
+      </layer>
+      <layer id="Forma_1">
+        <name>Forma_1</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>Forma_1</renderAs>
+      </layer>
+      <layer id="spriteCallGirl">
+        <name>spriteCallGirl</name>
+        <scaleW>300</scaleW>
+        <scaleH>390</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>spriteCallGirl</renderAs>
+      </layer>
+      <layer id="spriteCall">
+        <name>spriteCall</name>
+        <scaleW>300</scaleW>
+        <scaleH>400</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>spriteCall</renderAs>
+      </layer>
+      <replacement id="spriteCallGirl">
+        <name>spriteCallGirl</name>
+        <type>Sprite Sheet</type>
+        <layer>spriteCallGirl</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/LlamadaChica.png</file>
+        <frameWidth>188</frameWidth>
+        <frameHeight>211</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/LlamadaChica/LlamadaChica.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="spriteCall">
+        <name>spriteCall</name>
+        <type>Sprite Sheet</type>
+        <layer>spriteCall</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/LlamadaChico.png</file>
+        <frameWidth>132</frameWidth>
+        <frameHeight>213</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/LlamadaChico/LlamadaChico.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>0.8</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <trigger id="act_438">
+        <name>act_438</name>
+        <action id="var_702">
+          <name>var_702</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>14</value>
+        </action>
+        <action id="goPage_873">
+          <name>goPage_873</name>
+          <type>Go to Page</type>
+          <page>levelE_IntroStep1</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="levelE_IntroStep1">
+      <name>levelE_IntroStep1</name>
+      <number>14</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/levelE_IntroStep1.psd</file>
+      <fileName>levelE_IntroStep1.psd</fileName>
+      <layer id="snowyLandscape">
+        <name>snowyLandscape</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>snowyLandscape</renderAs>
+      </layer>
+      <replacement id="explTalk">
+        <name>explTalk</name>
+        <type>Sprite Sheet</type>
+        <layer>explTalk</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>141</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>16</frameCount>
+        <frameLength>0.8</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <trigger id="act_568">
+        <name>act_568</name>
+        <action id="var_551">
+          <name>var_551</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>15</value>
+        </action>
+        <action id="goPage_748">
+          <name>goPage_748</name>
+          <type>Go to Page</type>
+          <page>matchingSample</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="matchingSample">
+      <name>matchingSample</name>
+      <number>15</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/matchingSample.psd</file>
+      <fileName>matchingSample.psd</fileName>
+      <code id="codeSample">
+        <name>codeSample</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/sampleSelection.lua</extFile>
+      </code>
+      <audio id="aplausos">
+        <name>aplausos</name>
+        <audio>/e/ProyectosKwik2/ProyectoFinal/aplausos.mp3</audio>
+        <delay>0</delay>
+        <loop>forever</loop>
+        <isShort>false</isShort>
+        <allowRepeat>false</allowRepeat>
+        <isReadMe>false</isReadMe>
+        <keep>false</keep>
+        <autoPlay>false</autoPlay>
+        <lang>All</lang>
+        <channel>1</channel>
+        <volume>3</volume>
+        <fadeIn>false</fadeIn>
+        <fadeInAmount>.5</fadeInAmount>
+      </audio>
+      <layer id="explHappy">
+        <name>explHappy</name>
+        <scaleW>130</scaleW>
+        <scaleH>130</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>explHappy</renderAs>
+      </layer>
+      <layer id="explSobered">
+        <name>explSobered</name>
+        <scaleW>130</scaleW>
+        <scaleH>130</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>explSobered</renderAs>
+      </layer>
+    </page>
+    <page id="drawLetterE">
+      <name>drawLetterE</name>
+      <number>17</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/drawLetterE.psd</file>
+      <fileName>drawLetterE.psd</fileName>
+      <swipePage>false</swipePage>
+      <swipeSpacer>120</swipeSpacer>
+      <scaleW>100</scaleW>
+      <scaleH>100</scaleH>
+      <alpha>100</alpha>
+      <showNav>true</showNav>
+      <inApp/>
+      <code id="code_323">
+        <name>code_323</name>
+        <code/>
+        <position>middle</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/drawLetterE.lua</extFile>
+      </code>
+    </page>
+    <page id="recAudio">
+      <name>recAudio</name>
+      <number>18</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/recAudio.psd</file>
+      <fileName>recAudio.psd</fileName>
+      <code id="codeRecAudio">
+        <name>codeRecAudio</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/recAudio.lua</extFile>
+      </code>
+    </page>
+    <page id="LevelE_Skier">
+      <name>LevelE_Skier</name>
+      <number>16</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/LevelE_Skier.psd</file>
+      <fileName>LevelE_Skier.psd</fileName>
+      <replacement id="explSkier">
+        <name>explSkier</name>
+        <type>Sprite Sheet</type>
+        <layer>explSkier</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorEsquiando.png</file>
+        <frameWidth>192</frameWidth>
+        <frameHeight>219</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/ExploradorEsquando/exploradorEsquiando.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>16</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <trigger id="act_484">
+        <name>act_484</name>
+        <action id="var_349">
+          <name>var_349</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>17</value>
+        </action>
+        <action id="goPage_956">
+          <name>goPage_956</name>
+          <type>Go to Page</type>
+          <page>drawLetterE</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="LevelE_IntroMeeting">
+      <name>LevelE_IntroMeeting</name>
+      <number>19</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/LevelE_IntroMeeting.psd</file>
+      <fileName>LevelE_IntroMeeting.psd</fileName>
+      <replacement id="nurse">
+        <name>nurse</name>
+        <type>Sprite Sheet</type>
+        <layer>nurse</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/enfermera.png</file>
+        <frameWidth>151</frameWidth>
+        <frameHeight>207</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/Enfermera/enfermera.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>18</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <trigger id="act_415">
+        <name>act_415</name>
+        <action id="var_176">
+          <name>var_176</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>21</value>
+        </action>
+        <action id="var_762">
+          <name>var_762</name>
+          <type>Edit Variable</type>
+          <variable>Phase</variable>
+          <value>2</value>
+        </action>
+        <action id="goPage_737">
+          <name>goPage_737</name>
+          <type>Go to Page</type>
+          <page>LevelE_Meeting</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="LevelE_Meeting">
+      <name>LevelE_Meeting</name>
+      <number>20</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/LevelE_Meeting.psd</file>
+      <fileName>LevelE_Meeting.psd</fileName>
+      <replacement id="explorer">
+        <name>explorer</name>
+        <type>Sprite Sheet</type>
+        <layer>explorer</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorBebe.png</file>
+        <frameWidth>107</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorBebe/exploradorBebe.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>32</frameCount>
+        <frameLength>1.5</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="nurse">
+        <name>nurse</name>
+        <type>Sprite Sheet</type>
+        <layer>nurse</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/EnfermeraHabla.png</file>
+        <frameWidth>104</frameWidth>
+        <frameHeight>207</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/EnfermeraNormal/EnfermeraHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>16</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <layer id="table">
+        <name>table</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>table</renderAs>
+      </layer>
+      <layer id="nurse">
+        <name>nurse</name>
+        <scaleW>200</scaleW>
+        <scaleH>200</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>nurse</renderAs>
+      </layer>
+      <layer id="explorer">
+        <name>explorer</name>
+        <scaleW>200</scaleW>
+        <scaleH>200</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>explorer</renderAs>
+      </layer>
+      <trigger id="act_873">
+        <name>act_873</name>
+        <action id="var_482">
+          <name>var_482</name>
+          <type>Edit Variable</type>
+          <variable>CurrentPage</variable>
+          <value>15</value>
+        </action>
+        <action id="goPage_829">
+          <name>goPage_829</name>
+          <type>Go to Page</type>
+          <page>matchingSample</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+    </page>
+    <page id="Statistics">
+      <name>Statistics</name>
+      <number>21</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/Statistics.psd</file>
+      <fileName>Statistics.psd</fileName>
+      <code id="codeStatitics">
+        <name>codeStatitics</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/statitics.lua</extFile>
+      </code>
+    </page>
+    <page id="StatisticsMatching">
+      <name>StatisticsMatching</name>
+      <number>22</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/StatisticsMatching.psd</file>
+      <fileName>StatisticsMatching.psd</fileName>
+      <code id="code_181">
+        <name>code_181</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/statiticsLevelMatching.lua</extFile>
+      </code>
+    </page>
+  </pages>
+</project>

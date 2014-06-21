@@ -87,3 +87,10 @@ menuGroup:insert(fail)
 textFail = display.newText( " indica que se cometio un error", 180, 730, native.systemFont, 25 )
 textFail:setFillColor( 117, 76, 36 )
 menuGroup:insert(textFail)
+
+if (_G.TakePhoto) then
+	local screenCap = display.captureScreen( false )
+	display.save( screenCap, { filename="screenME"..math.ceil(_G.IndexStat/2)..math.fmod(_G.IndexStat, 2)..".jpg", baseDir=system.DocumentsDirectory, isFullResolution=true } ) -- ME = matching exercise
+	_G.IsTakePhoto = true
+	director:changeScene( "page_21", "fade" )
+end

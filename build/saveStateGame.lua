@@ -1,4 +1,5 @@
 local widget = require( "widget" )
+local facebook = require "facebook"
 local backgroundGroup = display.newGroup( )
 
 -- functions
@@ -340,6 +341,9 @@ onKeyEvent = function ( event )
     	audio.pause( 1 )
     	return true
      --end	
+    else
+    	facebook.logout()
+    	native.requestExit() 
     end
 	return false    
 end
@@ -348,3 +352,10 @@ local rectangle2 = display.newRoundedRect( 100, 100, 100, 100, 10 )
 
 rectangle2:addEventListener( "tap", onKeyEvent )
 --Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento
+
+local unhandledErrorListener = function( event )
+	native.showAlert( "ERROR", event.errorMessage, { "OK" } )
+    print( "Houston, we have a problem: " .. event.errorMessage )
+end
+
+Runtime:addEventListener( "unhandledError", unhandledErrorListener )

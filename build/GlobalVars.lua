@@ -9,4 +9,6 @@
        _G.numDigCoin = 4 --  
        _G.CurrentPage = 1 --  
        _G.GameStarted = false -- 
-       _G.IndexStat = 0
+       _G.IndexStat = 0 
+       _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
+       _G.IsTakePhot = false -- if true the screen shot been taken

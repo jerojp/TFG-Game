@@ -2,7 +2,7 @@
 -- Copyright (C) 2012 kwiksher.com. All Rights Reserved. 
 -- uses Director class, by Ricardo Rauber 
 -- uses DMC classes, by David McCuskey 
--- Exported on Tue Jun 17 2014 21:30:31 GMT+0200 
+-- Exported on Sat Jun 21 2014 19:12:46 GMT+0200 
 -- uses gTween class, by Josh Tynjala (modified by Kwiksher) 
 -- uses bTween class, by Josh Tynjala (modified by Kwiksher) 
 -- uses syncSound class, by David Fox  (modified by Kwiksher) 
@@ -86,7 +86,7 @@ local function onSystemEvent(event)
        end 
     end 
 end 
-Runtime:addEventListener("system", onSystemEvent) 
+--Runtime:addEventListener("system", onSystemEvent) 
 
 
 
@@ -100,6 +100,7 @@ local function main()
 
    -- Adding external code
    local widget = require( "widget" )
+local facebook = require "facebook"
 local backgroundGroup = display.newGroup( )
 
 -- functions
@@ -441,6 +442,9 @@ onKeyEvent = function ( event )
     	audio.pause( 1 )
     	return true
      --end	
+    else
+    	facebook.logout()
+    	native.requestExit() 
     end
 	return false    
 end
@@ -448,7 +452,14 @@ end
 local rectangle2 = display.newRoundedRect( 100, 100, 100, 100, 10 )
 
 rectangle2:addEventListener( "tap", onKeyEvent )
---Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento 
+--Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento
+
+local unhandledErrorListener = function( event )
+	native.showAlert( "ERROR", event.errorMessage, { "OK" } )
+    print( "Houston, we have a problem: " .. event.errorMessage )
+end
+
+Runtime:addEventListener( "unhandledError", unhandledErrorListener ) 
    -- Added variables before layers render 
        _G.NameUser = "Pedro" -- Name of the user 
        _G.Phase = 1 -- Phase of Level : 1=normal or 2=advance 
@@ -461,6 +472,8 @@ rectangle2:addEventListener( "tap", onKeyEvent )
        _G.CurrentPage = 1 --  
        _G.GameStarted = false -- 
        _G.IndexStat = 0 
+       _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
+       _G.IsTakePhot = false -- if true the screen shot been taken 
 
    director:changeScene("page_"..goPage)
    return true

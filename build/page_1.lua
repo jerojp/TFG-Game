@@ -218,7 +218,7 @@ statistics.y = display.contentCenterY + 200
        --Animations
        gtStash.gt_animSun = gtween.new( sun, 3, {  x=192, y=194,  alpha=1, rotation=0, xScale=1, yScale=1,}, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = true,  delay=0.1, ""}) 
 
-       local onEnd_animPlane_615 = function() 
+       local onEnd_animPlane_349 = function() 
           plane.x = plane.oriX; plane.y = plane.oriY; 
           plane.xScale = 1;plane.yScale = 1; plane.alpha = plane.oldAlpha; plane.rotation = 0; plane.isVisible = true; 
        end --ends reStart for animPlane 
@@ -232,7 +232,7 @@ statistics.y = display.contentCenterY + 200
          { x = -233, y = 72}, 
          { x = -233, y = 72}, 
          { x = -233, y = 72}, 
-angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0.1, onComplete=onEnd_animPlane_615, breadcrumb = true, breadAnchor = 6, breadShape = "circle", breadW = 10, breadH = 10, breadColor = {255,255,255}, breadInterval = 20, breadTimer = 1}, {  x=1407, y=237,  alpha=1, rotation=0, xScale=1, yScale=1, newAngle=180}) 
+angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0.1, onComplete=onEnd_animPlane_349, breadcrumb = true, breadAnchor = 6, breadShape = "circle", breadW = 10, breadH = 10, breadColor = {255,255,255}, breadInterval = 20, breadTimer = 1}, {  x=1407, y=237,  alpha=1, rotation=0, xScale=1, yScale=1, newAngle=180}) 
 
 
        -- Button event listeners 
