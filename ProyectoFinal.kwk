@@ -19,7 +19,7 @@
     <navDirection>Top</navDirection>
     <thumbH>125</thumbH>
     <bidi>false</bidi>
-    <suspend>true</suspend>
+    <suspend>false</suspend>
     <rotation>false</rotation>
     <startPage>1</startPage>
     <endPage>1</endPage>
@@ -155,7 +155,28 @@
         <breadDispose>true</breadDispose>
         <breadSec>1</breadSec>
       </anim>
-      <variables/>
+      <variables>
+        <variable id="TakePhoto">
+          <name>TakePhoto</name>
+          <value>false</value>
+          <comment/>
+          <table>false</table>
+          <save>false</save>
+          <type>global</type>
+          <content>Formula</content>
+          <where>before</where>
+        </variable>
+        <variable id="IsTakePhoto">
+          <name>IsTakePhoto</name>
+          <value>false</value>
+          <comment/>
+          <table>false</table>
+          <save>false</save>
+          <type>global</type>
+          <content>Formula</content>
+          <where>before</where>
+        </variable>
+      </variables>
       <button id="but_371">
         <name>but_371</name>
         <layer>meadow</layer>
@@ -1244,12 +1265,53 @@
       <number>22</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/StatisticsMatching.psd</file>
       <fileName>StatisticsMatching.psd</fileName>
+      <trigger id="act_190">
+        <name>act_190</name>
+        <action id="if_035">
+          <name>if_035</name>
+          <type>IF</type>
+          <exp1>TakePhoto</exp1>
+          <exp1Type>Variable</exp1Type>
+          <exp1Op>EQUAL</exp1Op>
+          <exp1Comp>true</exp1Comp>
+          <exp2Enabled>false</exp2Enabled>
+          <exp2Cond>AND</exp2Cond>
+          <exp2>TakePhoto</exp2>
+          <exp2Type>Variable</exp2Type>
+          <exp2Comp/>
+          <exp2Op>EQUAL</exp2Op>
+        </action>
+        <action id="var_967">
+          <name>var_967</name>
+          <type>Edit Variable</type>
+          <variable>IsTakePhoto</variable>
+          <value>true</value>
+        </action>
+        <action id="goPage_101">
+          <name>goPage_101</name>
+          <type>Go to Page</type>
+          <page>Statistics</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+        <action id="end_904">
+          <name>end_904</name>
+          <type>End IF</type>
+        </action>
+      </trigger>
       <code id="code_181">
         <name>code_181</name>
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/statiticsLevelMatching.lua</extFile>
       </code>
+      <timer id="timer_664">
+        
+        <name>timer_664</name>
+        <delay>0.1</delay>
+        <trigger>act_190</trigger>
+        <loop>1</loop>
+      </timer>
     </page>
   </pages>
 </project>

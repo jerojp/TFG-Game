@@ -59,10 +59,10 @@ function new()
        -- (MIDDLE) External code will render here 
 
        --Animations
-       local onEnd_linearEntry_995 = function() 
+       local onEnd_linearEntry_102 = function() 
           actNextPage(); 
        end --ends reStart for linearEntry 
-       gtStash.gt_linearEntry = gtween.new( kwkentradaMuseo, 5, {  x=830, y=1340,  alpha=1, rotation=0, xScale=3.6, yScale=3.6,}, {ease = gtween.easing.linear, repeatCount = 1, reflect = false,  delay=1, onComplete=onEnd_linearEntry_995}) 
+       gtStash.gt_linearEntry = gtween.new( kwkentradaMuseo, 5, {  x=830, y=1340,  alpha=1, rotation=0, xScale=3.6, yScale=3.6,}, {ease = gtween.easing.linear, repeatCount = 1, reflect = false,  delay=1, onComplete=onEnd_linearEntry_102}) 
 
  
        -- Actions (functions) 
@@ -72,7 +72,7 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_5", "fade" ) 
             end 
-            timerStash.newTimer_009 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_118 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  

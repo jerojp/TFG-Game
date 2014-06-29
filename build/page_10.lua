@@ -114,12 +114,12 @@ function new()
             {start =  2000, out = 2000, dur = 0, name = "tablet", file = ""},  
             {start =  2000, out = 3000, dur = 0, name = "mágica", file = ""},  
        } 
-       local speak_662 =  display.newImageRect( imgDir.. "kAudio.png", 30, 30 ); 
-       speak_662.x = 439; speak_662.y = 24  
-       speak_662.oriX = 439; speak_662.oriY = 24  
-       speak_662.alpha = 0  
+       local speak_262 =  display.newImageRect( imgDir.. "kAudio.png", 30, 30 ); 
+       speak_262.x = 439; speak_262.y = 24  
+       speak_262.oriX = 439; speak_262.oriY = 24  
+       speak_262.alpha = 0  
 
-       local b_text1, text1 = syncSound.addSentence{ x = 454, y = -6, padding = 10, sentence=geniopr1, volume=10, sentenceDir="audio", line=text1_txt, button=speak_662, font=native.systemFont, fontColor = {63, 62, 62}, fontSize = 28.1666698455811, fontColorHi = {0, 128, 255}, fadeDuration = 500, wordTouch = false, readDir="leftToRight", channel=1} 
+       local b_text1, text1 = syncSound.addSentence{ x = 454, y = -6, padding = 10, sentence=geniopr1, volume=10, sentenceDir="audio", line=text1_txt, button=speak_262, font=native.systemFont, fontColor = {63, 62, 62}, fontSize = 28.1666698455811, fontColorHi = {0, 128, 255}, fadeDuration = 500, wordTouch = false, readDir="leftToRight", channel=1} 
        menuGroup:insert(text1) 
        menuGroup.text1 = text1 
 
@@ -147,12 +147,12 @@ function new()
             {start =  5000, out = 5000, dur = 0, name = "el", file = ""},  
             {start =  5000, out = 5000, dur = 0, name = "mundo.", file = ""},  
        } 
-       local speak_838 =  display.newImageRect( imgDir.. "kAudio.png", 30, 30 ); 
-       speak_838.x = 309; speak_838.y = 24  
-       speak_838.oriX = 309; speak_838.oriY = 24  
-       speak_838.alpha = 0  
+       local speak_388 =  display.newImageRect( imgDir.. "kAudio.png", 30, 30 ); 
+       speak_388.x = 309; speak_388.y = 24  
+       speak_388.oriX = 309; speak_388.oriY = 24  
+       speak_388.alpha = 0  
 
-       local b_text2, text2 = syncSound.addSentence{ x = 324, y = -6, padding = 10, sentence=geniopr3, volume=10, sentenceDir="audio", line=text2_txt, button=speak_838, font=native.systemFont, fontColor = {63, 62, 62}, fontSize = 28.1666698455811, fontColorHi = {0, 128, 255}, fadeDuration = 500, wordTouch = false, readDir="leftToRight", channel=2} 
+       local b_text2, text2 = syncSound.addSentence{ x = 324, y = -6, padding = 10, sentence=geniopr3, volume=10, sentenceDir="audio", line=text2_txt, button=speak_388, font=native.systemFont, fontColor = {63, 62, 62}, fontSize = 28.1666698455811, fontColorHi = {0, 128, 255}, fadeDuration = 500, wordTouch = false, readDir="leftToRight", channel=2} 
        menuGroup:insert(text2) 
        menuGroup.text2 = text2 
 
@@ -176,7 +176,7 @@ function new()
        -- (MIDDLE) External code will render here 
 
        --Animations
-       local onEnd_pathGenMove_580 = function() 
+       local onEnd_pathGenMove_390 = function() 
           genius.x = genius.oriX; genius.y = genius.oriY; 
           genius.xScale = 1;genius.yScale = 1; genius.alpha = genius.oldAlpha; genius.rotation = 0; genius.isVisible = true; 
           genius:pause(); 
@@ -197,7 +197,7 @@ function new()
          { x = 707, y = 361}, 
          { x = 707, y = 361}, 
          { x = 707, y = 361}, 
-angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0.1, onComplete=onEnd_pathGenMove_580}, {  x=715, y=372,  alpha=1, xScale=1, yScale=1, newAngle=0}) 
+angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0.1, onComplete=onEnd_pathGenMove_390}, {  x=715, y=372,  alpha=1, xScale=1, yScale=1, newAngle=0}) 
 
  
        -- Actions (functions) 
@@ -212,7 +212,7 @@ angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflec
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_11", "moveFromRight" ) 
             end 
-            timerStash.newTimer_614 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_422 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  

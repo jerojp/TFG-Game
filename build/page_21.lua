@@ -50,6 +50,7 @@ local json = require( "json" )
 local groupImage = display.newGroup()
 local scrollView
 local imageTable
+local facebookGroup = display.newGroup( )
 
 local heightInic = 140
 local height = 106
@@ -70,6 +71,8 @@ local facebookImage = false
 local facebookTable = false
 local updateImage = false
 local updateTable = false
+
+print( "------------Pagina 21------------" )
 
 imageTable = display.newImageRect( imgDir.."tablaEstadisticas.png", 1000, 1155)
 imageTable.x = display.contentCenterX ; imageTable.y = display.contentCenterY+200
@@ -97,7 +100,9 @@ menuGroup:insert(scrollView)
 
 local function goToStatistics( event )
 	-- body
+	print( "!!!!!SE PULSA EL BOTON DE VER ESTADISITICAS!!!!" )
 	_G.IndexStat = event.target.index
+	dispose()
 	director:changeScene( "page_22", "fade" )
 end
 
@@ -175,125 +180,118 @@ local function playAudio( event )
     end  
 end
 
-local function printTable( t, label, level )
-	local cadena = ""
-	if label then print( label ) end
-	level = level or 1
 
-	if t then
-		for k,v in pairs( t ) do
-			local prefix = ""
-			for i=1,level do
-				prefix = prefix .. "\t"
-			end
-
-			cadena = cadena..prefix .. "[" .. tostring(k) .. "] = " .. tostring(v)
-			if type( v ) == "table" then
-				cadena = cadena..prefix .. "{"
-				cadena = cadena..printTable( v, nil, level + 1 )
-				cadena = cadena..prefix .. "}"
-			end
-		end
-	end
-	return cadena
+local function uploadPhotoTable( )
+	-- body
+	print("------Entra a subir foto tabla------")
+    local attachmentTable = {
+    	name = "Reise, el viaje de las vocales",
+        message = "Resultado de ".._G.NameUser.." para el ejercicio de igualacion de la muestra",
+        source = { baseDir=system.DocumentsDirectory, filename="screenME"..math.ceil(_G.IndexStat/2)..math.fmod(_G.IndexStat, 2)..".jpg", type="image" },
+        privacy = "{'value':'ALL_FRIENDS'}"
+    }
+    _G.IsTakePhoto = false
+    _G.TakePhoto = false
+    facebook.request( "me/photos", "POST", attachmentTable )
 end
 
-local function confirmUpdate( event )
-		-- desactivar Runtime:addEventListener("system", onSystemEvent), aÃ±adir al build.settings permiso "android.permission.INTERNET"
-		-- You must use your own app id for this sample to work. 
-		local fbAppID = "1428997230712728"  --fake
-		local object = event.target
- 		
- 		if (fbAppID) then
- 			local function onLoginSuccess()
-    		-- Upload 'iheartcorona.jpg' to current user's account
-    			if (_G.IsTakePhoto) then
-    					local attachmentTable = {
-    						name = "Reise, el viaje de las vocales",
-        					message = "Resultado de ".._G.NameUser.." para el ejercicio de igualacion de la muestra",
-        					source = { baseDir=system.DocumentsDirectory, filename="screenME"..math.ceil(_G.IndexStat/2)..math.fmod(_G.IndexStat, 2)..".jpg", type="image" },
-        					privacy = "{'value':'ALL_FRIENDS'}"
-    					}
-    					_G.IsTakePhoto = false
-    					_G.TakePhoto = false
-    					facebook.request( "me/photos", "POST", attachmentTable )
-    			else
-    				if (updateImage) then
-    					local attachmentImage = {
-    						name = "Reise, el viaje de las vocales",
-        					message = "Resultado de ".._G.NameUser.." para el ejercicio de dibujar la vocal",
-        					description = "Resultado de ".._G.NameUser.." para el ejercicio de dibujar la vocal",
-        					source = { baseDir=system.DocumentsDirectory, filename="screen"..object.level..object.phase..".jpg", type="image" },
-        					privacy = "{'value':'ALL_FRIENDS'}"
-    					}
-    					--facebook.request( "me/photos", "POST", attachmentImage ) 
+local function uploadPhotoDraw( )
+	-- body
+	local attachmentImage = {
+    	name = "Reise, el viaje de las vocales",
+        message = "Resultado de ".._G.NameUser.." para el ejercicio de dibujar la vocal",
+        description = "Resultado de ".._G.NameUser.." para el ejercicio de dibujar la vocal",
+        source = { baseDir=system.DocumentsDirectory, filename="screen".._G.DrawLevel.._G.DrawPhase..".jpg", type="image" },
+        privacy = "{'value':'ALL_FRIENDS'}"
+    }
+    facebook.request( "me/photos", "POST", attachmentImage )
+end
 
-    				--native.showAlert( "Upload", "La foto se esta subiendo.", { "OK" } )
-    				--[[
-    				local path = system.pathForFile( "screen"..object.level..object.phase..".jpg", system.DocumentsDirectory )
-    				local attachmentImage = {
-    					name = "Reise, el viaje de las vocales",
-        				message = "Resultado de ".._G.NameUser.." para el ejercicio de dibujar la vocal",
-        				--description = "Resultado de ".._G.NameUser.." para el ejercicio de dibujar la vocal",
-        				picture = path,
-        				privacy = "{'value':'ALL_FRIENDS'}"
-    				}
-    				Falla : picture URL is not properly formatted
-    				]]
-    				--[[
-					local attachmentImage = {
-    					name = "Reise, el viaje de las vocales",
-        				message = "Prueba de mensaje.",
-        				--description = "Resultado de ".._G.NameUser.." para el ejercicio de dibujar la vocal",
-        				--picture = { baseDir=system.DocumentsDirectory, filename="screen"..object.level..object.phase..".jpg", type="image" },
-        				privacy = "{'value':'ALL_FRIENDS'}"
-    				}
-    				Falla: sigue la privacidad en privado
-    				]]
-    				--[[Puede fallar por:
-    					- Al ser version debug (el token es debug) la privacidad se limita a que solo lo pueda ver el desarrollador.
-						- El request se debe hacer con otro path (me/feed y con otros parametros).
-						- Privacy esta mal indicado (cosa que dudo porque la foto se publica bien)
-    					]]
-    				end
+local function onLoginSuccess()
+    print( "Funcion onLoginSuccess" )
+    if (_G.UploadImageDraw) then
+    	uploadPhotoDraw( )
+    end
 
-    				if (updateTable) then
-    					_G.IndexStat = event.target.index
-    					_G.TakePhoto = true
-						director:changeScene( "page_22", "fade" )
-    				end
-    			end
-    			return true
-			end
- 
-			-- facebook listener
-			local function fbListener( event )
-				if ("session" == event.type) then
-					if event.phase ~= "login" then
-						-- Exit if login error
-						return
-					end
+    if (_G.UploadImageTable) then
+    	uploadPhotoTable( )
+    end
+
+    return true
+end
+
+-- facebook listener
+local function fbListener( event )
+	if ("session" == event.type) then
+		if event.phase ~= "login" then
+			-- Exit if login error
+			return
+		end
 					
-					onLoginSuccess()
-				elseif ( "request" == event.type ) then
-					if ( not event.isError ) then
-						native.showAlert( "Subida exitosa", "La foto ha sido publicada correctamente", { "OK" } )
-					else
-						native.showAlert( "ERROR", "Ha ocurrido un error al subir la foto", { "OK" } )
+		onLoginSuccess()
+	elseif ( "request" == event.type ) then
+		if ( not event.isError ) then
+			--Hay que resetear _G.UploadImageTable y _G.UploadImageDraw
+			native.showAlert( "Subida exitosa", "La foto ha sido publicada correctamente", { "OK" } )
+		else
+			native.showAlert( "ERROR", "Ha ocurrido un error al subir la foto", { "OK" } )
 
-						local response = json.encode( event.response )
+			local response = json.encode( event.response )
 						
-						native.showAlert( "ERROR", response, { "OK" } )
+			native.showAlert( "ERROR", response, { "OK" } )
 						
-					end
-				end
+		end
+	end
 
-			end
- 
-			-- photo uploading requires the "publish_stream" permission
+end
+
+
+local function confirmUpdate( event )
+	-- desactivar Runtime:addEventListener("system", onSystemEvent), aÃƒÂ±adir al build.settings permiso "android.permission.INTERNET"
+	-- You must use your own app id for this sample to work. 
+	local fbAppID = "1428997230712728"  --fake
+	local object = nil
+	if (event) then
+		object = event.target
+	end
+
+	if (updateImage) then
+    	_G.UploadImageDraw = true
+    	_G.DrawLevel = object.level
+    	_G.DrawPhase = object.phase
+    end
+
+	if (updateTable) then
+    	_G.IndexStat = object.index
+    	_G.TakePhoto = true
+    	_G.UploadImageTable = true
+    	print( "------CAMBIO A ESCENA 22------" )
+    	local myClosure_switch = function() 
+                dispose(); director:changeScene( "page_22" )
+        end 
+        timerStash.newTimer_999 = timer.performWithDelay(0, myClosure_switch, 1)  
+    end
+
+ 	if (fbAppID and not updateImage and not updateTable) then
 			facebook.login( fbAppID, fbListener, { "publish_actions" } )
-			--facebook.login( fbAppID, fbListener)
- 		end
+			--print( "SE LOGEA EN FACEBOOK HUREYYYYYYYYYYYY :) " )
+ 	end
+end
+
+
+local function buttonConfirmListener( event )
+	-- body
+	local object = event.target
+	if event.phase == "began" then
+        display.getCurrentStage():setFocus(object)
+        object.isFocus = true
+    elseif object.isFocus then
+        if event.phase == "ended" or event.phase == "cancelled" then
+            display.getCurrentStage():setFocus( nil )
+            object.isFocus = false
+            confirmUpdate(event)
+        end
+    end
 end
 
 local function updateFacebook( event )
@@ -319,14 +317,17 @@ local function updateFacebook( event )
 	rectangle.x = display.contentCenterX ; rectangle.y = display.contentCenterY
 	rectangle:setFillColor( 235 )
 	rectangle:addEventListener( "tap", nothing )
+	facebookGroup:insert( rectangle )
 
-	local text = display.newText( " Seleccione las imagenes de los resultados de los ejercicios que desea publicar en facebook :", rectangle.x - rectangle.width/2 + 10, rectangle.y - rectangle.height/2 + 20, rectangle.width-30, 55, native.systemFont, 23 )
-	text:setFillColor( color.R, color.G, color.B )
+	local textEx = display.newText( " Seleccione las imagenes de los resultados de los ejercicios que desea publicar en facebook :", rectangle.x - rectangle.width/2 + 10, rectangle.y - rectangle.height/2 + 20, rectangle.width-30, 55, native.systemFont, 23 )
+	textEx:setFillColor( color.R, color.G, color.B )
+	facebookGroup:insert( textEx )
 
 	local textTable = nil
 	if (object.index) then
 		textTable = display.newText( "- Igualacion-muestra", rectangle.x - rectangle.width/2 + 20, rectangle.y - rectangle.height/2 + 100 , native.systemFont, 25 )
 		textTable:setFillColor( color.R, color.G, color.B )
+		facebookGroup:insert( textTable )
 		local checkTable = widget.newSwitch{
     		left = rectangle.x - 20,
     		top = rectangle.y - rectangle.height/2 + 100,
@@ -335,20 +336,21 @@ local function updateFacebook( event )
     		initialSwitchState = true,
     		onPress = onSwitchPress
 		}
-		updateTable = true 	
+		updateTable = true
+		facebookGroup:insert( checkTable ) 	
 	end
 	if (object.level and object.phase) then
 		local heightCheck
 
 		if (textTable) then
     			heightCheck = rectangle.y - rectangle.height/2 + 100 + textTable.height + 25	
-    			print( "Entra" )
     	else
     			heightCheck = rectangle.y - rectangle.height/2 + 100
     	end
 
 		local textCapture = display.newText( "- Dibujar letra", rectangle.x - rectangle.width/2 + 20, heightCheck, native.systemFont, 25 )
 		textCapture:setFillColor( color.R, color.G, color.B )
+		facebookGroup:insert( textCapture )
 		local checkCapture = widget.newSwitch{
     		left = rectangle.x - 20,
     		top = heightCheck,
@@ -358,6 +360,7 @@ local function updateFacebook( event )
     		onPress = onSwitchPress
 		}
 		updateImage = true
+		facebookGroup:insert( checkCapture )
 	end
     
     local buttonConfirm = widget.newButton{
@@ -367,10 +370,11 @@ local function updateFacebook( event )
     	label = "Confirmar",
     	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
     	fontSize = 25,
-    	onEvent = confirmUpdate
+    	onEvent = buttonConfirmListener
 	}
 	buttonConfirm.x = rectangle.x - buttonConfirm.width/2 - 25
 	buttonConfirm.y = rectangle.y + rectangle.height/2 - buttonConfirm.height/2 - 20
+	facebookGroup:insert( buttonConfirm )
 
 	if (object.level and object.phase) then
 		buttonConfirm.level = object.level
@@ -378,7 +382,8 @@ local function updateFacebook( event )
 	end
 
 	if (object.index) then
-		buttonConfirm.index = buttonConfirm.index
+		buttonConfirm.index = object.index
+		print( "Introduce INDEX : "..buttonConfirm.index )
 	end
 
 	local buttonCancel = widget.newButton{
@@ -392,7 +397,9 @@ local function updateFacebook( event )
 	}
 	buttonCancel.x = rectangle.x + buttonCancel.width/2 + 25
 	buttonCancel.y = rectangle.y + rectangle.height/2 - buttonCancel.height/2 - 20
+	facebookGroup:insert( buttonCancel )
 
+	menuGroup:insert(facebookGroup)
     return true
 end
 
@@ -455,6 +462,7 @@ for i=1,10 do
 		objectFacebook:setFillColor( 0, 0, 150 )
 		if (facebookTable) then
 			objectFacebook.index = i
+			print( "Introuce index : "..objectFacebook.index )
 			facebookTable = false
 		end
 		if (facebookImage) then
@@ -475,10 +483,10 @@ for i=1,myTabla.numChildren do
 	myTabla[i]:addEventListener( "tap", goToStatistics )
 end
 
+print( "Antes del if de Tomar foto" )
 if (_G.IsTakePhoto) then
-	local evt = {}
-	evt.target = buttonConfirm
-	confirmUpdate(evt)
+	print( "-----Llama a subir la foto" )
+	confirmUpdate(nil)
 end 
 
        -- kwkRectangleOra positioning 

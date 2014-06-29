@@ -12,3 +12,7 @@
        _G.IndexStat = 0 
        _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
        _G.IsTakePhot = false -- if true the screen shot been taken
+       _G.UploadImageTable = false
+       _G.UploadImageDraw = false
+       _G.DrawLevel = 0
+       _G.DrawPhase = 0

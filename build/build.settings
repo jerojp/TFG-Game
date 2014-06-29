@@ -20,7 +20,7 @@ settings =
       {  
          plist=  
          {  
-              UIApplicationExitsOnSuspend = true,  
+              UIApplicationExitsOnSuspend = false,  
               UIHiddenStatusBar="YES",  
               CFBundleIconFile="Icon.png",  
               CFBundleIconFiles = {  

@@ -2,7 +2,7 @@
 -- Copyright (C) 2012 kwiksher.com. All Rights Reserved. 
 -- uses Director class, by Ricardo Rauber 
 -- uses DMC classes, by David McCuskey 
--- Exported on Sat Jun 21 2014 19:12:46 GMT+0200 
+-- Exported on Wed Jun 25 2014 17:14:29 GMT+0200 
 -- uses gTween class, by Josh Tynjala (modified by Kwiksher) 
 -- uses bTween class, by Josh Tynjala (modified by Kwiksher) 
 -- uses syncSound class, by David Fox  (modified by Kwiksher) 
@@ -74,21 +74,6 @@ function kwkVarCheck(variable)
 end 
 
 
-local function onSystemEvent(event) 
-    local quitOnDeviceOnly = true 
-    if quitOnDeviceOnly and system.getInfo("environment")=="device" then 
-       if (event.type == "applicationSuspend")  then 
-          if (system.getInfo( "platformName" ) == "Android")  then 
-              native.requestExit() 
-          else 
-              director:changeScene("page_1") 
-          end 
-       end 
-    end 
-end 
---Runtime:addEventListener("system", onSystemEvent) 
-
-
 
 --Create a main group
 local mainGroup = display.newGroup()
@@ -149,7 +134,8 @@ function savedTable(filename )
         local contents = json.encode(t)
         file:write( contents )
         io.close( file )
-        printTable(t)
+        print( "Juego GUARDADO" )
+        --printTable(t)
         return true
     else
         return false
@@ -175,7 +161,7 @@ function loadSettingGame( )
 	-- body
 	local gameSettingsVars = loadTable("saveGame.json")
 	print( "--------CARGANDO--------" )
-	printTable(gameSettingsVars)
+	--printTable(gameSettingsVars)
 	_G.NameUser = gameSettingsVars.nameUser
 	_G.Phase = gameSettingsVars.phase 
 	_G.Level = gameSettingsVars.level
@@ -185,6 +171,13 @@ function loadSettingGame( )
 	_G.TimerResults = gameSettingsVars.timeResults
 	_G.numDigCoin = gameSettingsVars.numDigCoin
 	_G.CurrentPage = gameSettingsVars.currentPage
+	_G.IndexStat = gameSettingsVars.indexStat
+    _G.TakePhoto = gameSettingsVars.takePhoto
+    _G.IsTakePhot = gameSettingsVars.isTakePhot
+    _G.UploadImageTable = gameSettingsVars.uploadTable
+    _G.UploadImageDraw = gameSettingsVars.uploadDraw
+    _G.DrawLevel = gameSettingsVars.drawLevel
+    _G.DrawPhase = gameSettingsVars.drawPhase
 end
 
 createTableSetting = function ()
@@ -200,7 +193,14 @@ createTableSetting = function ()
 	gameSettingsVars.timeResults = _G.TimerResults
 	gameSettingsVars.numDigCoin = _G.numDigCoin
 	gameSettingsVars.currentPage = _G.CurrentPage
-	printTable(gameSettingsVars)
+	gameSettingsVars.indexStat = _G.IndexStat
+    gameSettingsVars.takePhoto = _G.TakePhoto
+    gameSettingsVars.isTakePhot = _G.IsTakePhot
+    gameSettingsVars.uploadDraw = _G.UploadImageDraw
+    gameSettingsVars.uploadTable = _G.UploadImageTable
+    gameSettingsVars.drawLevel = _G.DrawLevel
+    gameSettingsVars.drawPhase = _G.DrawPhase
+	--printTable(gameSettingsVars)
 	return gameSettingsVars
 end
 
@@ -217,6 +217,7 @@ continueGame = function ( event )
           --transition.resume( )
           audio.resume( 1 )
           removePauseMenu() -- es opcional si se confirma que solo te puede salir del juego por el menu de pausa
+          display.getCurrentStage():setFocus( nil )
           object.isFocus = false
       end
     end
@@ -248,6 +249,7 @@ changeDifficult = function ( event )
 			difficultEasy.alpha = 0
 			difficultNormal.alpha = 0
 			difficultHard.alpha = 0
+			display.getCurrentStage():setFocus( nil )
 			object.isFocus = false
 			print( "Nueva dificultad : ".._G.DifficultLevel )
 
@@ -292,6 +294,7 @@ backMainMenu = function( event )
         	--guardad y cambiar escena
 			savedTable("saveGame.json")
 			removePauseMenu()
+			display.getCurrentStage():setFocus( nil )
 			object.isFocus = false
 			_G.CurrentPage = 1
 			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
@@ -432,34 +435,42 @@ onKeyEvent = function ( event )
 	local phase = event.phase
     local keyName = event.keyName
     
-    if (_G.CurrentPage ~= -1) then
-     --if ( "back" == keyName ) then
-    	        --local alert = native.showAlert( "Corona", "Dream. Build. Ship.", { "OK" })
-    	if (not createdPauseMenu) then
-    		createPauseMenu()
-    	end
-    	--transition.pause( )
-    	audio.pause( 1 )
-    	return true
-     --end	
-    else
-    	facebook.logout()
-    	native.requestExit() 
-    end
+    
+    if ((system.getInfo("environment")=="device" and "back" == keyName) or system.getInfo("environment")=="simulator") then
+    		if (_G.CurrentPage ~= 1) then
+    			if (not createdPauseMenu) then
+    				createPauseMenu()
+    			end
+    			--transition.pause( )
+    			audio.pause( 1 )
+    		else
+    			facebook.logout()
+    			native.requestExit()
+    		end
+    		return true
+    end 
 	return false    
 end
 
-local rectangle2 = display.newRoundedRect( 100, 100, 100, 100, 10 )
+local function onSystemEvent(event) 
+    if (event.type == "applicationSuspend")  then 
+    	savedTable("saveGame.json")
+    elseif (event.type == "applicationResume") then
+    	loadSettingGame( )
+    end 
+end 
 
-rectangle2:addEventListener( "tap", onKeyEvent )
---Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento
+Runtime:addEventListener("system", onSystemEvent) 
 
-local unhandledErrorListener = function( event )
-	native.showAlert( "ERROR", event.errorMessage, { "OK" } )
-    print( "Houston, we have a problem: " .. event.errorMessage )
+if system.getInfo("environment")=="device" then
+	Runtime:addEventListener( "key", onKeyEvent )
+else
+	local rectangle2 = display.newRoundedRect( 100, 100, 100, 100, 10 )
+	rectangle2:addEventListener( "tap", onKeyEvent )
 end
 
-Runtime:addEventListener( "unhandledError", unhandledErrorListener ) 
+--Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento
+ 
    -- Added variables before layers render 
        _G.NameUser = "Pedro" -- Name of the user 
        _G.Phase = 1 -- Phase of Level : 1=normal or 2=advance 
@@ -473,7 +484,11 @@ Runtime:addEventListener( "unhandledError", unhandledErrorListener )
        _G.GameStarted = false -- 
        _G.IndexStat = 0 
        _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
-       _G.IsTakePhot = false -- if true the screen shot been taken 
+       _G.IsTakePhot = false -- if true the screen shot been taken
+       _G.UploadImageTable = false
+       _G.UploadImageDraw = false
+       _G.DrawLevel = 0
+       _G.DrawPhase = 0 
 
    director:changeScene("page_"..goPage)
    return true
