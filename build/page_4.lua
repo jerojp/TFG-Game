@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -46,6 +46,7 @@ function new()
        local kwkentradaMuseo  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- kwkentradaMuseo positioning 
        kwkentradaMuseo = display.newImageRect( imgDir.. "kwkentradamuseo.png", 1280, 800 ); 
@@ -59,60 +60,29 @@ function new()
        -- (MIDDLE) External code will render here 
 
        --Animations
-       local onEnd_linearEntry_102 = function() 
+       local onEnd_linearEntry_012 = function() 
           actNextPage(); 
        end --ends reStart for linearEntry 
-       gtStash.gt_linearEntry = gtween.new( kwkentradaMuseo, 5, {  x=830, y=1340,  alpha=1, rotation=0, xScale=3.6, yScale=3.6,}, {ease = gtween.easing.linear, repeatCount = 1, reflect = false,  delay=1, onComplete=onEnd_linearEntry_102}) 
+       gtStash.gt_linearEntry = gtween.new( kwkentradaMuseo, 5, {  x=830, y=1340,  alpha=1, rotation=0, xScale=3.6, yScale=3.6,}, {ease = gtween.easing.linear, repeatCount = 1, reflect = false,  delay=1, onComplete=onEnd_linearEntry_012}) 
 
  
        -- Actions (functions) 
        function actNextPage(event) 
-           CurrentPage = 5
-          saveKwikVars({"CurrentPage",5}) 
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_5", "fade" ) 
             end 
-            timerStash.newTimer_118 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_030 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  
       --End Actions (functions) 
 
 
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( kwkentradaMuseo, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       kwkentradaMuseo:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTweens() 
           cancelAllTimers(); cancelAllTransitions() 
-          kwkentradaMuseo:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(kwkentradaMuseo) 
        end 
 
        -- (BOTTOM) External code will render here 

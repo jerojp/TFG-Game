@@ -76,7 +76,7 @@
 
        createTextCoin( )
 
-       objetoCorrect = display.newImageRect( imgDir.. "objeto".._G.Level.._G.Phase..".png", 150, 135 ); 
+       objetoCorrect = display.newImageRect( imgDir.. "objeto".._G.Level.._G.Level.._G.Phase..".png", 150, 135 ); 
        objetoCorrect.x = 680; objetoCorrect.y = 91; objetoCorrect.alpha = 1; objetoCorrect.oldAlpha = 1 
        objetoCorrect.oriX = objetoCorrect.x; objetoCorrect.oriY = objetoCorrect.y 
        objetoCorrect.name = "objetoCorrect" 
@@ -210,7 +210,7 @@
          end
 
          if (negacion) then
-            menuGroup:remove(negacion)
+            --menuGroup:remove(negacion)
             negacion:removeSelf()
             negacion = nil
          end
@@ -237,7 +237,7 @@
           negacion.x = 644; negacion.y = 307; negacion.alpha = 1; negacion.oldAlpha = 1 
           negacion.oriX = negacion.x; negacion.oriY = negacion.y 
           negacion.name = "negacion" 
-          menuGroup:insert(negacion)
+          --menuGroup:insert(negacion)
 
           negacion:setReferencePoint(display.BottomCenterReferencePoint); 
 
@@ -277,8 +277,8 @@
            end
 
            if (ManoInfer and ManoSup) then
-            menuGroup:remove(ManoInfer)
-            menuGroup:remove(ManoSup)
+            --menuGroup:remove(ManoInfer)
+           -- menuGroup:remove(ManoSup)
             
             ManoInfer:removeSelf()
             ManoInfer = nil
@@ -314,13 +314,13 @@
            ManoInfer = display.newImageRect( imgDir.. "manoinfer.png", 229, 208 ); 
            ManoInfer.x = 670; ManoInfer.y = 381; ManoInfer.alpha = 1; ManoInfer.oldAlpha = 1 
            ManoInfer.oriX = ManoInfer.x; ManoInfer.oriY = ManoInfer.y
-           menuGroup:insert(ManoInfer) 
+           --menuGroup:insert(ManoInfer) 
 
            -- ManoSup positioning 
            ManoSup = display.newImageRect( imgDir.. "manosup.png", 156, 243 ); 
            ManoSup.x = 620; ManoSup.y = 398; ManoSup.alpha = 1; ManoSup.oldAlpha = 1 
            ManoSup.oriX = ManoSup.x; ManoSup.oriY = ManoSup.y 
-           menuGroup:insert(ManoSup)
+           --menuGroup:insert(ManoSup)
 
            linear_sup() 
            linearInf()
@@ -350,6 +350,7 @@
            objetos[i].alpha = levelAlpha
            objetos[i+1].alpha = 1 - levelAlpha  
         end
+        print( "Alpha : "..levelAlpha )
  
       end 
 
@@ -414,11 +415,11 @@
        end 
 
        function generateLetter()
-        local letra = math.random( 2, 4 )
+        local letra = math.random( 1, 5 )
 
        -- print( "Antes -> lorrectas "..numLetrasCor )
         --print( "Antes -> lncorrectas "..numLetrasInc )
-        if (numLetrasCor == 0 and nivelActual == 1) then
+        if (numLetrasCor == 0 and (nivelActual == 1 or nivelActual == 11)) then
             letra = _G.Level
             numLetrasCor = numLetrasCor + 1
         else
@@ -456,12 +457,12 @@
           nuevaLetra = generateLetter()
           local objetoN 
 
-          objetoN = display.newImageRect( imgDir.. "objeto"..nuevaLetra.._G.Phase..".png", 190, 145 );
+          objetoN = display.newImageRect( imgDir.. "objeto"..nuevaLetra.._G.Level.._G.Phase..".png", 190, 145 );
           objetoN.alpha = 1 - levelAlpha
           objetoN.oldAlpha = objetoN.alpha
           objetoN.name = "objeto"..nuevaLetra..contador ; contador = contador + 1
 
-          letraN = display.newImageRect( imgDir.. "letra"..nuevaLetra.._G.Phase..".png", 120, 145 );
+          letraN = display.newImageRect( imgDir.. "letra"..nuevaLetra..".png", 120, 145 );
           letraN.alpha = levelAlpha
           if (letraN.alpha == 0) then
             letraN.alpha = 0.01
@@ -516,7 +517,8 @@
           end
           maxNivel = nivelActual + maxNivel
 
-          for i=nivelActual,maxNivel do
+          print( "Maximo Nivel "..maxNivel )
+          for i=nivelActual,maxNivel,1 do
             table.insert( resultsTest, -1 )
             table.insert( timerTest, -1 )
           end
@@ -534,6 +536,7 @@
           numLetrasCor = letrasCorGroup.numChildren
           numLetrasInc = gp_letrasIncorr.numChildren
 
+          act_cambiarAlph() 
            act_posicionarO() 
       end 
 
@@ -559,33 +562,27 @@
 
         if (_G.Level == 1) then
           if (_G.Phase == 1) then
-            number = 1  
+            number = 28  
           else
-            number = 1
+            number = 32
           end
         elseif (_G.Level == 2) then
           if (_G.Phase == 1) then
             number = 16  
           else
-            number = 1
+            number = 21
           end
         elseif (_G.Level == 3) then
           if (_G.Phase == 1) then
-            number = 1  
+            number = 37  
           else
-            number = 1
-          end
-        elseif (_G.Level == 3) then
-          if (_G.Phase == 1) then
-            number = 1  
-          else
-            number = 1
+            number = 42
           end
         elseif (_G.Level == 4) then
           if (_G.Phase == 1) then
-            number = 1  
+            number = 46  
           else
-            number = 1
+            number = 52
           end
         elseif (_G.Level == 5) then
           if (_G.Phase == 1) then
@@ -600,20 +597,22 @@
 
 
        local function statisticsUpdate()
-          if (resultsTest[nivelActual] > 0) then
-              resultsTest[nivelActual] = resultsTest[nivelActual] + n_fallosNivel
+          local auxLevel = math.fmod(nivelActual, 11) + 1 
+          print( "Statitics LEVEL : "..auxLevel )
+          if (resultsTest[auxLevel] > 0) then
+              resultsTest[auxLevel] = resultsTest[auxLevel] + n_fallosNivel
           else
-              resultsTest[nivelActual] = n_fallosNivel
+              resultsTest[auxLevel] = n_fallosNivel
           end
 
           n_fallosNivel = 0
 
           local tiempo = (system.getTimer( ) - contadorTiempo) / 1000 -- In seconds
 
-          if (timerTest[nivelActual] > 0 ) then
-            timerTest[nivelActual] = timerTest[nivelActual] + tiempo
+          if (timerTest[auxLevel] > 0 ) then
+            timerTest[auxLevel] = timerTest[auxLevel] + tiempo
           else
-            timerTest[nivelActual] = tiempo
+            timerTest[auxLevel] = tiempo
           end
 
           contadorTiempo = system.getTimer( ) 
@@ -623,7 +622,7 @@
           if (timerApplause) then
              cancel_timer_Applause()
           end
-          activeNegacion() 
+
           n_fallosNivel = n_fallosNivel + 1
           saveKwikVars({"n_fallosNivel",n_fallosNivel + 1}) 
           n_fallos = n_fallos - 1
@@ -632,7 +631,7 @@
           
           act_posicionarO() 
 
-         if (n_fallos == 0) then 
+          if (n_fallos == 0) then 
            transitionStash.newTransition_692 = transition.to( ExplicacionFall, {alpha=ExplicacionFall.oldAlpha, time=1000, delay=0}) 
            n_fallos = 3
            saveKwikVars({"n_fallos",3}) 
@@ -643,16 +642,15 @@
             textLevel.text =  "Nivel : "..nivelActual 
            end 
            act_cambiarAlph() 
-         end 
-           act_eliminarVid() 
+          end 
+
+          act_eliminarVid() 
+          activeNegacion() 
        end 
 
        function act_letraCorrec(event)
            if (timerApplause) then
              cancel_timer_Applause()
-             act_play()
-           else
-             act_play() -- Animation to applaud 
            end
 
            statisticsUpdate()
@@ -664,12 +662,9 @@
            if (nivelActual == maxNivel) then 
             finalizarEjercicio() 
            else
-
             --Increment and actually coint
             _G.Coin = _G.Coin + incrementCoin
             textCoinUpdate( )
-
-            act_cambiarAlph() 
             if (n_aciertosSegTotales == maxAciertosSeguidosIncremento) then
               if (intervaloNuevoOb == 1) then
                 n_objetos_nuevos = n_objetos_nuevos + 1
@@ -686,17 +681,17 @@
                 for i=1,n_objetos_nuevos do
                   addNuevoObj()
                 end    
-              end
-        
+              end       
               n_aciertosSeg = 1
               saveKwikVars({"n_aciertosSeg",1}) 
             else 
               n_aciertosSeg = n_aciertosSeg + 1
               saveKwikVars({"n_aciertosSeg",n_aciertosSeg + 1}) 
             end
-
+            act_cambiarAlph() 
             act_posicionarO() 
-          end
+            act_play() -- Animation to applaud
+          end 
        end 
 
  

@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -40,13 +40,17 @@ function new()
 
  
        -- Button names 
-       local butLevelE
+       local butLetraE
 
        -- Layer names 
        local continents  
-       local kwkE  
+       local FlechaMapa  
+       local FlechaMapaCopia  
+       local A  
+       local E  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- continents positioning 
        continents = display.newImageRect( imgDir.. "p11_continents.png", 1280, 800 ); 
@@ -55,70 +59,62 @@ function new()
        continents.name = "continents" 
        menuGroup:insert(1,continents); menuGroup.continents = continents 
 
-       -- kwkE positioning 
-       kwkE = display.newImageRect( imgDir.. "kwke.png", 69, 73 ); 
-       kwkE.x = 641; kwkE.y = 112; kwkE.alpha = 1; kwkE.oldAlpha = 1 
-       kwkE.oriX = kwkE.x; kwkE.oriY = kwkE.y 
-       kwkE.name = "kwkE" 
-       menuGroup:insert(kwkE); menuGroup.kwkE = kwkE 
+       -- FlechaMapa positioning 
+       FlechaMapa = display.newImageRect( imgDir.. "p11_flechamapa.png", 85, 100 ); 
+       FlechaMapa.x = 632; FlechaMapa.y = 120; FlechaMapa.alpha = 1; FlechaMapa.oldAlpha = 1 
+       FlechaMapa.oriX = FlechaMapa.x; FlechaMapa.oriY = FlechaMapa.y 
+       FlechaMapa.name = "FlechaMapa" 
+       menuGroup:insert(FlechaMapa); menuGroup.FlechaMapa = FlechaMapa 
+
+       -- FlechaMapaCopia positioning 
+       FlechaMapaCopia = display.newImageRect( imgDir.. "p11_flechamapacopia.png", 85, 100 ); 
+       FlechaMapaCopia.x = 414; FlechaMapaCopia.y = 373; FlechaMapaCopia.alpha = 1; FlechaMapaCopia.oldAlpha = 1 
+       FlechaMapaCopia.oriX = FlechaMapaCopia.x; FlechaMapaCopia.oriY = FlechaMapaCopia.y 
+       FlechaMapaCopia.name = "FlechaMapaCopia" 
+       menuGroup:insert(FlechaMapaCopia); menuGroup.FlechaMapaCopia = FlechaMapaCopia 
+
+       -- A positioning 
+       A = display.newImageRect( imgDir.. "p11_a.png", 35, 26 ); 
+       A.x = 414; A.y = 351; A.alpha = 1; A.oldAlpha = 1 
+       A.oriX = A.x; A.oriY = A.y 
+       A.name = "A" 
+       menuGroup:insert(A); menuGroup.A = A 
+
+       -- E positioning 
+       E = display.newImageRect( imgDir.. "p11_e.png", 30, 26 ); 
+       E.x = 633; E.y = 99; E.alpha = 1; E.oldAlpha = 1 
+       E.oriX = E.x; E.oriY = E.y 
+       E.name = "E" 
+       menuGroup:insert(E); menuGroup.E = E 
  
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
 
        -- Button event listeners 
-       local function onkwkEEvent(event) 
-          butLevelE(kwkE) 
+       local function onFlechaMapaEvent(event) 
+          butLetraE(FlechaMapa) 
           return true 
        end 
-       kwkE:addEventListener("tap", onkwkEEvent ) 
+       FlechaMapa:addEventListener("tap", onFlechaMapaEvent ) 
 
        -- Button functions 
-       function butLevelE(self) 
-           Level = 2
+       function butLetraE(self) 
+           _G.Level = 2
           saveKwikVars({"Level",2}) 
-           CurrentPage = 12
-          saveKwikVars({"CurrentPage",12}) 
+           _G.Phase = 1
+          saveKwikVars({"Phase",1}) 
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_12", "fade" ) 
             end 
-            timerStash.newTimer_625 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_840 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
 
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( continents, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       continents:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          continents:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(continents) 
        end 
 
        -- (BOTTOM) External code will render here 

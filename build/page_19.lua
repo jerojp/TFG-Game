@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -40,13 +40,14 @@ function new()
 
  
        -- Action names 
-       local act_415 
+       local act_nextScn 
 
        -- Layer names 
        local casaEnfermeraEx  
        local nurse  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- casaEnfermeraEx positioning 
        casaEnfermeraEx = display.newImageRect( imgDir.. "p19_casaenfermeraex.png", 1280, 800 ); 
@@ -83,7 +84,7 @@ function new()
            sheetContentHeight = 629
  
        } 
-       nurse_sheet = graphics.newImageSheet( spriteDir.. "enfermera.png", nurse_options ) 
+       nurse_sheet = graphics.newImageSheet( spriteDir.. "enfsaluda.png", nurse_options ) 
        nurse_seq = { name = "default", start = 1, count = 18, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
        nurse = display.newSprite(nurse_sheet, nurse_seq ) 
        nurse:play(); 
@@ -97,54 +98,26 @@ function new()
        -- (MIDDLE) External code will render here 
  
        -- Actions (functions) 
-       function act_415(event) 
-           CurrentPage = 21
-          saveKwikVars({"CurrentPage",21}) 
-           Phase = 2
+       function act_nextScn(event) 
+           _G.Phase = 2
           saveKwikVars({"Phase",2}) 
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_20", "fade" ) 
             end 
-            timerStash.newTimer_470 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_911 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  
       --End Actions (functions) 
 
+ 
+       -- Timers 
+       timerStash.timer_nextScn = timer.performWithDelay( 4000, act_nextScn, 1 ) 
 
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( casaEnfermeraEx, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       casaEnfermeraEx:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          casaEnfermeraEx:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(casaEnfermeraEx) 
        end 
 
        function cleanSprite() 

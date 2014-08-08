@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -47,6 +47,7 @@ function new()
        local Seleccione_la_d  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- kwkrectangle positioning 
        kwkrectangle = display.newImageRect( imgDir.. "kwkrectangle.png", 1280, 800 ); 
@@ -87,39 +88,10 @@ function new()
 
        -- (MIDDLE) External code will render here 
 
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( kwkrectangle, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       kwkrectangle:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          kwkrectangle:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(kwkrectangle) 
        end 
 
        -- (BOTTOM) External code will render here 

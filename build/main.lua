@@ -2,10 +2,9 @@
 -- Copyright (C) 2012 kwiksher.com. All Rights Reserved. 
 -- uses Director class, by Ricardo Rauber 
 -- uses DMC classes, by David McCuskey 
--- Exported on Wed Jun 25 2014 17:14:29 GMT+0200 
+-- Exported on Fri Aug 08 2014 17:55:51 GMT+0200 
 -- uses gTween class, by Josh Tynjala (modified by Kwiksher) 
 -- uses bTween class, by Josh Tynjala (modified by Kwiksher) 
--- uses syncSound class, by David Fox  (modified by Kwiksher) 
 
 _G.kwk_readMe = 0 
 
@@ -21,7 +20,6 @@ if ( system.getInfo("environment") =="simulator" and system.getInfo("build") ~="
 Navigation = require("kNavi") 
 local gtween = require("gtween") 
 local btween = require("btween") 
-local syncSound = require("syncSound") 
 
 display.setStatusBar( display.HiddenStatusBar ) 
 imgDir = "images/" 
@@ -84,8 +82,13 @@ local function main()
    mainGroup:insert(director.directorView)
 
    -- Adding external code
-   local widget = require( "widget" )
+   --[[
+  Refactorizar este código. Cambiar las funciones de guardar y cargar juego a un fichero aparte, preferiblemente añadirlas a una tabla
+como clase.
+]]
+local widget = require( "widget" )
 local facebook = require "facebook"
+require("MyDialog")
 local backgroundGroup = display.newGroup( )
 
 -- functions
@@ -101,6 +104,7 @@ local printTable
 
 -- display and vars
 local rectangle
+local rectangleHiddle
 local continue
 local selectDefficult
 local backMainMenu
@@ -108,6 +112,12 @@ local difficultEasy
 local difficultNormal
 local difficultHard
 local createdPauseMenu = false
+
+local rectangleExer
+local rectangleHiddleExer
+local continueExer
+local backMainMenuExer
+local createdPauseMenuExer = false
 
 -- names
 local easy = "easy"
@@ -123,6 +133,24 @@ printTable = function ( myTable)
 	end
 
 	print( "-------FIN IMPRESION-------" )
+end
+
+function pauseMyTimers( )
+	-- body
+	local k, v
+
+    for k,v in pairs(timerStash) do
+        timer.pause( v )
+    end
+end
+
+function resumeMyTimers(  )
+	-- body
+	local k, v
+
+    for k,v in pairs(timerStash) do
+        timer.resume( v )
+    end
 end
 
 function savedTable(filename )
@@ -160,30 +188,61 @@ end
 function loadSettingGame( )
 	-- body
 	local gameSettingsVars = loadTable("saveGame.json")
-	print( "--------CARGANDO--------" )
-	--printTable(gameSettingsVars)
-	_G.NameUser = gameSettingsVars.nameUser
-	_G.Phase = gameSettingsVars.phase 
-	_G.Level = gameSettingsVars.level
-	_G.DifficultLevel = gameSettingsVars.difficultLevel
-	_G.Coin = gameSettingsVars.coin
-	_G.Results = gameSettingsVars.results
-	_G.TimerResults = gameSettingsVars.timeResults
-	_G.numDigCoin = gameSettingsVars.numDigCoin
-	_G.CurrentPage = gameSettingsVars.currentPage
-	_G.IndexStat = gameSettingsVars.indexStat
-    _G.TakePhoto = gameSettingsVars.takePhoto
-    _G.IsTakePhot = gameSettingsVars.isTakePhot
-    _G.UploadImageTable = gameSettingsVars.uploadTable
-    _G.UploadImageDraw = gameSettingsVars.uploadDraw
-    _G.DrawLevel = gameSettingsVars.drawLevel
-    _G.DrawPhase = gameSettingsVars.drawPhase
+	if (gameSettingsVars) then
+		print( "--------CARGANDO--------" )
+		--printTable(gameSettingsVars)
+		_G.GameStarted = gameSettingsVars.gameStarted
+		_G.NameUser = gameSettingsVars.nameUser
+		_G.Phase = gameSettingsVars.phase 
+		_G.Level = gameSettingsVars.level
+		_G.DifficultLevel = gameSettingsVars.difficultLevel
+		_G.Coin = gameSettingsVars.coin
+		_G.Results = gameSettingsVars.results
+		_G.TimerResults = gameSettingsVars.timeResults
+		_G.numDigCoin = gameSettingsVars.numDigCoin
+		_G.CurrentPage = gameSettingsVars.currentPage
+		_G.IndexStat = gameSettingsVars.indexStat
+    	_G.TakePhoto = gameSettingsVars.takePhoto
+    	_G.IsTakePhot = gameSettingsVars.isTakePhot
+    	_G.UploadImageTable = gameSettingsVars.uploadTable
+    	_G.UploadImageDraw = gameSettingsVars.uploadDraw
+    	_G.DrawLevel = gameSettingsVars.drawLevel
+    	_G.DrawPhase = gameSettingsVars.drawPhase
+    	_G.SecondFaseDraw = gameSettingsVars.secondFaseDraw
+    	_G.Subtitle = gameSettingsVars.subtitule
+    	_G.Age = gameSettingsVars.age
+    	_G.AutoNextPage = gameSettingsVars.autoNextPage
+	else
+		print( "--------JUEGO INICIAL--------" )
+		_G.NameUser = "Pedro" -- Name of the user 
+       _G.Phase = 1 -- Phase of Level : 1=normal or 2=advance 
+       _G.Level = 2 -- Level selected by user, [1,5] 
+       _G.DifficultLevel = 2 -- Difficult selected by user 
+       _G.Coin = 000 --  
+       _G.Results = {} --  
+       _G.TimerResults = {} --  
+       _G.numDigCoin = 4 --  
+       _G.CurrentPage = 1 --  
+       _G.GameStarted = false -- 
+       _G.IndexStat = 0 
+       _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
+       _G.IsTakePhot = false -- if true the screen shot been taken
+       _G.UploadImageTable = false
+       _G.UploadImageDraw = false
+       _G.DrawLevel = 0
+       _G.DrawPhase = 0
+       _G.SecondFaseDraw = {false, false, false, false, false}
+       _G.Subtitle = false
+       _G.Age = 3
+       _G.AutoNextPage = true
+    end
 end
 
 createTableSetting = function ()
 	print( "Entra a crear tabla....." )
 	local gameSettingsVars = {}
 
+	gameSettingsVars.gameStarted = _G.GameStarted
 	gameSettingsVars.nameUser = _G.NameUser
 	gameSettingsVars.phase = _G.Phase
 	gameSettingsVars.level = _G.Level
@@ -200,6 +259,10 @@ createTableSetting = function ()
     gameSettingsVars.uploadTable = _G.UploadImageTable
     gameSettingsVars.drawLevel = _G.DrawLevel
     gameSettingsVars.drawPhase = _G.DrawPhase
+    gameSettingsVars.secondFaseDraw = _G.SecondFaseDraw
+    gameSettingsVars.subtitule = _G.Subtitle
+    gameSettingsVars.age = _G.Age
+    gameSettingsVars.autoNextPage = _G.AutoNextPage
 	--printTable(gameSettingsVars)
 	return gameSettingsVars
 end
@@ -215,6 +278,7 @@ continueGame = function ( event )
     elseif object.isFocus then
       if event.phase == "ended" or event.phase == "cancelled" then
           --transition.resume( )
+          resumeMyTimers()
           audio.resume( 1 )
           removePauseMenu() -- es opcional si se confirma que solo te puede salir del juego por el menu de pausa
           display.getCurrentStage():setFocus( nil )
@@ -296,7 +360,6 @@ backMainMenu = function( event )
 			removePauseMenu()
 			display.getCurrentStage():setFocus( nil )
 			object.isFocus = false
-			_G.CurrentPage = 1
 			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
 			director:changeScene( "page_1", "fade" ) 
         end
@@ -304,8 +367,83 @@ backMainMenu = function( event )
 	return true
 end
 
+local function backMainMenuExer( event )
+	-- body
+	local myDialog
+	local object = event.target 
+
+	local function onCompleteC( event )
+		-- body
+		local object = event.target
+		if event.phase == "began" then
+
+        	display.getCurrentStage():setFocus(object)
+        	object.isFocus = true
+    	elseif object.isFocus then
+        	if event.phase == "ended" or event.phase == "cancelled" then
+        		--guardad y cambiar escena
+				savedTable("saveGame.json")
+				deleteMyDialog( myDialog )
+				removePauseMenuExer()
+				display.getCurrentStage():setFocus( nil )
+				object.isFocus = false
+				cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+				director:changeScene( "page_1", "fade" ) 
+        	end
+    	end
+		return true 	
+	end
+
+	local function onCompleteD( event )
+		-- body
+		local object = event.target
+		if event.phase == "began" then
+
+        	display.getCurrentStage():setFocus(object)
+        	object.isFocus = true
+    	elseif object.isFocus then
+        	if event.phase == "ended" or event.phase == "cancelled" then
+        		display.getCurrentStage():setFocus( nil )
+				object.isFocus = false
+        		deleteMyDialog(myDialog)
+        	end
+    	end
+		return true
+	end
+
+	if event.phase == "began" then
+        	display.getCurrentStage():setFocus(object)
+        	object.isFocus = true
+    elseif object.isFocus then
+        	if event.phase == "ended" or event.phase == "cancelled" then
+        		display.getCurrentStage():setFocus( nil )
+				object.isFocus = false
+        		myDialog = createMyDialog("Salir", "Si abandonas el ejercicio perderas el progreso realizado", onCompleteC, onCompleteD)
+        	end
+    end
+	return true
+	--display.getCurrentStage():setFocus(myDialog)
+	--backMainMenu()
+end
+
+local function nothingTouch( event )
+	-- body
+	return true
+end
+
+local function nothingTap( event )
+	-- body
+	return true
+end
+
 createPauseMenu = function ( event )
+  if (not createdPauseMenu) then
 	createdPauseMenu = true
+
+	rectangleHiddle = display.newRect( 0, 0, display.contentWidth, display.contentHeight)
+	rectangleHiddle:addEventListener( "touch", nothingTouch )
+	rectangleHiddle:addEventListener( "tap", nothingTap )
+	rectangleHiddle.alpha = 0.01
 
 	rectangle = display.newRoundedRect( display.contentWidth/2-250, 100, 500, 600, 10 )
 	
@@ -405,13 +543,15 @@ createPauseMenu = function ( event )
 	difficultEasy.alpha = 0
 	difficultNormal.alpha = 0
 	difficultHard.alpha = 0
-	
-	
+  end
 end
 
 removePauseMenu = function ( )
 	-- body
 	createdPauseMenu = false
+
+	rectangleHiddle:removeSelf( )
+	rectangleHiddle = nil
 
 	rectangle:removeSelf( )
 	rectangle = nil
@@ -430,6 +570,66 @@ removePauseMenu = function ( )
 	difficultHard = nil
 end
 
+createPauseMenuExer = function( )
+	-- body
+	if (not createdPauseMenuExer) then
+		createdPauseMenuExer = true
+
+		rectangleHiddleExer = display.newRect( 0, 0, display.contentWidth, display.contentHeight)
+		rectangleHiddleExer:addEventListener( "touch", nothingTouch )
+		rectangleHiddleExer:addEventListener( "tap", nothingTap )
+		rectangleHiddleExer.alpha = 0.01
+
+		rectangleExer = display.newRoundedRect( display.contentWidth/2-250, 100, 500, 600, 10 )
+	
+		rectangleExer:setFillColor( 210, 210, 210 )
+		rectangleExer.alpha = 0.9
+
+		continueExer = widget.newButton{
+			width = 240,
+    		height = 120,
+    		defaultFile = imgDir.. "button.png",
+    		--overFile = imgDir.. "button.png",
+    		label = "Continuar",
+    		labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+    		fontSize = 25,
+    		onEvent = continueGame
+		}
+
+		continueExer.x = display.contentCenterX
+		continueExer.y = display.contentCenterY - 200
+
+		backMenuExer = widget.newButton{
+			width = 240,
+    		height = 120,
+    		defaultFile = imgDir.. "button.png",
+    		--overFile = imgDir.. "button.png",
+    		label = "Menu Principal",
+    		labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+    		fontSize = 25,
+    		onEvent = backMainMenuExer
+		}
+
+		backMenuExer.x = display.contentCenterX
+		backMenuExer.y = display.contentCenterY + 200	
+	end
+end
+
+removePauseMenuExer = function( event )
+	-- body
+	createdPauseMenuExer = false
+
+	rectangleHiddleExer:removeSelf( )
+	rectangleHiddleExer = nil
+	rectangleExer:removeSelf( )
+	rectangleExer = nil
+	continueExer:removeSelf( )
+	continueExer = nil
+	backMenuExer:removeSelf()
+	backMenuExer = nil
+
+end
+
 onKeyEvent = function ( event )
 	-- body
 	local phase = event.phase
@@ -438,13 +638,20 @@ onKeyEvent = function ( event )
     
     if ((system.getInfo("environment")=="device" and "back" == keyName) or system.getInfo("environment")=="simulator") then
     		if (_G.CurrentPage ~= 1) then
-    			if (not createdPauseMenu) then
+    			local pageExercise = {15, 17, 18, 29, 38, 49, 57}
+    			print( "Indice Tabla pausa: ".._G.CurrentPage )
+    			print( table.indexOf( pageExercise, _G.CurrentPage ) )
+    			if (table.indexOf( pageExercise, _G.CurrentPage ) ~= nil) then
+    				createPauseMenuExer()
+    			else
     				createPauseMenu()
     			end
     			--transition.pause( )
+    			pauseMyTimers( )
     			audio.pause( 1 )
     		else
     			facebook.logout()
+    			savedTable("saveGame.json")
     			native.requestExit()
     		end
     		return true
@@ -471,24 +678,8 @@ end
 
 --Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento
  
-   -- Added variables before layers render 
-       _G.NameUser = "Pedro" -- Name of the user 
-       _G.Phase = 1 -- Phase of Level : 1=normal or 2=advance 
-       _G.Level = 2 -- Level selected by user, [1,5] 
-       _G.DifficultLevel = 2 -- Difficult selected by user 
-       _G.Coin = 000 --  
-       _G.Results = {} --  
-       _G.TimerResults = {} --  
-       _G.numDigCoin = 4 --  
-       _G.CurrentPage = 1 --  
-       _G.GameStarted = false -- 
-       _G.IndexStat = 0 
-       _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
-       _G.IsTakePhot = false -- if true the screen shot been taken
-       _G.UploadImageTable = false
-       _G.UploadImageDraw = false
-       _G.DrawLevel = 0
-       _G.DrawPhase = 0 
+   loadSettingGame( )    
+        
 
    director:changeScene("page_"..goPage)
    return true

@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -39,203 +39,168 @@ function new()
        end 
 
  
-       -- Action names 
-       local act_190 
-
        -- Layer names 
-       local Capa_1  
+       local background  
+       local explorer  
+       local nurse  
+       local table  
 
        -- (TOP) External code will render here 
-       local widget = require( "widget" )
-local storyboard = require "storyboard"
-local myGroup = display.newGroup()
-local background
-local tableEst
-local imageError
-local imageSuccess
-local upArrow
-local textIntroLevel
-local textIntroPhase
-local textLevelInic
-local textLevelFinish
-local textLevel
-local contInic
-local contEnd
-local cont
-local myObject
-local fail
-local textFail
-local success
-local textSuccess
+       _G.CurrentPage = curPage 
 
-background = display.newRect( 0, 0, display.contentWidth, display.contentHeight)
-background:setFillColor( 237, 216, 197 )
-myGroup:insert(background)
+       -- background positioning 
+       background = display.newImageRect( imgDir.. "p22_background.png", 1280, 798 ); 
+       background.x = 640; background.y = 401; background.alpha = 1; background.oldAlpha = 1 
+       background.oriX = background.x; background.oriY = background.y 
+       background.name = "background" 
+       menuGroup:insert(1,background); menuGroup.background = background 
 
-tableEst = display.newImageRect( imgDir.. "tablaEstadisticaNivel.png", 879, 403 ); -- 727
-tableEst.x = 640; tableEst.y = 400;
-myGroup:insert(tableEst) 
+       -- explorer positioning 
+       local explorer_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=2, y=2, width=107, height=220 }, -- exploradorBebe_00000
+               { x=111, y=2, width=107, height=220 }, -- exploradorBebe_00001
+               { x=220, y=2, width=107, height=220 }, -- exploradorBebe_00002
+               { x=329, y=2, width=107, height=220 }, -- exploradorBebe_00003
+               { x=2, y=224, width=107, height=220 }, -- exploradorBebe_00004
+               { x=111, y=224, width=107, height=220 }, -- exploradorBebe_00005
+               { x=220, y=224, width=107, height=220 }, -- exploradorBebe_00006
+               { x=329, y=224, width=107, height=220 }, -- exploradorBebe_00007
+               { x=2, y=446, width=107, height=220 }, -- exploradorBebe_00008
+               { x=111, y=446, width=107, height=220 }, -- exploradorBebe_00009
+               { x=220, y=446, width=107, height=220 }, -- exploradorBebe_00010
+               { x=329, y=446, width=107, height=220 }, -- exploradorBebe_00011
+               { x=2, y=668, width=107, height=220 }, -- exploradorBebe_00012
+               { x=111, y=668, width=107, height=220 }, -- exploradorBebe_00013
+               { x=220, y=668, width=107, height=220 }, -- exploradorBebe_00014
+               { x=329, y=668, width=107, height=220 }, -- exploradorBebe_00015
+           },
+    
+           sheetContentWidth = 438,
+           sheetContentHeight = 890
+ 
+       } 
+       explorer_sheet = graphics.newImageSheet( spriteDir.. "expbebe.png", explorer_options ) 
+       explorer_seq = { name = "default", start = 1, count = 15, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       explorer = display.newSprite(explorer_sheet, explorer_seq ) 
+       explorer:play(); 
+       explorer.x = 374; explorer.y = 567; explorer.alpha = 1; explorer.oldAlpha = 1 
+       explorer.xScale = 2; 
+       explorer.yScale = 2; 
+       explorer.oriX = explorer.x; explorer.oriY = explorer.y 
+       explorer.name = "explorer" 
+       menuGroup:insert(explorer); menuGroup.explorer = explorer 
 
-textIntroLevel = display.newText( "Estadisticas Nivel :  "..math.ceil(_G.IndexStat/2), 300, 100, native.systemFont, 25 )
-textIntroLevel:setFillColor( 117, 76, 36 )
-myGroup:insert(textIntroLevel)
+       -- nurse positioning 
+       local nurse_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=2, y=2, width=104, height=207 }, -- EnfermeraNormal_00000
+               { x=108, y=2, width=104, height=207 }, -- EnfermeraNormal_00001
+               { x=214, y=2, width=104, height=207 }, -- EnfermeraNormal_00002
+               { x=320, y=2, width=104, height=207 }, -- EnfermeraNormal_00003
+               { x=426, y=2, width=104, height=207 }, -- EnfermeraNormal_00004
+               { x=532, y=2, width=104, height=207 }, -- EnfermeraNormal_00005
+               { x=638, y=2, width=104, height=207 }, -- EnfermeraNormal_00006
+               { x=744, y=2, width=104, height=207 }, -- EnfermeraNormal_00007
+               { x=850, y=2, width=104, height=207 }, -- EnfermeraNormal_00008
+               { x=2, y=211, width=104, height=207 }, -- EnfermeraNormal_00009
+               { x=108, y=211, width=104, height=207 }, -- EnfermeraNormal_00010
+               { x=214, y=211, width=104, height=207 }, -- EnfermeraNormal_00011
+               { x=320, y=211, width=104, height=207 }, -- EnfermeraNormal_00012
+               { x=426, y=211, width=104, height=207 }, -- EnfermeraNormal_00013
+               { x=532, y=211, width=104, height=207 }, -- EnfermeraNormal_00014
+               { x=638, y=211, width=104, height=207 }, -- EnfermeraNormal_00015
+               { x=744, y=211, width=104, height=207 }, -- EnfermeraNormal_00016
+           },
+    
+           sheetContentWidth = 956,
+           sheetContentHeight = 420
+ 
+       } 
+       nurse_sheet = graphics.newImageSheet( spriteDir.. "enfhabla.png", nurse_options ) 
+       nurse_seq = { name = "default", start = 1, count = 16, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       nurse = display.newSprite(nurse_sheet, nurse_seq ) 
+       nurse:play(); 
+       nurse.x = 875; nurse.y = 560; nurse.alpha = 1; nurse.oldAlpha = 1 
+       nurse.xScale = 2; 
+       nurse.yScale = 2; 
+       nurse.oriX = nurse.x; nurse.oriY = nurse.y 
+       nurse.name = "nurse" 
+       menuGroup:insert(nurse); menuGroup.nurse = nurse 
 
-textIntroPhase = display.newText( "Fase :  "..math.fmod(_G.IndexStat, 2), 640, 100, native.systemFont, 25 )
-textIntroPhase:setFillColor( 117, 76, 36 )
-myGroup:insert(textIntroPhase)
-
-textLevelInic = display.newText( "Nivel inicial:", 300, 140, native.systemFont, 25 )
-textLevelInic:setFillColor( 117, 76, 36 )
-myGroup:insert(textLevelInic)
-
-textLevelFinish = display.newText( "Nivel final:", 600, 140, native.systemFont, 25 )
-textLevelFinish:setFillColor( 117, 76, 36 )
-myGroup:insert(textLevelFinish)
-
-for i=1,10 do
-	textLevel = display.newText( i, 330, 240 + 38*(i-1) - i*1.34, native.systemFontBolt, 28 )
-	myGroup:insert(textLevel)
-	if(i==10) then
-		textLevel.x = textLevel.x - 10
-	end
-	textLevel:setFillColor( 0, 0, 0 )
-end
-
-for i=1,10 do
-	cont =  _G.Results[_G.IndexStat][i]
-	for j=0, cont do
-		if (cont ~= -1) then
-			if (j==cont) then
-				myObject = display.newImageRect( imgDir.. "ralladoAcierto.png", 75,  43);
-			else
-				myObject = display.newImageRect( imgDir.. "cruzError.png", 75,  43);
-			end
-			myObject.x = 412 + (75*j); myObject.y = 257 + (32*(i-1)) + i*3.5;
-			myGroup:insert(myObject)
-		end
-	end
-end
-
-for i=1,10 do
-	myObject = display.newText( _G.TimerResults[_G.IndexStat][i], 926, 240 + (32*(i-1)) + i*3.5, native.systemFont, 25 )
-	myObject:setFillColor( 0, 0, 0 )
-	myGroup:insert(myObject)
-	myObject = display.newText( "seg", 1005, 240 + (32*(i-1)) + i*3.5, native.systemFont, 25 )
-	myObject:setFillColor( 0, 0, 0 )
-	myGroup:insert(myObject)
-end
-
-success = display.newImageRect( imgDir.. "ralladoAcierto.png", 75,  43);
-success.x = 100 ; success.y = 700
-myGroup:insert(success)
-textSuccess = display.newText( " indica que se ha acertado", 180, 680, native.systemFont, 25 )
-textSuccess:setFillColor( 117, 76, 36 )
-myGroup:insert(textSuccess)
-
-fail = display.newImageRect( imgDir.. "cruzError.png", 75,  43);
-fail.x = 100 ; fail.y = 750
-myGroup:insert(fail)
-textFail = display.newText( " indica que se cometio un error", 180, 730, native.systemFont, 25 )
-textFail:setFillColor( 117, 76, 36 )
-myGroup:insert(textFail)
-
-local function buttonBackListener( event )
-	-- body
-	print( "-----Cambio a escena 21-----" )
-	director:changeScene("page_21")
-end
-
-local buttonBack = widget.newButton{
-    	width = 200,
-    	height = 80,
-    	defaultFile = imgDir.. "button.png",
-    	label = "Atras",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    	fontSize = 25,
-    	onEvent = buttonBackListener
-	}
-buttonBack.x = 800
-buttonBack.y = 750
-
-myGroup:insert(buttonBack)
-menuGroup:insert( myGroup )
-
-if (_G.TakePhoto) then
-	local screenCap = display.captureScreen( false )
-	display.save( screenCap, { filename="screenME"..math.ceil(_G.IndexStat/2)..math.fmod(_G.IndexStat, 2)..".jpg", baseDir=system.DocumentsDirectory, isFullResolution=true } ) -- ME = matching exercise
-	_G.IsTakePhoto = true
-end 
-
-       -- Capa_1 positioning 
-       Capa_1 = display.newImageRect( imgDir.. "p22_capa_1.png", 0, 0 ); 
-       Capa_1.x = 0; Capa_1.y = 0; Capa_1.alpha = 1; Capa_1.oldAlpha = 1 
-       Capa_1.oriX = Capa_1.x; Capa_1.oriY = Capa_1.y 
-       Capa_1.name = "Capa_1" 
-       menuGroup:insert(1,Capa_1); menuGroup.Capa_1 = Capa_1 
+       -- table positioning 
+       table = display.newImageRect( imgDir.. "p22_table.png", 725, 242 ); 
+       table.x = 628; table.y = 677; table.alpha = 1; table.oldAlpha = 1 
+       table.oriX = table.x; table.oriY = table.y 
+       table.name = "table" 
+       menuGroup:insert(table); menuGroup.table = table 
  
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
- 
-       -- Actions (functions) 
-       function act_190(event) 
-         if (TakePhoto == true) then 
-           _G.IsTakePhoto = true
-          saveKwikVars({"IsTakePhoto",true}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_21", "fade" ) 
-            end 
-            timerStash.newTimer_216 = timer.performWithDelay(0, myClosure_switch, 1) 
-         end 
-       end 
 
- 
-      --End Actions (functions) 
-
- 
-       -- Timers 
-       timerStash.timer_664 = timer.performWithDelay( 100, act_190, 1 ) 
-
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( Capa_1, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       Capa_1:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          Capa_1:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(Capa_1) 
+       end 
+
+       function cleanSprite() 
+           explorer_sheet = nil; explorer = nil 
+    nurse_sheet = nil; nurse = nil 
+ 
        end 
 
        -- (BOTTOM) External code will render here 
+       require( "ControlScene" )
+require("viewGenius")
+
+local gpGenius = createGenius( )
+gpGenius:scale( 0.3, 0.3 )
+gpGenius:translate( display.contentWidth - (gpGenius.Tablet.contentWidth*1.85) , display.contentHeight - (gpGenius.Tablet.contentHeight *1.10) )
+gpGenius.alpha = 0
+
+menuGroup:insert( gpGenius )
+gpGenius.genius:pause( )
+
+nurse:pause( )
+explorer:pause()
+
+
+local aud = {"eli_6.mp3", "eli_7.mp3"}
+local sub = {"La encontré cuando caminaba por la montaña, un viejo sabio del pueblo me ha dicho que tiene un poder grandioso.",
+			"El viejo sabio me dijo que el tenía la caja pero solo se la daría a la persona que consiguiera el pergamino de oro."}
+
+addCharacter(nurse, aud, sub)
+
+aud = {"exp_sz7.mp3", "exp_sz8.mp3"}
+sub = {"!Vaya! !Qué piedra más bonita!",
+	  "!Genial! Entonce conseguiré ese pergamino."}
+
+addCharacter(explorer, aud, sub)
+
+aud = {"genio_sz1.mp3", "genio_sz2.mp3"}
+sub = {"Parece que no miente, esta piedra está ligada a una caja que custodia las puertas de una tierra desconocida. Si conseguimos la caja podremos averiguar qué tierra es.",
+	  "!Has oído eso! Como recordarás yo te dije al iniciar la aventura que si conseguías completar todos los trabajos del jefe te entregaría el pergamino de oro."}
+
+addCharacter(gpGenius.genius, aud, sub, nil, gpGenius)
+
+local sec = {2, 1, 3, 1, 3, 2 }
+setSecuence( sec )
+
+playScene( "page_11" ) 
 
 
     end 
     drawScreen() 
+
+    function clean() 
+       cleanSprite() 
+    end 
 
     return menuGroup 
 end 

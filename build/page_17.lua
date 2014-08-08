@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -43,6 +43,7 @@ function new()
        local Capa_1  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p17_capa_1.png", 0, 0 ); 
@@ -55,7 +56,6 @@ function new()
 
        -- (MIDDLE) External code will render here 
              require("extraDraw");
-      local widget = require "widget"
       local gp_point = display.newGroup()
       local gp_letter = display.newGroup()
       local rectTop
@@ -129,16 +129,6 @@ function new()
       gp_point:insert( pointVertHiddenBelow )
 
       gp_point.anchorChildren = true
-
-      if(DifficultLevel == 1) then  -- Easy
-        gp_letter:scale( 1.5, 1.5 )
-        gp_point:scale( 1.5, 1.5 )
-        radius = radius * 1.5
-      elseif (DifficultLevel == 3) then  -- Hard
-        gp_letter:scale( 0.7, 0.7 )      
-        gp_point:scale( 0.7, 0.7 )
-        radius = radius * 0.7
-      end
 
       addExtra( menuGroup, gp_letter, gp_point, radius )   
       menuGroup:insert(gp_letter)

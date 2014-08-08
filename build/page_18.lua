@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -40,168 +40,260 @@ function new()
 
  
        -- Layer names 
-       local Rectangulo_1  
+       local Capa_1  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
-       -- Rectangulo_1 positioning 
-       Rectangulo_1 = display.newImageRect( imgDir.. "p18_rectangulo_1.png", 1280, 800 ); 
-       Rectangulo_1.x = 640; Rectangulo_1.y = 400; Rectangulo_1.alpha = 1; Rectangulo_1.oldAlpha = 1 
-       Rectangulo_1.oriX = Rectangulo_1.x; Rectangulo_1.oriY = Rectangulo_1.y 
-       Rectangulo_1.name = "Rectangulo_1" 
-       menuGroup:insert(1,Rectangulo_1); menuGroup.Rectangulo_1 = Rectangulo_1 
+       -- Capa_1 positioning 
+       Capa_1 = display.newImageRect( imgDir.. "p18_capa_1.png", 0, 0 ); 
+       Capa_1.x = 0; Capa_1.y = 0; Capa_1.alpha = 1; Capa_1.oldAlpha = 1 
+       Capa_1.oriX = Capa_1.x; Capa_1.oriY = Capa_1.y 
+       Capa_1.name = "Capa_1" 
+       menuGroup:insert(1,Capa_1); menuGroup.Capa_1 = Capa_1 
  
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
 
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( Rectangulo_1, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       Rectangulo_1:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          Rectangulo_1:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(Rectangulo_1) 
        end 
 
        -- (BOTTOM) External code will render here 
-        -- Button names 
+              local widget = require( "widget" )
+       -- Layer names 
        local but_recAudio
        local but_play
-
-       -- Layer names 
-       local recAudio  
-       local play  
-       local kwkE  
-       local Grabar  
-       local Reproducir  
-       local Grabacion_de_la
-       local dataFileName = "audio".._G.Level.._G.Phase..".pcm"  
+       local dataFileName = "audioExLet".._G.Level.._G.Phase..".wav" 
+       local r
+       local audioHandle
+       local audioHandleExample
+       local audioChannel = 1
        local playSound = false
+       local playSoundExample = false
+       local red = {R=181, G=38, B=38}
+       local blue = {R=125, G=189, B=216}
+       local green = {R=105, G=200, B=95}
+       local pink = {R=204, G=96, B=147}
+       local yellow = {R=242, G=244, B=115}
+       local backColors = {red, blue, green, pink, yellow}
 
        -- (TOP) External code will render here 
 
-       -- recAudio positioning 
-       recAudio = display.newImageRect( imgDir.. "p18_recaudio.png", 57, 81 ); 
-       recAudio.x = 455; recAudio.y = 518; recAudio.alpha = 1; recAudio.oldAlpha = 1 
-       recAudio.oriX = recAudio.x; recAudio.oriY = recAudio.y 
+       -- recAudio positioning
+       math.randomseed( system.getTimer( ) )
+
+       local background = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
+       local ran = math.random(#backColors)
+       background:setFillColor( backColors[ran].R, backColors[ran].G, backColors[ran].B)
+       menuGroup:insert( background )
+
+       local recAudio = display.newImageRect( imgDir.. "recaudio.png", 57, 81 ); 
+       recAudio.x = display.contentCenterX-200; recAudio.y = 518;
        recAudio.name = "recAudio" 
        menuGroup:insert(recAudio); menuGroup.recAudio = recAudio 
 
        -- play positioning 
-       play = display.newImageRect( imgDir.. "p18_play.png", 71, 81 ); 
-       play.x = 731; play.y = 518; play.alpha = 1; play.oldAlpha = 1 
-       play.oriX = play.x; play.oriY = play.y 
+       local play = display.newImageRect( imgDir.. "play.png", 71, 81 ); 
+       play.x = display.contentCenterX+200; play.y = 518;
        play.name = "play" 
        menuGroup:insert(play); menuGroup.play = play 
 
        -- kwkE positioning 
-       kwkE = display.newImageRect( imgDir.. "kwke.png", 199, 232 ); 
-       kwkE.x = 587; kwkE.y = 274; kwkE.alpha = 1; kwkE.oldAlpha = 1 
-       kwkE.oriX = kwkE.x; kwkE.oriY = kwkE.y 
-       kwkE.name = "kwkE" 
-       menuGroup:insert(kwkE); menuGroup.kwkE = kwkE 
+       local letra = display.newImageRect( imgDir.. "letra".._G.Level..".png", 199, 232 ); 
+       letra.x = display.contentCenterX; letra.y = 300; 
+       letra.name = "letra" 
+       menuGroup:insert(letra) 
 
-       -- Grabar positioning 
-       Grabar = display.newImageRect( imgDir.. "p18_grabar.png", 79, 20 ); 
-       Grabar.x = 454; Grabar.y = 587; Grabar.alpha = 1; Grabar.oldAlpha = 1 
-       Grabar.oriX = Grabar.x; Grabar.oriY = Grabar.y 
-       Grabar.name = "Grabar" 
-       menuGroup:insert(Grabar); menuGroup.Grabar = Grabar 
+       -- Grabar positioning
+       local textRec = display.newText( "Grabar", display.contentCenterX-245, display.contentCenterY+187, native.systemFontBold, 30 )
+       menuGroup:insert( textRec )
+       textRec:setFillColor( 0 ) 
 
-       -- Reproducir positioning 
-       Reproducir = display.newImageRect( imgDir.. "p18_reproducir.png", 128, 26 ); 
-       Reproducir.x = 718; Reproducir.y = 590; Reproducir.alpha = 1; Reproducir.oldAlpha = 1 
-       Reproducir.oriX = Reproducir.x; Reproducir.oriY = Reproducir.y 
-       Reproducir.name = "Reproducir" 
-       menuGroup:insert(Reproducir); menuGroup.Reproducir = Reproducir 
+       -- Reproducir positioning
+       local textPlay = display.newText( "Reproducir", display.contentCenterX+130, display.contentCenterY+187, native.systemFontBold, 30 )
+       textPlay:setFillColor( 0 )
+       menuGroup:insert( textPlay )
 
-       -- Grabacion_de_la positioning 
-       Grabacion_de_la = display.newImageRect( imgDir.. "p18_grabacion_de_la.png", 652, 60 ); 
-       Grabacion_de_la.x = 610; Grabacion_de_la.y = 77; Grabacion_de_la.alpha = 1; Grabacion_de_la.oldAlpha = 1 
-       Grabacion_de_la.oriX = Grabacion_de_la.x; Grabacion_de_la.oriY = Grabacion_de_la.y 
-       Grabacion_de_la.name = "Grabacion_de_la" 
-       menuGroup:insert(Grabacion_de_la); menuGroup.Grabacion_de_la = Grabacion_de_la 
- 
-       -- Group(s) creation 
+       -- Grabacion_de_la positioning
+       local textPr = display.newText( "Grabacion de la letra ".._G.Level, display.contentCenterX, display.contentCenterY-300, native.systemFontBold, 34 )
+       textPr.x = display.contentCenterX
+       textPr:setFillColor( 0 )
+       menuGroup:insert( textPr )
 
-       -- (MIDDLE) External code will render here 
+       
+       local textSec = display.newText( "Pulsa sobre la letra para escuchar el sonido de ejemplo", display.contentCenterX, display.contentCenterY-340, native.systemFont, 30 )
+       textSec.x = display.contentCenterX
+       textSec:setFillColor( 0 )
+       menuGroup:insert( textSec )
 
-       -- Button event listeners 
-       local function onrecAudioEvent(event) 
-          but_recAudio(recAudio) 
-          return true 
-       end 
-       recAudio:addEventListener("tap", onrecAudioEvent ) 
-       local function onplayEvent(event) 
-          but_play(play) 
-          return true 
-       end 
-       play:addEventListener("tap", onplayEvent ) 
+       local function finalize( event )
+         -- body
+         local object = event.target
+         if event.phase == "began" then
+           display.getCurrentStage():setFocus(object)
+           object.isFocus = true
+         elseif object.isFocus then
+          if event.phase == "ended" or event.phase == "cancelled" then
+            display.getCurrentStage():setFocus( nil )
+            object.isFocus = false
+            if (_G.Level == 1) then
+              if (_G.Phase == 1) then
+                number = 30  
+              else
+                number = 33
+            end
+            elseif (_G.Level == 2) then
+              if (_G.Phase == 1) then
+                number = 19  
+              else
+                number = 22
+              end
+            elseif (_G.Level == 3) then
+              if (_G.Phase == 1) then
+                number = 39 
+              else
+                number = 43
+              end
+            elseif (_G.Level == 4) then
+              if (_G.Phase == 1) then
+                number = 50 
+              else
+                number = 53
+              end
+            elseif (_G.Level == 5) then
+              if (_G.Phase == 1) then
+                number = 1  
+              else
+                number = 1
+              end
+            end
+
+            dispose(); director:changeScene( "page_"..number, "fade" ) 
+          end
+         end
+        return true
+       end
+
+       local continue = widget.newButton{
+        width = 190,
+        height = 90,
+        defaultFile = imgDir.. "button.png",
+        --overFile = imgDir.. "button.png",
+        label = "Finalizar",
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+        fontSize = 25,
+        onEvent = finalize
+       }
+
+       continue.x = display.contentCenterX
+       continue.y = display.contentCenterY+320
+       continue.alpha = 0
+
+       local function onCompleteSoundExample( )
+         -- body
+         playSoundExample = false
+         audio.dispose( audioHandleExample )
+         audioHandleExample = nil
+         return true
+       end
 
        local function onCompleteSound( )
          -- body
+         playSound = false
+         audio.dispose( audioHandle )
+         audioHandle = nil
+         continue.alpha = 1
+         return true
        end
-       -- Button functions 
-       function but_recAudio(self) 
-           local playback 
-           local filePath = system.pathForFile(dataFileName, system.DocumentsDirectory ) 
-           local r = media.newRecording(filePath) 
-           menuGroup.alpha = 0.5 
-           r:startRecording( ) 
-           local audioClosure = function(event ) 
-                   r:stopRecording() 
-                   menuGroup.alpha = 1 
-                   local file = io.open(filePath, "r") 
-                   if file then 
-                      io.close(file) 
-                      playSound = true
-                      media.playSound( dataFileName, system.DocumentsDirectory, onCompleteSound )
-                   end 
-            end 
-            timerStash.recTimer = timer.performWithDelay(2000, audioClosure ) 
-       end 
 
-       function but_play(self) 
+       -- Button event listeners 
+       local function playSoundExampleFun( event )
+         -- body
+         local dataFile = audioDir.."letterExample".._G.Level..".mp3"
+         playSoundExample = true
+         --media.playSound( dataFile, { onComplete=onCompleteSoundExample })
+         audioHandleExample = audio.loadSound( dataFile )
+         audio.play( audioHandleExample, {channel = 1, onComplete = onCompleteSoundExample} )
+       end
+       letra:addEventListener( "tap", playSoundExampleFun )
+
+       -- Button functions 
+       local function but_recAudio(event) 
+        local object = event.target
+
+        if event.phase == "began" then
+          display.getCurrentStage():setFocus(object)
+          object.isFocus = true
+
+          if (playSound or playSoundExample) then
+            playSoundExample = false
+            playSound = false
+            --media.stopSound()
+            audio.stop( audioChannel )
+            print( "dentro if play" )
+          end
+
+          --local filePath = system.pathForFile(dataFileName, system.DocumentsDirectory ) 
+          --os.remove( filePath )
+          menuGroup.alpha = 0.5 
+          r:startRecording( ) 
+           
+        elseif object.isFocus then
+          if event.phase == "ended" or event.phase == "cancelled" then
+            --transition.resume( )
+            if r:isRecording() then
+              r:stopRecording() 
+              menuGroup.alpha = 1
+              print( "Entra repr" ) 
+              local filePath = system.pathForFile(dataFileName, system.DocumentsDirectory ) 
+              local file = io.open(filePath, "r") 
+              if file then 
+                io.close(file) 
+                playSound = true
+                print( "reproduce" )
+                audioHandle = audio.loadSound( dataFileName, system.DocumentsDirectory )
+                audio.play( audioHandle, {channel = audioChannel, onComplete = onCompleteSound} )
+                --media.playSound( dataFileName, system.DocumentsDirectory, onCompleteSound )
+              end
+            end 
+            display.getCurrentStage():setFocus( nil )
+            object.isFocus = false
+          end
+        end
+        return true
+       end
+
+       
+       recAudio:addEventListener("touch", but_recAudio )  
+
+       local function but_play(event) 
            --External code  
-        if (playSound) then
-          media.stopSound()
+        if (playSound or playSoundExample) then
+          --media.stopSound()
+          audio.stop( audioChannel )
           playSound = false
+          playSoundExample = false
         end
         local filePath = system.pathForFile(dataFileName, system.DocumentsDirectory ) 
         local file = io.open(filePath, "r")
         if file then 
           --print( file )
+          playSound = true
           io.close(file) 
-          media.playSound(dataFileName, system.DocumentsDirectory, onCompleteSound ) 
+          audioHandle = audio.loadSound( dataFileName, system.DocumentsDirectory )
+          audio.play( audioHandle, {channel = audioChannel, onComplete = onCompleteSound} )
+          --media.playSound(dataFileName, system.DocumentsDirectory, onCompleteSound ) 
         end   
        end 
+
+       play:addEventListener("tap", but_play )
+        
+      local filePath = system.pathForFile( dataFileName, system.DocumentsDirectory )
+      r = media.newRecording(filePath)
  
 
 

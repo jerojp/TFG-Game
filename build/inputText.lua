@@ -66,7 +66,6 @@
        -- Button functions 
        function butConfirm(self) 
             local myClosure_switch = function()
-                _G.CurrentPage = 7 
                 dispose(); director:changeScene( "page_7", "fade" ) 
             end 
             timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 

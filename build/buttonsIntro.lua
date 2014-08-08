@@ -1,7 +1,19 @@
+--[[
+Refactorizar para quitar el nombre del archivo saveGame. Añadir la opcion de resetear juego al modulo de guardar estado cuando se cree.
+]]
+
 local widget = require( "widget" )
 
 local function butIntro(event) 
     if (event.phase == "ended" or event.phase == "cancelled") then
+        local destDir = system.DocumentsDirectory  -- where the file is stored
+        local results, reason = os.remove( system.pathForFile( "saveGame.json", destDir  ) )
+        if results then
+            print( "file removed" )
+        else
+            print( "file does not exist", reason )
+        end
+        loadSettingGame( )
         _G.CurrentPage = 2
         saveKwikVars({"CurrentPage",2}) 
         _G.GameStarted = true
@@ -24,7 +36,7 @@ local function btnEtadistics( event )
     -- body
     if (event.phase == "ended" or event.phase == "cancelled") then
        _G.CurrentPage = 21
-        dispose(); director:changeScene( "page_21", "fade" )  
+        dispose(); director:changeScene( "page_23", "fade" )  
     end
 end
 

@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -39,9 +39,6 @@ function new()
        end 
 
  
-       -- Action names 
-       local act_873 
-
        -- Layer names 
        local background  
        local explorer  
@@ -49,6 +46,7 @@ function new()
        local table  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- background positioning 
        background = display.newImageRect( imgDir.. "p20_background.png", 1280, 798 ); 
@@ -66,42 +64,26 @@ function new()
                { x=111, y=2, width=107, height=220 }, -- exploradorBebe_00001
                { x=220, y=2, width=107, height=220 }, -- exploradorBebe_00002
                { x=329, y=2, width=107, height=220 }, -- exploradorBebe_00003
-               { x=438, y=2, width=107, height=220 }, -- exploradorBebe_00004
-               { x=547, y=2, width=107, height=220 }, -- exploradorBebe_00005
-               { x=656, y=2, width=107, height=220 }, -- exploradorBebe_00006
-               { x=765, y=2, width=107, height=220 }, -- exploradorBebe_00007
-               { x=2, y=224, width=107, height=220 }, -- exploradorBebe_00008
-               { x=111, y=224, width=107, height=220 }, -- exploradorBebe_00009
-               { x=220, y=224, width=107, height=220 }, -- exploradorBebe_00010
-               { x=329, y=224, width=107, height=220 }, -- exploradorBebe_00011
-               { x=438, y=224, width=107, height=220 }, -- exploradorBebe_00012
-               { x=547, y=224, width=107, height=220 }, -- exploradorBebe_00013
-               { x=656, y=224, width=107, height=220 }, -- exploradorBebe_00014
-               { x=765, y=224, width=107, height=220 }, -- exploradorBebe_00015
-               { x=2, y=446, width=107, height=220 }, -- exploradorBebe_00016
-               { x=111, y=446, width=107, height=220 }, -- exploradorBebe_00017
-               { x=220, y=446, width=107, height=220 }, -- exploradorBebe_00018
-               { x=329, y=446, width=107, height=220 }, -- exploradorBebe_00019
-               { x=438, y=446, width=107, height=220 }, -- exploradorBebe_00020
-               { x=547, y=446, width=107, height=220 }, -- exploradorBebe_00021
-               { x=656, y=446, width=107, height=220 }, -- exploradorBebe_00022
-               { x=765, y=446, width=107, height=220 }, -- exploradorBebe_00023
-               { x=2, y=668, width=107, height=220 }, -- exploradorBebe_00024
-               { x=111, y=668, width=107, height=220 }, -- exploradorBebe_00025
-               { x=220, y=668, width=107, height=220 }, -- exploradorBebe_00026
-               { x=329, y=668, width=107, height=220 }, -- exploradorBebe_00027
-               { x=438, y=668, width=107, height=220 }, -- exploradorBebe_00028
-               { x=547, y=668, width=107, height=220 }, -- exploradorBebe_00029
-               { x=656, y=668, width=107, height=220 }, -- exploradorBebe_00030
-               { x=765, y=668, width=107, height=220 }, -- exploradorBebe_00031
+               { x=2, y=224, width=107, height=220 }, -- exploradorBebe_00004
+               { x=111, y=224, width=107, height=220 }, -- exploradorBebe_00005
+               { x=220, y=224, width=107, height=220 }, -- exploradorBebe_00006
+               { x=329, y=224, width=107, height=220 }, -- exploradorBebe_00007
+               { x=2, y=446, width=107, height=220 }, -- exploradorBebe_00008
+               { x=111, y=446, width=107, height=220 }, -- exploradorBebe_00009
+               { x=220, y=446, width=107, height=220 }, -- exploradorBebe_00010
+               { x=329, y=446, width=107, height=220 }, -- exploradorBebe_00011
+               { x=2, y=668, width=107, height=220 }, -- exploradorBebe_00012
+               { x=111, y=668, width=107, height=220 }, -- exploradorBebe_00013
+               { x=220, y=668, width=107, height=220 }, -- exploradorBebe_00014
+               { x=329, y=668, width=107, height=220 }, -- exploradorBebe_00015
            },
     
-           sheetContentWidth = 874,
+           sheetContentWidth = 438,
            sheetContentHeight = 890
  
        } 
-       explorer_sheet = graphics.newImageSheet( spriteDir.. "exploradorbebe.png", explorer_options ) 
-       explorer_seq = { name = "default", start = 1, count = 32, time = 1500, loopCount = 0, loopDirection = "forward" }; 
+       explorer_sheet = graphics.newImageSheet( spriteDir.. "expbebe.png", explorer_options ) 
+       explorer_seq = { name = "default", start = 1, count = 16, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
        explorer = display.newSprite(explorer_sheet, explorer_seq ) 
        explorer:play(); 
        explorer.x = 374; explorer.y = 567; explorer.alpha = 1; explorer.oldAlpha = 1 
@@ -119,25 +101,28 @@ function new()
                { x=2, y=2, width=104, height=207 }, -- EnfermeraNormal_00000
                { x=108, y=2, width=104, height=207 }, -- EnfermeraNormal_00001
                { x=214, y=2, width=104, height=207 }, -- EnfermeraNormal_00002
-               { x=320, y=2, width=104, height=207 }, -- EnfermeraNormal_00005
-               { x=2, y=211, width=104, height=207 }, -- EnfermeraNormal_00006
-               { x=108, y=211, width=104, height=207 }, -- EnfermeraNormal_00007
-               { x=214, y=211, width=104, height=207 }, -- EnfermeraNormal_00008
-               { x=320, y=211, width=104, height=207 }, -- EnfermeraNormal_00009
-               { x=2, y=420, width=104, height=207 }, -- EnfermeraNormal_00010
-               { x=108, y=420, width=104, height=207 }, -- EnfermeraNormal_00011
-               { x=214, y=420, width=104, height=207 }, -- EnfermeraNormal_00012
-               { x=320, y=420, width=104, height=207 }, -- EnfermeraNormal_00013
-               { x=2, y=629, width=104, height=207 }, -- EnfermeraNormal_00014
-               { x=108, y=629, width=104, height=207 }, -- EnfermeraNormal_00015
+               { x=320, y=2, width=104, height=207 }, -- EnfermeraNormal_00003
+               { x=426, y=2, width=104, height=207 }, -- EnfermeraNormal_00004
+               { x=532, y=2, width=104, height=207 }, -- EnfermeraNormal_00005
+               { x=638, y=2, width=104, height=207 }, -- EnfermeraNormal_00006
+               { x=744, y=2, width=104, height=207 }, -- EnfermeraNormal_00007
+               { x=850, y=2, width=104, height=207 }, -- EnfermeraNormal_00008
+               { x=2, y=211, width=104, height=207 }, -- EnfermeraNormal_00009
+               { x=108, y=211, width=104, height=207 }, -- EnfermeraNormal_00010
+               { x=214, y=211, width=104, height=207 }, -- EnfermeraNormal_00011
+               { x=320, y=211, width=104, height=207 }, -- EnfermeraNormal_00012
+               { x=426, y=211, width=104, height=207 }, -- EnfermeraNormal_00013
+               { x=532, y=211, width=104, height=207 }, -- EnfermeraNormal_00014
+               { x=638, y=211, width=104, height=207 }, -- EnfermeraNormal_00015
+               { x=744, y=211, width=104, height=207 }, -- EnfermeraNormal_00016
            },
     
-           sheetContentWidth = 426,
-           sheetContentHeight = 838
+           sheetContentWidth = 956,
+           sheetContentHeight = 420
  
        } 
-       nurse_sheet = graphics.newImageSheet( spriteDir.. "enfermerahabla.png", nurse_options ) 
-       nurse_seq = { name = "default", start = 1, count = 16, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       nurse_sheet = graphics.newImageSheet( spriteDir.. "enfhabla.png", nurse_options ) 
+       nurse_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
        nurse = display.newSprite(nurse_sheet, nurse_seq ) 
        nurse:play(); 
        nurse.x = 875; nurse.y = 560; nurse.alpha = 1; nurse.oldAlpha = 1 
@@ -157,54 +142,11 @@ function new()
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
- 
-       -- Actions (functions) 
-       function act_873(event) 
-           CurrentPage = 15
-          saveKwikVars({"CurrentPage",15}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_15", "fade" ) 
-            end 
-            timerStash.newTimer_554 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
 
- 
-      --End Actions (functions) 
-
-
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( background, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       background:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          background:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(background) 
        end 
 
        function cleanSprite() 
@@ -214,6 +156,28 @@ function new()
        end 
 
        -- (BOTTOM) External code will render here 
+       require( "ControlScene" )
+nurse:pause( )
+explorer:pause()
+
+_G.Level = 2
+_G.Phase = 2
+
+local aud = {"eli_3.mp3", "eli_4.mp3"}
+local sub = {"!Cuánto me alegro de verte!, !Cuánto has crecido!",
+			"Te propongo una adivinanza, a ver si la aciertas, empieza por la letra E."}
+
+addCharacter(nurse, aud, sub)
+
+aud = {"exp_sz6.mp3"}
+sub = {"Sí, y por fin he conseguido convertirme en un explorador, ¿Cuál es tu profesión Eli?"}
+
+addCharacter(explorer, aud, sub)
+
+local sec = {1, 2, 1}
+setSecuence( sec )
+
+playScene( "page_15" ) 
 
 
     end 

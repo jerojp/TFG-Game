@@ -58,7 +58,7 @@ local function goToStatistics( event )
 	print( "!!!!!SE PULSA EL BOTON DE VER ESTADISITICAS!!!!" )
 	_G.IndexStat = event.target.index
 	dispose()
-	director:changeScene( "page_22", "fade" )
+	director:changeScene( "page_24", "fade" )
 end
 
 local function closeImage( event )
@@ -107,34 +107,15 @@ end
 
 local function playAudio( event )
 	-- body
-	scrollView.alpha = 0.8
 	local object = event.target
-	local filePath = system.pathForFile("audio"..object.level..object.phase..".pcm", system.DocumentsDirectory ) 
+	local filePath = system.pathForFile("audioExLet"..object.level..object.phase..".wav", system.DocumentsDirectory ) 
     local file = io.open(filePath, "r")
     if file then 
       io.close(file) 
-      media.playSound("audio"..object.level..object.phase..".pcm", system.DocumentsDirectory, onCompleteSound ) 
+      scrollView.alpha = 0.8
+      media.playSound("audioExLet"..object.level..object.phase..".wav", system.DocumentsDirectory, onCompleteSound ) 
     end  
 end
-
-
-local function onCompleteSound( event )
-		-- body
-	scrollView.alpha = 1.0
-end
-
-local function playAudio( event )
-	-- body
-	scrollView.alpha = 0.8
-	local object = event.target
-	local filePath = system.pathForFile("audio"..object.level..object.phase..".pcm", system.DocumentsDirectory ) 
-    local file = io.open(filePath, "r")
-    if file then 
-      io.close(file) 
-      media.playSound("audio"..object.level..object.phase..".pcm", system.DocumentsDirectory, onCompleteSound ) 
-    end  
-end
-
 
 local function uploadPhotoTable( )
 	-- body
@@ -222,7 +203,7 @@ local function confirmUpdate( event )
     	_G.UploadImageTable = true
     	print( "------CAMBIO A ESCENA 22------" )
     	local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_22" )
+                dispose(); director:changeScene( "page_24" )
         end 
         timerStash.newTimer_999 = timer.performWithDelay(0, myClosure_switch, 1)  
     end
@@ -397,7 +378,7 @@ for i=1,10 do
 			scrollView:insert(line)
 			io.close(fhd)
    	end
-   	path = system.pathForFile("audio"..level..phase..".pcm", system.DocumentsDirectory ) 
+   	path = system.pathForFile("audioExLet"..level..phase..".pcm", system.DocumentsDirectory ) 
     fhd = io.open(path, "r")
     if fhd then 
         local objectAudio = display.newText( "Reproducir Audio", 776, heightInic + (height*(i-1)) + 2, native.systemFont, 22 )

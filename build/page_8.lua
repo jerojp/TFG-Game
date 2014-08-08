@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -39,9 +39,6 @@ function new()
        end 
 
  
-       -- Action names 
-       local act_139 
-
        -- Layer names 
        local kwkescenarioJef  
        local kwkboss  
@@ -50,6 +47,7 @@ function new()
        local kwkcoin  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- kwkescenarioJef positioning 
        kwkescenarioJef = display.newImageRect( imgDir.. "kwkescenariojef.png", 1280, 800 ); 
@@ -136,54 +134,11 @@ function new()
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
- 
-       -- Actions (functions) 
-       function act_139(event) 
-           CurrentPage = 9
-          saveKwikVars({"CurrentPage",9}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_9", "moveFromRight" ) 
-            end 
-            timerStash.newTimer_584 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
 
- 
-      --End Actions (functions) 
-
-
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( kwkescenarioJef, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       kwkescenarioJef:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          kwkescenarioJef:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(kwkescenarioJef) 
        end 
 
        function cleanSprite() 
@@ -192,6 +147,18 @@ function new()
        end 
 
        -- (BOTTOM) External code will render here 
+       require( "ControlScene" )
+kwkboss:pause( )
+
+local aud = {"jefe_3.mp3", "jefe_4.mp3", "jefe_5.mp3"}
+local sub = {"Encantado de conocerte y desde este momento ya trabajas para nosotros, te acabas de convertir en un explorador profesional y como tal te recompensaré con monedas cada vez que descubras un nuevo tesoro.",
+			"Bueno es hora de ponerse en marcha y quién sabe quizá te puedas convertir en el explorador más importante del mundo.",
+			"Antes de que te marches déjame que te de una ultima cosa, toma esta Tablet como regalo de bienvenida, puede que te sea útil en tus viajes."}
+local sec = {1, 1, 1}
+
+addCharacter(kwkboss, aud, sub)
+setSecuence( sec )
+playScene( "page_9" ) 
 
 
     end 

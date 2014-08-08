@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -50,6 +50,7 @@ function new()
        local kwkbuttonConfir  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- kwkrectangle positioning 
        kwkrectangle = display.newImageRect( imgDir.. "kwkrectangle.png", 1280, 800 ); 
@@ -84,7 +85,6 @@ function new()
        -- (MIDDLE) External code will render here 
         local nameIntro = display.newText( NameUser, 648, 248, native.systemFont, 48 ) 
  nameIntro:setTextColor (255, 255, 255)  
- nameIntro.alpha = 1; nameIntro.oldAlpha = 1 
  menuGroup:insert(nameIntro); menuGroup.nameIntro = nameIntro  
 
        -- Button event listeners 
@@ -104,52 +104,21 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_6", "moveFromLeft" ) 
             end 
-            timerStash.newTimer_311 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
-
-       function butConfirm(self) 
-           CurrentPage = 8
-          saveKwikVars({"CurrentPage",8}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_8", "fade" ) 
-            end 
             timerStash.newTimer_316 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
-
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( kwkrectangle, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
+       function butConfirm(self) 
+            local myClosure_switch = function() 
+                dispose(); director:changeScene( "page_64", "fade" ) 
             end 
-         end  
+            timerStash.newTimer_320 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
-       kwkrectangle:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+
+
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          kwkrectangle:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(kwkrectangle) 
        end 
 
        -- (BOTTOM) External code will render here 

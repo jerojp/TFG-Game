@@ -1,9 +1,10 @@
 local lineTable = {}
+local linePoints = {}
 local numPointPressed = 0
 local pressedPointLeft = false
 local isErase = false
-local faultCounter = 0 -- Misses out of the drawing area 
-local MAX_FAULT = 100 --
+local faultCounter = 1 -- Misses out of the drawing area 
+local MAX_FAULT = 2 --
 
 local function finalizeLevel( )
   -- body
@@ -11,8 +12,8 @@ local function finalizeLevel( )
   print( "FINALIZADO" )
   local screenCap = display.captureScreen( false )
   display.save( screenCap, { filename="screen".._G.Level.._G.Phase..".jpg", baseDir=system.DocumentsDirectory, isFullResolution=true } )
-  
-  if (_G.Level == 1) then
+  --[[
+        if (_G.Level == 1) then
           if (_G.Phase == 1) then
             number = 1  
           else
@@ -48,8 +49,10 @@ local function finalizeLevel( )
           else
             number = 1
           end
-  end
-
+        end
+  --]]
+  _G.SecondFaseDraw[_G.Level] = true
+  number = 18
   director:changeScene( "page_"..number, "fade" ) 
 end
 
@@ -84,11 +87,6 @@ local function checkPoint( groupPoint, x, y, radiusPincel, maxChildren )
           print( "--------ENTRAA "..i.."---------" )
           groupPoint[i] = nil
           numPointPressed = numPointPressed + 1
-
-          if(numPointPressed == maxChildren) then
-              -- Mostrar audio de ejercicio acabado correctamente y cambiar pagina
-            finalizeLevel()    
-          end
   
         end
       end  
@@ -102,6 +100,22 @@ end
 function addExtra( menuGroup, Letra, groupPointOrigin, radius )
       --Groups
       local groupPoint = {}
+
+      if(_G.DifficultLevel == 1) then  -- Easy
+        Letra:scale( 1.5, 1.5 )
+        groupPointOrigin:scale( 1.5, 1.5 )
+        radius = radius * 1.5
+      elseif (_G.DifficultLevel == 3) then  -- Hard
+        Letra:scale( 0.7, 0.7 )      
+        groupPointOrigin:scale( 0.7, 0.7 )
+        radius = radius * 0.7
+      end
+
+      if (_G.SecondFaseDraw[_G.Level]) then
+        Letra:scale( 0.85, 0.85 )
+        groupPointOrigin:scale( 0.85, 0.85 )
+        radius = radius * 0.85
+      end
 
       --Function extra
       local function copyToTable()
@@ -119,10 +133,9 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
         -- body
         numPointPressed = 0
         pressedPointLeft = false
-        faultCounter = 0
+        --faultCounter = 0
         copyToTable()
       end
-
 
       copyToTable()
 
@@ -158,6 +171,8 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
        local lineWidth = 25 -- brush with   
        local lineColor = {R=255, G=0, B=0} -- Color for the brush 
        local widget = require "widget"
+       local enterPaleta = false
+
     -- This is only included because I used the widget.newButton API for the example "undo" & "erase" buttons. It's not required for the drawing functionality.
 
 
@@ -191,13 +206,13 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
           resetVar()
           return true
       end
-
       
        -- PanelDibujo positioning 
        PanelDibujo = display.newImageRect( imgDir.. "paneldibujo.png", 1280, 600 ); 
        PanelDibujo.x = 640; PanelDibujo.y = 300; PanelDibujo.alpha = 1; PanelDibujo.oldAlpha = 1 
        PanelDibujo.oriX = PanelDibujo.x; PanelDibujo.oriY = PanelDibujo.y 
        PanelDibujo.name = "PanelDibujo"
+       Letra.name = "Letra"
        menuGroup:insert(PanelDibujo)
  
        local eraseButton = widget.newButton{
@@ -318,7 +333,30 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
       }
       menuGroup:insert(slider)
 
+      local function inicDraw( event )
+        -- body
+        i = #lineTable+1
+        lineTable[i]=display.newGroup()
+        --display.getCurrentStage():setFocus(event.target)
+                
+        local circle = display.newCircle(event.x,event.y,lineWidth/2)
+        circle:setFillColor(lineColor.R, lineColor.G, lineColor.B)
+        lineTable[i]:insert(circle)
+                
+        linePoints = nil
+        linePoints = {};
+                
+        local pt = {}
+        pt.x = event.x;
+        pt.y = event.y;
+        table.insert(linePoints,pt);
+      end
 
+      local function finalizeDraw( event )
+        -- body
+        i=nil
+      end
+      
        function act_draw(event) 
 
         local function drawLine()
@@ -334,23 +372,9 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
         end
  
         if event.phase=="began" then
-                i = #lineTable+1
-                lineTable[i]=display.newGroup()
-                --display.getCurrentStage():setFocus(event.target)
-                
-                local circle = display.newCircle(event.x,event.y,lineWidth/2)
-                        circle:setFillColor(lineColor.R, lineColor.G, lineColor.B)
-                        lineTable[i]:insert(circle)
-                
-                linePoints = nil
-                linePoints = {};
-                
-                local pt = {}
-                        pt.x = event.x;
-                        pt.y = event.y;
-                        table.insert(linePoints,pt);
-                                        
+                inicDraw(event)          
         elseif event.phase=="moved" then
+              if (lineTable[i]) then
                 local pt = {}
                         pt.x = event.x;
                         pt.y = event.y;
@@ -359,14 +383,24 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
                         table.insert(linePoints,pt)
                         drawLine()
                         checkPoint(groupPoint, pt.x, pt.y, lineWidth/2, groupPointOrigin.numChildren)
-                end
+                end                
+              else
+                print( "INICIOOOOOOOOOOOOOOOO" )
+                --inicDraw(event)
+              end
         
         elseif event.phase=="cancelled" or "ended" then
                 --display.getCurrentStage():setFocus(nil)
+                print( "FINALIZADO POR : "..event.target.name )
+                if(numPointPressed == groupPointOrigin.numChildren) then
+                  -- Mostrar audio de ejercicio acabado correctamente y cambiar pagina
+                  finalizeLevel()    
+                end
                 if (isErase) then
                   erase()
                 end
-                i=nil
+                finalizeDraw(event)
+                enterPaleta = false
         end
  
        end 
@@ -410,18 +444,34 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
        end 
        Amarillo:addEventListener("tap", onAmarilloEvent ) 
 
-       local function onPaletaEvent(event) 
-       	print( faultCounter )
-          if (faultCounter > MAX_FAULT and Letra.contentHeight*1.05 < 600) then 
-            Letra:scale( 1.05, 1.05 )
-            groupPointOrigin:scale( 1.05, 1.05 )
-            radius = radius * 1.05
-            resetVar() 
-         else 
-           faultCounter = faultCounter + 1
-         end 
-          act_draw(event) 
-          return true 
+       local function onPaletaEvent(event)
+
+        if (event.phase=="began" or event.phase=="moved") then
+          if (not enterPaleta) then
+            enterPaleta = true
+       	    if (faultCounter < MAX_FAULT) then 
+              --Reproducir audio de ayuda
+              print( "Cuenta FALTAAAAAAA" )
+              print( enterPaleta )
+              faultCounter = faultCounter + 1  
+            else 
+              if (Letra.contentHeight*1.05 < 600) then
+                print( "ESCALAAAAAAA" )
+                Letra:scale( 1.05, 1.05 )
+                groupPointOrigin:scale( 1.05, 1.05 )
+                radius = radius * 1.05
+              end
+              faultCounter = 1
+              --Reproducir audio explicativo de subida de nivel 
+            end 
+            erase()
+            finalizeDraw()
+          end
+        elseif (event.phase=="cancelled" or "ended") then
+          print( "REINICIAR FALTAAAAAAA" )
+          enterPaleta = false
+        end 
+        return true 
        end
 
        PanelDibujo:addEventListener("touch", onPaletaEvent ) 

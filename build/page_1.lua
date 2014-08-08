@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -51,12 +51,26 @@ function new()
        -- Added variables before layers render 
        _G.TakePhoto = false --  
        _G.IsTakePhoto = false --  
+       _G.Phase = 1 --  
+       _G.Level = 2 --  
 
        -- (TOP) External code will render here 
-       local widget = require( "widget" )
+       --[[
+Refactorizar para quitar el nombre del archivo saveGame. Añadir la opcion de resetear juego al modulo de guardar estado cuando se cree.
+]]
+
+local widget = require( "widget" )
 
 local function butIntro(event) 
     if (event.phase == "ended" or event.phase == "cancelled") then
+        local destDir = system.DocumentsDirectory  -- where the file is stored
+        local results, reason = os.remove( system.pathForFile( "saveGame.json", destDir  ) )
+        if results then
+            print( "file removed" )
+        else
+            print( "file does not exist", reason )
+        end
+        loadSettingGame( )
         _G.CurrentPage = 2
         saveKwikVars({"CurrentPage",2}) 
         _G.GameStarted = true
@@ -79,7 +93,7 @@ local function btnEtadistics( event )
     -- body
     if (event.phase == "ended" or event.phase == "cancelled") then
        _G.CurrentPage = 21
-        dispose(); director:changeScene( "page_21", "fade" )  
+        dispose(); director:changeScene( "page_23", "fade" )  
     end
 end
 
@@ -133,6 +147,7 @@ local statistics  = widget.newButton{
 statistics.x = display.contentCenterX
 statistics.y = display.contentCenterY + 200
  
+       _G.CurrentPage = curPage 
 
        -- meadow positioning 
        meadow = display.newImageRect( imgDir.. "p1_meadow.png", 1280, 800 ); 
@@ -222,7 +237,7 @@ statistics.y = display.contentCenterY + 200
        --Animations
        gtStash.gt_animSun = gtween.new( sun, 3, {  x=192, y=194,  alpha=1, rotation=0, xScale=1, yScale=1,}, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = true,  delay=0.1, ""}) 
 
-       local onEnd_animPlane_811 = function() 
+       local onEnd_animPlane_549 = function() 
           plane.x = plane.oriX; plane.y = plane.oriY; 
           plane.xScale = 1;plane.yScale = 1; plane.alpha = plane.oldAlpha; plane.rotation = 0; plane.isVisible = true; 
        end --ends reStart for animPlane 
@@ -236,7 +251,7 @@ statistics.y = display.contentCenterY + 200
          { x = -233, y = 72}, 
          { x = -233, y = 72}, 
          { x = -233, y = 72}, 
-angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0.1, onComplete=onEnd_animPlane_811, breadcrumb = true, breadAnchor = 6, breadShape = "circle", breadW = 10, breadH = 10, breadColor = {255,255,255}, breadInterval = 20, breadTimer = 1}, {  x=1407, y=237,  alpha=1, rotation=0, xScale=1, yScale=1, newAngle=180}) 
+angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0.1, onComplete=onEnd_animPlane_549, breadcrumb = true, breadAnchor = 6, breadShape = "circle", breadW = 10, breadH = 10, breadColor = {255,255,255}, breadInterval = 20, breadTimer = 1}, {  x=1407, y=237,  alpha=1, rotation=0, xScale=1, yScale=1, newAngle=180}) 
 
 
        -- Button event listeners 

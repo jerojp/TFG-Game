@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 22 
+    local numPages = 64 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -39,14 +39,12 @@ function new()
        end 
 
  
-       -- Action names 
-       local act_413 
-
        -- Layer names 
        local kwkentradaMuseo  
        local explCall  
 
        -- (TOP) External code will render here 
+       _G.CurrentPage = curPage 
 
        -- kwkentradaMuseo positioning 
        kwkentradaMuseo = display.newImageRect( imgDir.. "kwkentradamuseo.png", 1280, 800 ); 
@@ -90,54 +88,11 @@ function new()
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
- 
-       -- Actions (functions) 
-       function act_413(event) 
-           CurrentPage = 13
-          saveKwikVars({"CurrentPage",13}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_13", "fade" ) 
-            end 
-            timerStash.newTimer_481 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
 
- 
-      --End Actions (functions) 
-
-
-       -- swipe this page with spacer of 120 in normal direction 
-       Gesture.activate( kwkentradaMuseo, {swipeLength=120} ) 
-       local function pageSwap(event ) 
-         if event.phase == "ended" and event.direction ~= nil then  
-            local wPage = curPage  
-            local direction  
-            if event.direction == "left" and kBidi == false then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "left" and kBidi == true then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            elseif event.direction == "right" and kBidi == true then  
-               wPage = curPage + 1  
-               if wPage > numPages then wPage = curPage end  
-               direction = "moveFromRight"  
-            elseif event.direction == "right" and kBidi == false then  
-               wPage = curPage - 1  
-               if wPage < tonumber(initPage) then wPage = initPage end  
-               direction = "moveFromLeft"  
-            end  
-            if tonumber(wPage) ~= tonumber(curPage) then dispose(); 
-               dispose(); director:changeScene("page_"..wPage, direction) 
-            end 
-         end  
-       end 
-       kwkentradaMuseo:addEventListener( Gesture.SWIPE_EVENT, pageSwap ) 
+       -- do not swipe this page 
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
-          kwkentradaMuseo:removeEventListener( Gesture.SWIPE_EVENT, pageSwap ); Gesture.deactivate(kwkentradaMuseo) 
        end 
 
        function cleanSprite() 

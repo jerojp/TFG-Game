@@ -93,8 +93,19 @@ myGroup:insert(textFail)
 
 local function buttonBackListener( event )
 	-- body
-	print( "-----Cambio a escena 21-----" )
-	director:changeScene("page_21")
+	local object = event.target
+	if event.phase == "began" then
+        display.getCurrentStage():setFocus(object)
+        object.isFocus = true
+    elseif object.isFocus then
+        if event.phase == "ended" or event.phase == "cancelled" then
+			display.getCurrentStage():setFocus( nil )
+			object.isFocus = false
+			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+			director:changeScene("page_23")
+        end
+    end
+	return true
 end
 
 local buttonBack = widget.newButton{
