@@ -29,7 +29,7 @@ aud = {"genio_sz1.mp3", "genio_sz2.mp3"}
 sub = {"Parece que no miente, esta piedra está ligada a una caja que custodia las puertas de una tierra desconocida. Si conseguimos la caja podremos averiguar qué tierra es.",
 	  "!Has oído eso! Como recordarás yo te dije al iniciar la aventura que si conseguías completar todos los trabajos del jefe te entregaría el pergamino de oro."}
 
-addCharacter(gpGenius.genius, aud, sub, nil, gpGenius)
+addCharacter(gpGenius.genius, aud, sub, gpGenius)
 
 local sec = {2, 1, 3, 1, 3, 2 }
 setSecuence( sec )

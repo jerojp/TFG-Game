@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -47,6 +47,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- background positioning 
        background = display.newImageRect( imgDir.. "p22_background.png", 1280, 798 ); 
@@ -187,7 +188,7 @@ aud = {"genio_sz1.mp3", "genio_sz2.mp3"}
 sub = {"Parece que no miente, esta piedra está ligada a una caja que custodia las puertas de una tierra desconocida. Si conseguimos la caja podremos averiguar qué tierra es.",
 	  "!Has oído eso! Como recordarás yo te dije al iniciar la aventura que si conseguías completar todos los trabajos del jefe te entregaría el pergamino de oro."}
 
-addCharacter(gpGenius.genius, aud, sub, nil, gpGenius)
+addCharacter(gpGenius.genius, aud, sub, gpGenius)
 
 local sec = {2, 1, 3, 1, 3, 2 }
 setSecuence( sec )

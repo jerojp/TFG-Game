@@ -79,7 +79,7 @@
               if (_G.Phase == 1) then
                 number = 30  
               else
-                number = 33
+                number = 34
             end
             elseif (_G.Level == 2) then
               if (_G.Phase == 1) then

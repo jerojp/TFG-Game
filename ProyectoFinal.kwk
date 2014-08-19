@@ -246,6 +246,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
       <trigger id="actNextPage">
         <name>actNextPage</name>
         <action id="goPage_317">
@@ -262,6 +268,28 @@
       <number>4</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/IntroductionMuseum.psd</file>
       <fileName>IntroductionMuseum.psd</fileName>
+      <code id="code_CurPage">
+        <name>code_CurPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <trigger id="actNextPage">
+        <name>actNextPage</name>
+        <action id="goPage_176">
+          <name>goPage_176</name>
+          <type>Go to Page</type>
+          <page>IntroductionTalkMuseum</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
       <anim id="linearEntry">
         <name>linearEntry</name>
         <target>Layer</target>
@@ -296,22 +324,6 @@
         <breadSec>1</breadSec>
         <groupControl>false</groupControl>
       </anim>
-      <code id="code_CurPage">
-        <name>code_CurPage</name>
-        <code/>
-        <position>top</position>
-        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
-      </code>
-      <trigger id="actNextPage">
-        <name>actNextPage</name>
-        <action id="goPage_176">
-          <name>goPage_176</name>
-          <type>Go to Page</type>
-          <page>IntroductionTalkMuseum</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </trigger>
     </page>
     <page id="IntroductionTalkMuseum">
       <name>IntroductionTalkMuseum</name>
@@ -399,6 +411,12 @@
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene5Boss.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="EnterName">
       <name>EnterName</name>
@@ -416,6 +434,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="ConfirmName">
@@ -464,6 +488,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="IntroductionTalkMuseum_2">
@@ -529,6 +559,12 @@
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene8_BossIntroFinal.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="IntroGenie">
       <name>IntroGenie</name>
@@ -546,6 +582,12 @@
         <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene9_introGenie.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
@@ -586,6 +628,12 @@
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene10_presentGenius.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="DifficultyLevelSelection">
       <name>DifficultyLevelSelection</name>
@@ -603,6 +651,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="selectionLevel">
@@ -649,11 +703,98 @@
           <wait>0</wait>
         </action>
       </button>
+      <button id="but_127">
+        <name>but_127</name>
+        <layer>I</layer>
+        <rollover>I</rollover>
+        <target>Layer</target>
+        <type>Tap</type>
+        <tap>1</tap>
+        <action id="var_207">
+          <name>var_207</name>
+          <type>Edit Variable</type>
+          <variable>Level</variable>
+          <value>3</value>
+        </action>
+        <action id="var_123">
+          <name>var_123</name>
+          <type>Edit Variable</type>
+          <variable>Phase</variable>
+          <value>1</value>
+        </action>
+        <action id="goPage_494">
+          <name>goPage_494</name>
+          <type>Go to Page</type>
+          <page>LevelI_</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </button>
+      <button id="but_990">
+        <name>but_990</name>
+        <layer>O</layer>
+        <rollover>O</rollover>
+        <target>Layer</target>
+        <type>Tap</type>
+        <tap>1</tap>
+        <action id="var_126">
+          <name>var_126</name>
+          <type>Edit Variable</type>
+          <variable>Phase</variable>
+          <value>1</value>
+        </action>
+        <action id="var_803">
+          <name>var_803</name>
+          <type>Edit Variable</type>
+          <variable>Level</variable>
+          <value>4</value>
+        </action>
+        <action id="goPage_960">
+          <name>goPage_960</name>
+          <type>Go to Page</type>
+          <page>LevelO_Intro</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </button>
+      <button id="but_545">
+        <name>but_545</name>
+        <layer>A</layer>
+        <rollover>A</rollover>
+        <target>Layer</target>
+        <type>Tap</type>
+        <tap>1</tap>
+        <action id="var_051">
+          <name>var_051</name>
+          <type>Edit Variable</type>
+          <variable>Level</variable>
+          <value>1</value>
+        </action>
+        <action id="var_416">
+          <name>var_416</name>
+          <type>Edit Variable</type>
+          <variable>Phase</variable>
+          <value>1</value>
+        </action>
+        <action id="goPage_634">
+          <name>goPage_634</name>
+          <type>Go to Page</type>
+          <page>LevelA_Intro</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </button>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="levelE_Intro">
@@ -687,6 +828,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="levelE_Call">
@@ -808,6 +955,12 @@
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene13_call.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="levelE_IntroStep1">
       <name>levelE_IntroStep1</name>
@@ -837,6 +990,12 @@
         <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene14_introStep1.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
@@ -876,6 +1035,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <audio id="aplausos">
         <name>aplausos</name>
@@ -942,6 +1107,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="recAudio">
       <name>recAudio</name>
@@ -960,6 +1131,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="LevelE_Skier">
       <name>LevelE_Skier</name>
@@ -977,6 +1154,12 @@
         <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene16_expEsq.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="explSkier">
         <name>explSkier</name>
@@ -1010,6 +1193,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="nurse">
         <name>nurse</name>
@@ -1150,6 +1339,12 @@
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene20_met1.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="Statistics">
       <name>Statistics</name>
@@ -1238,6 +1433,39 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_008">
+        <name>code_008</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene25_intoA.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwkboss">
+        <name>kwkboss</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkboss</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/jefe.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>189</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/JefeMuseo/JefeMuseo/jefe.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>32</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelA_IntroBrasil">
       <name>LevelA_IntroBrasil</name>
@@ -1250,45 +1478,84 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_810">
+        <name>code_810</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene26_brasil1.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelA_IntroJungle">
       <name>LevelA_IntroJungle</name>
       <number>31</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/LevelA_IntroJungle.psd</file>
       <fileName>LevelA_IntroJungle.psd</fileName>
-      <button id="butSample">
-        <name>butSample</name>
-        <layer>kwkrecty</layer>
-        <rollover>kwkrecty</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_542">
-          <name>var_542</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>1</value>
-        </action>
-        <action id="var_115">
-          <name>var_115</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>2</value>
-        </action>
-        <action id="goPage_443">
-          <name>goPage_443</name>
-          <type>Go to Page</type>
-          <page>matchingSample</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_695">
+        <name>code_695</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene31_introJungle.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelI_">
       <name>LevelI_</name>
@@ -1306,6 +1573,12 @@
         <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene35_inicI.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
@@ -1345,6 +1618,12 @@
         <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene36_introIglu.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
@@ -1406,6 +1685,12 @@
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene37_BeforeDraw.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
         <type>Sprite Sheet</type>
@@ -1460,6 +1745,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
         <type>Sprite Sheet</type>
@@ -1502,16 +1793,6 @@
         <useSheet>None</useSheet>
         <export2>true</export2>
       </replacement>
-      <trigger id="act_945">
-        <name>act_945</name>
-        <action id="goPage_571">
-          <name>goPage_571</name>
-          <type>Go to Page</type>
-          <page>LevelI_Ship</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </trigger>
       <trigger id="act_pauseSp">
         <name>act_pauseSp</name>
         <action id="pause_429">
@@ -1523,6 +1804,16 @@
           <name>pause_126</name>
           <type>Pause Sprite</type>
           <pause>kwkexp</pause>
+        </action>
+      </trigger>
+      <trigger id="act_945">
+        <name>act_945</name>
+        <action id="goPage_571">
+          <name>goPage_571</name>
+          <type>Go to Page</type>
+          <page>LevelI_Ship</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
         </action>
       </trigger>
       <timer id="timer_next">
@@ -1554,6 +1845,12 @@
         <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene41_ship.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
@@ -1609,45 +1906,183 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_015">
+        <name>code_015</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene44_IntroO.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <layer id="humo">
+        <name>humo</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>humo</renderAs>
+      </layer>
+      <layer id="kwkexp">
+        <name>kwkexp</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkexp</renderAs>
+      </layer>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/tabletRota.png</file>
+        <frameWidth>86</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorTabletRota/tabletRota.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkexphumo">
+        <name>kwkexphumo</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexphumo</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expTabletRotaHumo.png</file>
+        <frameWidth>86</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorTabletRota/expTabletRotaHumo.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelO_IntroJapon">
       <name>LevelO_IntroJapon</name>
       <number>45</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/LevelO_IntroJapon.psd</file>
       <fileName>LevelO_IntroJapon.psd</fileName>
-      <button id="butSample">
-        <name>butSample</name>
-        <layer>kwkrecty</layer>
-        <rollover>kwkrecty</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_542">
-          <name>var_542</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>4</value>
-        </action>
-        <action id="var_115">
-          <name>var_115</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>1</value>
-        </action>
-        <action id="goPage_443">
-          <name>goPage_443</name>
-          <type>Go to Page</type>
-          <page>matchingSample</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_684">
+        <name>code_684</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene45_introJap.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwkjap">
+        <name>kwkjap</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkjap</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/japonesa.png</file>
+        <frameWidth>258</frameWidth>
+        <frameHeight>360</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/Japonesa/japonesa.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>9</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expJapones.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/ExploradorJapones/expJapones.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwktablet">
+        <name>kwktablet</name>
+        <type>Sprite Sheet</type>
+        <layer>kwktablet</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/tabletHumo.png</file>
+        <frameWidth>46</frameWidth>
+        <frameHeight>82</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/Tablethumo/tabletHumo.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>9</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <layer id="kwkexp">
+        <name>kwkexp</name>
+        <scaleW>70</scaleW>
+        <scaleH>70</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkexp</renderAs>
+      </layer>
     </page>
     <page id="LevelO_IntroRescue">
       <name>LevelO_IntroRescue</name>
@@ -1659,6 +2094,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="LevelO_Rescue">
@@ -1672,84 +2113,141 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_653">
+        <name>code_653</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene48_rescate.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="LevelO_Chine">
       <name>LevelO_Chine</name>
       <number>51</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/LevelO_Chine.psd</file>
       <fileName>LevelO_Chine.psd</fileName>
-      <button id="butSample">
-        <name>butSample</name>
-        <layer>kwkrecty</layer>
-        <rollover>kwkrecty</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_542">
-          <name>var_542</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>4</value>
-        </action>
-        <action id="var_115">
-          <name>var_115</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>2</value>
-        </action>
-        <action id="goPage_443">
-          <name>goPage_443</name>
-          <type>Go to Page</type>
-          <page>matchingSample</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_184">
+        <name>code_184</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene51_introChina.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwkjap">
+        <name>kwkjap</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkjap</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/japonesa.png</file>
+        <frameWidth>258</frameWidth>
+        <frameHeight>360</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/Japonesa/japonesa.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>9</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expJapones.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/ExploradorJapones/expJapones.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <layer id="kwkexp">
+        <name>kwkexp</name>
+        <scaleW>70</scaleW>
+        <scaleH>70</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkexp</renderAs>
+      </layer>
     </page>
     <page id="LevelA_ExplDisguise">
       <name>LevelA_ExplDisguise</name>
       <number>27</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/LevelA_ExplDisguise.psd</file>
       <fileName>LevelA_ExplDisguise.psd</fileName>
-      <button id="butSample">
-        <name>butSample</name>
-        <layer>kwkrecty</layer>
-        <rollover>kwkrecty</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_542">
-          <name>var_542</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>1</value>
-        </action>
-        <action id="var_115">
-          <name>var_115</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>1</value>
-        </action>
-        <action id="goPage_443">
-          <name>goPage_443</name>
-          <type>Go to Page</type>
-          <page>matchingSample</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_131">
+        <name>code_131</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene27_expDis.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwkexpf">
+        <name>kwkexpf</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexpf</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expDisfraz.png</file>
+        <frameWidth>143</frameWidth>
+        <frameHeight>248</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorDisfraz/expDisfraz.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelA_ExplMask">
       <name>LevelA_ExplMask</name>
@@ -1762,6 +2260,39 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_900">
+        <name>code_900</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene28_expmas.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwkexpf">
+        <name>kwkexpf</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexpf</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expDisfraz.png</file>
+        <frameWidth>143</frameWidth>
+        <frameHeight>248</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorDisfraz/expDisfraz.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelA_ExplDance">
       <name>LevelA_ExplDance</name>
@@ -1774,6 +2305,30 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_439">
+        <name>code_439</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene30_expDance.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <layer id="kwkexp">
+        <name>kwkexp</name>
+        <scaleW>155</scaleW>
+        <scaleH>157</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkexp</renderAs>
+      </layer>
     </page>
     <page id="LevelA_Jun2">
       <name>LevelA_Jun2</name>
@@ -1786,33 +2341,60 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
-      <button id="but_911">
-        <name>but_911</name>
-        <layer>kwkrg</layer>
-        <rollover>kwkrg</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_034">
-          <name>var_034</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>2</value>
-        </action>
-        <action id="var_637">
-          <name>var_637</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>2</value>
-        </action>
-        <action id="goPage_810">
-          <name>goPage_810</name>
-          <type>Go to Page</type>
-          <page>DrawLetterA</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
+      <code id="code_083">
+        <name>code_083</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene32_jun2.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwksamin">
+        <name>kwksamin</name>
+        <type>Sprite Sheet</type>
+        <layer>kwksamin</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/inca.png</file>
+        <frameWidth>179</frameWidth>
+        <frameHeight>336</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/inca/inca.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelA_Jun3">
       <name>LevelA_Jun3</name>
@@ -1825,6 +2407,39 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_424">
+        <name>code_424</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene33_jun3.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwksamin">
+        <name>kwksamin</name>
+        <type>Sprite Sheet</type>
+        <layer>kwksamin</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/inca.png</file>
+        <frameWidth>179</frameWidth>
+        <frameHeight>336</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/inca/inca.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelA_JunEnd">
       <name>LevelA_JunEnd</name>
@@ -1837,6 +2452,60 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_236">
+        <name>code_236</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene34_junend.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <replacement id="kwksamin">
+        <name>kwksamin</name>
+        <type>Sprite Sheet</type>
+        <layer>kwksamin</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/inca.png</file>
+        <frameWidth>179</frameWidth>
+        <frameHeight>336</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/inca/inca.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelE_Meeting2">
       <name>LevelE_Meeting2</name>
@@ -1932,6 +2601,12 @@
         <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene21_met2.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="LevelE_MeetingFinal">
@@ -2029,6 +2704,12 @@
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene22_met3.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="LevelI_IgluEnd">
       <name>LevelI_IgluEnd</name>
@@ -2040,6 +2721,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
@@ -2101,6 +2788,12 @@
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene42_ship2.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
         <type>Sprite Sheet</type>
@@ -2157,9 +2850,15 @@
       </code>
       <code id="code_084">
         <name>code_084</name>
-        <code></code>
+        <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene43_ship3.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
@@ -2215,6 +2914,30 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_476">
+        <name>code_476</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene46_jap2.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <layer id="kwkexp">
+        <name>kwkexp</name>
+        <scaleW>70</scaleW>
+        <scaleH>70</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkexp</renderAs>
+      </layer>
     </page>
     <page id="LevelO_Rescue2">
       <name>LevelO_Rescue2</name>
@@ -2226,6 +2949,18 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_412">
+        <name>code_412</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene50_rescateend.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="LevelO_Chine2">
@@ -2239,33 +2974,51 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
-      <button id="but_692">
-        <name>but_692</name>
-        <layer>kwkrg</layer>
-        <rollover>kwkrg</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_430">
-          <name>var_430</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>2</value>
-        </action>
-        <action id="var_703">
-          <name>var_703</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>2</value>
-        </action>
-        <action id="goPage_753">
-          <name>goPage_753</name>
-          <type>Go to Page</type>
-          <page>DrawLetterO</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
+      <code id="code_812">
+        <name>code_812</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene52_china2.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <layer id="kwkexp">
+        <name>kwkexp</name>
+        <scaleW>70</scaleW>
+        <scaleH>70</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkexp</renderAs>
+      </layer>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expJapones.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>264</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/ExploradorJapones/expJapones.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelO_ChineEnd">
       <name>LevelO_ChineEnd</name>
@@ -2278,6 +3031,51 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_539">
+        <name>code_539</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene53_chinaEnd.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <layer id="kwkexp">
+        <name>kwkexp</name>
+        <scaleW>70</scaleW>
+        <scaleH>70</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkexp</renderAs>
+      </layer>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expJapones.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/ExploradorJapones/expJapones.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>true</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelU_Intro">
       <name>LevelU_Intro</name>
@@ -2289,6 +3087,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="LevelU_IntroFood">
@@ -2329,6 +3133,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="LevelU_Food2">
       <name>LevelU_Food2</name>
@@ -2341,6 +3151,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="LevelU_FoodEnd">
       <name>LevelU_FoodEnd</name>
@@ -2352,6 +3168,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="LevelU_IntroToys">
@@ -2392,6 +3214,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="LevelU_Toys2">
       <name>LevelU_Toys2</name>
@@ -2403,6 +3231,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
       <button id="but_840">
         <name>but_840</name>
@@ -2443,6 +3277,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="DrawLetterA">
       <name>DrawLetterA</name>
@@ -2460,6 +3300,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="DrawLetterI">
@@ -2479,6 +3325,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="DrawLetterO">
       <name>DrawLetterO</name>
@@ -2496,6 +3348,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="DrawLetterU">
@@ -2515,6 +3373,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
       </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
     </page>
     <page id="EnterAge">
       <name>EnterAge</name>
@@ -2532,6 +3396,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/inputAge.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="ConfirmAge">
@@ -2580,6 +3450,12 @@
         <code/>
         <position>middle</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/introAge.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
     </page>
     <page id="IntroTalkMusAge">
@@ -2667,6 +3543,24 @@
         <code/>
         <position>bottom</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene64_talkAge.lua</extFile>
+      </code>
+      <code id="code_lastPage">
+        <name>code_lastPage</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+    </page>
+    <page id="StoreToys">
+      <name>StoreToys</name>
+      <number>65</number>
+      <file>/e/ProyectosKwik2/ProyectoFinal/StoreToys.psd</file>
+      <fileName>StoreToys.psd</fileName>
+      <code id="code_320">
+        <name>code_320</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/StoreToys.lua</extFile>
       </code>
     </page>
   </pages>

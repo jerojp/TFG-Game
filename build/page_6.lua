@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -117,6 +117,7 @@ function new()
        end 
  
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- kwkrectangle positioning 
        kwkrectangle = display.newImageRect( imgDir.. "kwkrectangle.png", 1280, 800 ); 

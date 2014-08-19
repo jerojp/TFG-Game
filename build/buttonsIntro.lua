@@ -3,6 +3,7 @@ Refactorizar para quitar el nombre del archivo saveGame. Añadir la opcion de re
 ]]
 
 local widget = require( "widget" )
+require( "viewOptions" )
 
 local function butIntro(event) 
     if (event.phase == "ended" or event.phase == "cancelled") then
@@ -26,7 +27,7 @@ local function continueGame( event )
 	-- body
 	if (event.phase == "ended" or event.phase == "cancelled") then
         loadSettingGame( )
-        dispose(); director:changeScene( "page_".._G.CurrentPage, "fade" ) 
+        dispose(); director:changeScene( "page_".._G.LastPage, "fade" ) 
     end
 	
 	return true
@@ -40,9 +41,23 @@ local function btnEtadistics( event )
     end
 end
 
+local function btnOptions( event )
+    -- body
+    if (event.phase == "ended" or event.phase == "cancelled") then
+       createPanelOptions( )  
+    end
+end
+
+local function btnStoreToys( event )
+    -- body
+    if (event.phase == "ended" or event.phase == "cancelled") then
+       dispose(); director:changeScene( "page_65", "fade" ) 
+    end
+end
+
 local continue = widget.newButton{
 		width = 500,
-    	height = 130,
+    	height = 100,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
     	label = "Continuar",
@@ -52,10 +67,8 @@ local continue = widget.newButton{
 }
 
 continue.x = display.contentCenterX
-continue.y = display.contentCenterY - 200
+continue.y = display.contentCenterY - 300
 
-print( "Variable :" )
-print( _G.GameStarted )
 if (not _G.GameStarted) then
     continue.alpha = 0
 else 
@@ -64,7 +77,7 @@ end
 
 local inicGame  = widget.newButton{
 		width = 500,
-    	height = 130,
+    	height = 100,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
     	label = "Nueva Partida",
@@ -74,11 +87,40 @@ local inicGame  = widget.newButton{
 }
 
 inicGame.x = display.contentCenterX
-inicGame.y = display.contentCenterY
+inicGame.y = display.contentCenterY - 150
+
+
+local options  = widget.newButton{
+        width = 500,
+        height = 100,
+        defaultFile = imgDir.. "button.png",
+        --overFile = imgDir.. "button.png",
+        label = "Opciones",
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+        fontSize = 30,
+        onEvent = btnOptions
+}
+
+options.x = display.contentCenterX
+options.y = display.contentCenterY
+
+local storeToys  = widget.newButton{
+        width = 500,
+        height = 100,
+        defaultFile = imgDir.. "button.png",
+        --overFile = imgDir.. "button.png",
+        label = "Juguetes",
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+        fontSize = 30,
+        onEvent = btnStoreToys
+}
+
+storeToys.x = display.contentCenterX
+storeToys.y = display.contentCenterY + 150
 
 local statistics  = widget.newButton{
         width = 500,
-        height = 130,
+        height = 100,
         defaultFile = imgDir.. "button.png",
         --overFile = imgDir.. "button.png",
         label = "Estadisticas",
@@ -88,4 +130,4 @@ local statistics  = widget.newButton{
 }
 
 statistics.x = display.contentCenterX
-statistics.y = display.contentCenterY + 200
+statistics.y = display.contentCenterY + 300

@@ -2,6 +2,7 @@ require( "Character" )
 
 local allCharacter = {}
 local secuence = {}
+local events = nil
 local cont = 0
 local page = nil
 local panelNext = nil
@@ -43,15 +44,20 @@ local function moveGenio( event )
 	end
 end
 
-function addCharacter( spr, aud, sub, img, group )
+function addCharacter( spr, aud, sub, group )
 	-- body
-	local obj = Character:new( spr, aud, sub, img, group)
+	local obj = Character:new( spr, aud, sub, group)
 	table.insert( allCharacter, obj )
 end
 
 function setSecuence( sec )
 	-- body
 	secuence = sec
+end
+
+function setEventsControlScene( ev )
+	-- body
+	events = ev
 end
 
 local function nextScene( event )
@@ -86,22 +92,51 @@ local function nextScene( event )
     return true
 end
 
+local function checkTimer(time)
+	-- body
+	if (not _G.Subtitle and _G.AutoNextPage) then
+		local function completeTimer( event )
+			-- body
+			allCharacter[secuence[cont]]:clearObject()
+			playScene(nil)
+		end
+		if (not time) then
+			time = 300
+		end
+		timerStash.timer_waitNext = timer.performWithDelay( time, completeTimer )
+	elseif(not panelNext) then
+		panelNext = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
+		panelNext.alpha = 0.01
+		panelNext:addEventListener( "touch", nextScene )
+	end
+end
+
 function onCompleteCharacter(event)
 	if (event.completed) then
 		allCharacter[secuence[cont]]:finalize()
-		if (not _G.Subtitle and _G.AutoNextPage) then
-			local function completeTimer( event )
-				-- body
-				allCharacter[secuence[cont]]:clearObject()
-				playScene(nil)
+		if (events and events[cont]) then
+			if (events[cont].mytype == "effects") then
+				events[cont].value[2]( checkTimer )
+			elseif (events[cont].mytype == "image" and events[cont].value[1] == 1) then
+				allCharacter[secuence[cont]]:addImage(events[cont].value[2])
+				checkTimer(2300)
+			else
+				checkTimer(300)	
 			end
-			timerStash.timer_waitNext = timer.performWithDelay( 300, completeTimer )
+		else
+			checkTimer(300)
 		end
 	end
 end
 
-local function finalizeScene( )
+function finalizeScene( notGoNextPage )
 	-- body
+	print("*******FINALIZAR ESCENA*********")
+	if (notGoNextPage) then
+		if ( table.maxn( allCharacter ) > 0 ) then
+			allCharacter[secuence[cont]]:clearObject()
+		end
+	end
 	if (gtStash.gt_mypathGenMove) then
 		gtStash.gt_mypathGenMove:pause()
 		gtStash.gt_mypathGenMove = nil
@@ -115,15 +150,31 @@ local function finalizeScene( )
 	end
 	table.remove( allCharacter )
 	allCharacter = nil
-
 	allCharacter = {}
-	director:changeScene( page, "fade" )
+
+	events = nil
+	secuence = nil
+
+	if (not notGoNextPage) then
+		print("*******CAMBIAR ESCENA*********")
+		if (_G.CurrentPage == 26) then
+			director:changeScene( page)
+		else
+			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+			director:changeScene( page, "fade" )
+		end
+	end
 end
 
 local function playNextScene( )
 	-- body
 	cont = cont + 1
 	if (cont <= #secuence) then
+		if (events and events[cont]) then
+			if (events[cont].mytype == "image" and events[cont].value[1] == 0) then
+				allCharacter[secuence[cont]]:addImage(events[cont].value[2])
+			end 
+		end
 		if (allCharacter[secuence[cont]]:getName() == "genio" and not isMoveGenio) then
 			moveGenio()
 		end

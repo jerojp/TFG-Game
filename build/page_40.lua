@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -40,8 +40,8 @@ function new()
 
  
        -- Action names 
-       local act_945 
        local act_pauseSp 
+       local act_945 
 
        -- Layer names 
        local fondoPoloSurDia  
@@ -50,6 +50,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- fondoPoloSurDia positioning 
        fondoPoloSurDia = display.newImageRect( imgDir.. "p40_fondopolosurdia.png", 1280, 800 ); 
@@ -129,16 +130,16 @@ function new()
        -- (MIDDLE) External code will render here 
  
        -- Actions (functions) 
+       function act_pauseSp(event) 
+           if kwkesq then kwkesq:pause() end 
+           if kwkexp then kwkexp:pause() end 
+       end 
+
        function act_945(event) 
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_41", "fade" ) 
             end 
-            timerStash.newTimer_541 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
-
-       function act_pauseSp(event) 
-           if kwkesq then kwkesq:pause() end 
-           if kwkexp then kwkexp:pause() end 
+            timerStash.newTimer_523 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  

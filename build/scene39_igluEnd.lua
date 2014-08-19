@@ -1,4 +1,6 @@
 require( "ControlScene" )
+require("viewGenius")
+
 kwkexp:pause( )
 kwkesq:pause()
 
@@ -18,7 +20,7 @@ addCharacter(kwkesq, aud, sub)
 aud = {"genio_ps2.mp3"}
 sub = {"¡Ah! Un iglú es como una casa pero hecha de hielo que se utiliza para protegerse del frío."}
 
-addCharacter(gpGenius.genius, aud, sub, nil, gpGenius)
+addCharacter(gpGenius.genius, aud, sub, gpGenius)
 
 local sec = {2, 1}
 setSecuence( sec )

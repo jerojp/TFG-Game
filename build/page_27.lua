@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -39,15 +39,13 @@ function new()
        end 
 
  
-       -- Button names 
-       local butSample
-
        -- Layer names 
        local FondoBrasil  
-       local kwkrecty  
+       local kwkexpf  
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- FondoBrasil positioning 
        FondoBrasil = display.newImageRect( imgDir.. "p27_fondobrasil.png", 1288, 809 ); 
@@ -56,36 +54,46 @@ function new()
        FondoBrasil.name = "FondoBrasil" 
        menuGroup:insert(1,FondoBrasil); menuGroup.FondoBrasil = FondoBrasil 
 
-       -- kwkrecty positioning 
-       kwkrecty = display.newImageRect( imgDir.. "kwkrecty.png", 148, 69 ); 
-       kwkrecty.x = 962; kwkrecty.y = 165; kwkrecty.alpha = 1; kwkrecty.oldAlpha = 1 
-       kwkrecty.oriX = kwkrecty.x; kwkrecty.oriY = kwkrecty.y 
-       kwkrecty.name = "kwkrecty" 
-       menuGroup:insert(kwkrecty); menuGroup.kwkrecty = kwkrecty 
+       -- kwkexpf positioning 
+       local kwkexpf_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=2, y=2, width=143, height=248 }, -- exploradorDisfraz_00000
+               { x=147, y=2, width=143, height=248 }, -- exploradorDisfraz_00001
+               { x=292, y=2, width=143, height=248 }, -- exploradorDisfraz_00002
+               { x=437, y=2, width=143, height=248 }, -- exploradorDisfraz_00003
+               { x=582, y=2, width=143, height=248 }, -- exploradorDisfraz_00004
+               { x=727, y=2, width=143, height=248 }, -- exploradorDisfraz_00005
+               { x=2, y=252, width=143, height=248 }, -- exploradorDisfraz_00006
+               { x=147, y=252, width=143, height=248 }, -- exploradorDisfraz_00007
+               { x=292, y=252, width=143, height=248 }, -- exploradorDisfraz_00008
+               { x=437, y=252, width=143, height=248 }, -- exploradorDisfraz_00009
+               { x=582, y=252, width=143, height=248 }, -- exploradorDisfraz_00010
+               { x=727, y=252, width=143, height=248 }, -- exploradorDisfraz_00011
+               { x=2, y=502, width=143, height=248 }, -- exploradorDisfraz_00012
+               { x=147, y=502, width=143, height=248 }, -- exploradorDisfraz_00013
+               { x=292, y=502, width=143, height=248 }, -- exploradorDisfraz_00014
+               { x=437, y=502, width=143, height=248 }, -- exploradorDisfraz_00015
+               { x=582, y=502, width=143, height=248 }, -- exploradorDisfraz_00016
+           },
+    
+           sheetContentWidth = 872,
+           sheetContentHeight = 752
+ 
+       } 
+       kwkexpf_sheet = graphics.newImageSheet( spriteDir.. "expdisfraz.png", kwkexpf_options ) 
+       kwkexpf_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       kwkexpf = display.newSprite(kwkexpf_sheet, kwkexpf_seq ) 
+       kwkexpf:play(); 
+       kwkexpf.x = 496; kwkexpf.y = 332; kwkexpf.alpha = 1; kwkexpf.oldAlpha = 1 
+       kwkexpf.oriX = kwkexpf.x; kwkexpf.oriY = kwkexpf.y 
+       kwkexpf.name = "kwkexpf" 
+       menuGroup:insert(kwkexpf); menuGroup.kwkexpf = kwkexpf 
  
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
-
-       -- Button event listeners 
-       local function onkwkrectyEvent(event) 
-          butSample(kwkrecty) 
-          return true 
-       end 
-       kwkrecty:addEventListener("tap", onkwkrectyEvent ) 
-
-       -- Button functions 
-       function butSample(self) 
-           _G.Level = 1
-          saveKwikVars({"Level",1}) 
-           _G.Phase = 1
-          saveKwikVars({"Phase",1}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_15", "fade" ) 
-            end 
-            timerStash.newTimer_820 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
-
 
        -- do not swipe this page 
 
@@ -93,11 +101,39 @@ function new()
           cancelAllTimers(); cancelAllTransitions() 
        end 
 
+       function cleanSprite() 
+           kwkexpf_sheet = nil; kwkexpf = nil 
+ 
+       end 
+
        -- (BOTTOM) External code will render here 
+       require( "ControlScene" )
+kwkexpf:pause( )
+
+--timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )
+_G.Subtitle = false
+_G.AutoNextPage = true
+
+_G.Level = 1
+_G.Phase = 1
+
+local aud = {"exp_br4.mp3"}
+local sub = {"!Ya estoy! Me he disfrazado de flamenco. Pero creo que me falta algo, la mujer de la tienda me dijo que cogiera un antifaz pero no he sabido qué es. A ver si consigo recordar que es un antifaz."}
+
+addCharacter(kwkexpf, aud, sub)
+
+local sec = {1}
+setSecuence( sec )
+
+playScene( "page_15" ) 
 
 
     end 
     drawScreen() 
+
+    function clean() 
+       cleanSprite() 
+    end 
 
     return menuGroup 
 end 

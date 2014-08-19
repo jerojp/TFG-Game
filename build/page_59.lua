@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -48,6 +48,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- kwkFondoAfrica positioning 
        kwkFondoAfrica = display.newImageRect( imgDir.. "kwkfondoafrica.png", 1280, 800 ); 
@@ -83,7 +84,7 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_15", "fade" ) 
             end 
-            timerStash.newTimer_059 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_789 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
 

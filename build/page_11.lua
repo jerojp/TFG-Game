@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -41,16 +41,23 @@ function new()
  
        -- Button names 
        local butLetraE
+       local but_127
+       local but_990
+       local but_545
 
        -- Layer names 
        local continents  
        local FlechaMapa  
        local FlechaMapaCopia  
+       local O  
+       local U  
+       local I  
        local A  
        local E  
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- continents positioning 
        continents = display.newImageRect( imgDir.. "p11_continents.png", 1280, 800 ); 
@@ -72,6 +79,27 @@ function new()
        FlechaMapaCopia.oriX = FlechaMapaCopia.x; FlechaMapaCopia.oriY = FlechaMapaCopia.y 
        FlechaMapaCopia.name = "FlechaMapaCopia" 
        menuGroup:insert(FlechaMapaCopia); menuGroup.FlechaMapaCopia = FlechaMapaCopia 
+
+       -- O positioning 
+       O = display.newImageRect( imgDir.. "p11_o.png", 55, 54 ); 
+       O.x = 1057; O.y = 197; O.alpha = 1; O.oldAlpha = 1 
+       O.oriX = O.x; O.oriY = O.y 
+       O.name = "O" 
+       menuGroup:insert(O); menuGroup.O = O 
+
+       -- U positioning 
+       U = display.newImageRect( imgDir.. "p11_u.png", 66, 60 ); 
+       U.x = 633; U.y = 334; U.alpha = 1; U.oldAlpha = 1 
+       U.oriX = U.x; U.oriY = U.y 
+       U.name = "U" 
+       menuGroup:insert(U); menuGroup.U = U 
+
+       -- I positioning 
+       I = display.newImageRect( imgDir.. "p11_i.png", 63, 81 ); 
+       I.x = 643; I.y = 735; I.alpha = 1; I.oldAlpha = 1 
+       I.oriX = I.x; I.oriY = I.y 
+       I.name = "I" 
+       menuGroup:insert(I); menuGroup.I = I 
 
        -- A positioning 
        A = display.newImageRect( imgDir.. "p11_a.png", 35, 26 ); 
@@ -97,6 +125,21 @@ function new()
           return true 
        end 
        FlechaMapa:addEventListener("tap", onFlechaMapaEvent ) 
+       local function onIEvent(event) 
+          but_127(I) 
+          return true 
+       end 
+       I:addEventListener("tap", onIEvent ) 
+       local function onOEvent(event) 
+          but_990(O) 
+          return true 
+       end 
+       O:addEventListener("tap", onOEvent ) 
+       local function onAEvent(event) 
+          but_545(A) 
+          return true 
+       end 
+       A:addEventListener("tap", onAEvent ) 
 
        -- Button functions 
        function butLetraE(self) 
@@ -107,7 +150,40 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_12", "fade" ) 
             end 
-            timerStash.newTimer_840 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_286 = timer.performWithDelay(0, myClosure_switch, 1) 
+       end 
+
+       function but_127(self) 
+           _G.Level = 3
+          saveKwikVars({"Level",3}) 
+           _G.Phase = 1
+          saveKwikVars({"Phase",1}) 
+            local myClosure_switch = function() 
+                dispose(); director:changeScene( "page_35", "fade" ) 
+            end 
+            timerStash.newTimer_303 = timer.performWithDelay(0, myClosure_switch, 1) 
+       end 
+
+       function but_990(self) 
+           _G.Phase = 1
+          saveKwikVars({"Phase",1}) 
+           _G.Level = 4
+          saveKwikVars({"Level",4}) 
+            local myClosure_switch = function() 
+                dispose(); director:changeScene( "page_44", "fade" ) 
+            end 
+            timerStash.newTimer_310 = timer.performWithDelay(0, myClosure_switch, 1) 
+       end 
+
+       function but_545(self) 
+           _G.Level = 1
+          saveKwikVars({"Level",1}) 
+           _G.Phase = 1
+          saveKwikVars({"Phase",1}) 
+            local myClosure_switch = function() 
+                dispose(); director:changeScene( "page_25", "fade" ) 
+            end 
+            timerStash.newTimer_318 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
 

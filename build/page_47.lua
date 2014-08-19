@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -44,6 +44,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- FondoCazador positioning 
        FondoCazador = display.newImageRect( imgDir.. "p47_fondocazador.png", 1280, 800 ); 

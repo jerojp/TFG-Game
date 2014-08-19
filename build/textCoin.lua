@@ -1,32 +1,97 @@
-local kwktextcoin
+local myGroup
 
-function createTextCoin(  )
-	-- body
-	kwktextcoin = display.newText( _G.Coin, 70, 8, 120, 0, native.systemFont, 40 ) 
-    kwktextcoin:setTextColor (229, 185, 89) 
-    kwktextcoin.alpha = 1; kwktextcoin.oldAlpha = 1 
-    kwktextcoin.oriX = kwktextcoin.x; kwktextcoin.oriY = kwktextcoin.y 
-    kwktextcoin.name = "kwktextcoin"
+local function contNumDig(number)
+    local numDig = 1
+    local n = number
 
-    textCoinUpdate() 
+    while n >= 10 do
+        numDig = numDig + 1
+        n = math.floor( n / 10 )
+    end
+
+    return numDig
 end
 
-function textCoinUpdate( )
-	-- body
-	local number = _G.Coin
-	local numDig = 1 
-	local text = _G.Coin
+local function textCoinFormat( )
+    -- body
+    local number = _G.Coin
+    local numDig
+    local text = _G.Coin
+    local imgNewCoin
 
-    while number >= 10 do
-    	numDig = numDig + 1
-    	number = math.floor( number / 10 )
-    end
+    numDig = contNumDig(number)
 
     local numCero = _G.numDigCoin - numDig
 
     for i=1, numCero do
-    	text = "0"..text
+        text = "0"..text
+    end
+    myGroup[2].text = text
+end
+
+function createTextCoin(  )
+	-- body
+    myGroup = display.newGroup( )
+
+    local kwkcoin = display.newImageRect( imgDir.. "kwkcoin.png", 54, 47 ); 
+    kwkcoin.x = 36; kwkcoin.y = 32;
+    myGroup:insert(kwkcoin) 
+
+	local textCoin = display.newText( _G.Coin, 70, 8, 120, 0, native.systemFont, 40 ) 
+    textCoin:setTextColor (229, 185, 89) 
+    myGroup:insert(textCoin)
+
+    textCoinFormat() 
+
+    return myGroup
+end
+
+function textCoinUpdate( incCoin, operation )
+    -- body
+    local newTextCoin
+
+    local function onCompleteTransition( event )
+        -- body
+        if (operation == "add") then
+            _G.Coin = _G.Coin + incCoin 
+        else
+            _G.Coin = _G.Coin - incCoin
+            if (_G.Coin < 0) then
+                _G.Coin = 0
+            end
+        end
+
+        textCoinFormat( )
+
+        newTextCoin:removeSelf( )
+        newTextCoin = nil
+
+        return true        
     end
 
-    kwktextcoin.text = text
+    if (not myGroup) then
+        createTextCoin()
+    end
+
+    local symbol
+    if (operation == "add") then
+        symbol = "+ "
+    else
+        symbol = "- "
+    end
+
+    local options = 
+    {
+        --parent = textGroup,
+        text = symbol..incCoin,     
+        x = myGroup[2].x,
+        y = myGroup[2].y + 50,
+        font = native.systemFontBold,   
+        fontSize = 40,
+    }
+    newTextCoin =  display.newText( options )
+    newTextCoin.x = newTextCoin.x - newTextCoin.contentWidth/2 - ((contNumDig(incCoin)-1)*10)
+    newTextCoin:setTextColor (229, 185, 89) 
+
+    transition.to( newTextCoin, {  time=1000, y=myGroup[2].y, alpha = 0, onComplete=onCompleteTransition} )
 end

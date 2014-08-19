@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -39,53 +39,61 @@ function new()
        end 
 
  
-       -- Button names 
-       local butSample
-
        -- Layer names 
-       local fondoBrasilBosq  
-       local kwkrecty  
+       local FondoBrasil  
+       local kwkexp  
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
-       -- fondoBrasilBosq positioning 
-       fondoBrasilBosq = display.newImageRect( imgDir.. "p31_fondobrasilbosq.png", 1298, 800 ); 
-       fondoBrasilBosq.x = 641; fondoBrasilBosq.y = 400; fondoBrasilBosq.alpha = 1; fondoBrasilBosq.oldAlpha = 1 
-       fondoBrasilBosq.oriX = fondoBrasilBosq.x; fondoBrasilBosq.oriY = fondoBrasilBosq.y 
-       fondoBrasilBosq.name = "fondoBrasilBosq" 
-       menuGroup:insert(1,fondoBrasilBosq); menuGroup.fondoBrasilBosq = fondoBrasilBosq 
+       -- FondoBrasil positioning 
+       FondoBrasil = display.newImageRect( imgDir.. "p31_fondobrasil.png", 1298, 812 ); 
+       FondoBrasil.x = 641; FondoBrasil.y = 394; FondoBrasil.alpha = 1; FondoBrasil.oldAlpha = 1 
+       FondoBrasil.oriX = FondoBrasil.x; FondoBrasil.oriY = FondoBrasil.y 
+       FondoBrasil.name = "FondoBrasil" 
+       menuGroup:insert(1,FondoBrasil); menuGroup.FondoBrasil = FondoBrasil 
 
-       -- kwkrecty positioning 
-       kwkrecty = display.newImageRect( imgDir.. "kwkrecty.png", 148, 69 ); 
-       kwkrecty.x = 1069; kwkrecty.y = 175; kwkrecty.alpha = 1; kwkrecty.oldAlpha = 1 
-       kwkrecty.oriX = kwkrecty.x; kwkrecty.oriY = kwkrecty.y 
-       kwkrecty.name = "kwkrecty" 
-       menuGroup:insert(kwkrecty); menuGroup.kwkrecty = kwkrecty 
+       -- kwkexp positioning 
+       local kwkexp_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=2, y=2, width=141, height=220 }, -- exploradorNormal_00000
+               { x=145, y=2, width=141, height=220 }, -- exploradorNormal_00001
+               { x=288, y=2, width=141, height=220 }, -- exploradorNormal_00002
+               { x=431, y=2, width=141, height=220 }, -- exploradorNormal_00003
+               { x=574, y=2, width=141, height=220 }, -- exploradorNormal_00004
+               { x=717, y=2, width=141, height=220 }, -- exploradorNormal_00005
+               { x=2, y=224, width=141, height=220 }, -- exploradorNormal_00006
+               { x=145, y=224, width=141, height=220 }, -- exploradorNormal_00007
+               { x=288, y=224, width=141, height=220 }, -- exploradorNormal_00008
+               { x=431, y=224, width=141, height=220 }, -- exploradorNormal_00009
+               { x=574, y=224, width=141, height=220 }, -- exploradorNormal_00010
+               { x=717, y=224, width=141, height=220 }, -- exploradorNormal_00011
+               { x=2, y=446, width=141, height=220 }, -- exploradorNormal_00012
+               { x=145, y=446, width=141, height=220 }, -- exploradorNormal_00013
+               { x=288, y=446, width=141, height=220 }, -- exploradorNormal_00014
+               { x=431, y=446, width=141, height=220 }, -- exploradorNormal_00015
+               { x=574, y=446, width=141, height=220 }, -- exploradorNormal_00016
+           },
+    
+           sheetContentWidth = 860,
+           sheetContentHeight = 668
+ 
+       } 
+       kwkexp_sheet = graphics.newImageSheet( spriteDir.. "exploradorhabla.png", kwkexp_options ) 
+       kwkexp_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "forward" }; 
+       kwkexp = display.newSprite(kwkexp_sheet, kwkexp_seq ) 
+       kwkexp:play(); 
+       kwkexp.x = 465; kwkexp.y = 351; kwkexp.alpha = 1; kwkexp.oldAlpha = 1 
+       kwkexp.oriX = kwkexp.x; kwkexp.oriY = kwkexp.y 
+       kwkexp.name = "kwkexp" 
+       menuGroup:insert(kwkexp); menuGroup.kwkexp = kwkexp 
  
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
-
-       -- Button event listeners 
-       local function onkwkrectyEvent(event) 
-          butSample(kwkrecty) 
-          return true 
-       end 
-       kwkrecty:addEventListener("tap", onkwkrectyEvent ) 
-
-       -- Button functions 
-       function butSample(self) 
-           _G.Level = 1
-          saveKwikVars({"Level",1}) 
-           _G.Phase = 2
-          saveKwikVars({"Phase",2}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_15", "fade" ) 
-            end 
-            timerStash.newTimer_267 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
-
 
        -- do not swipe this page 
 
@@ -93,11 +101,39 @@ function new()
           cancelAllTimers(); cancelAllTransitions() 
        end 
 
+       function cleanSprite() 
+           kwkexp_sheet = nil; kwkexp = nil 
+ 
+       end 
+
        -- (BOTTOM) External code will render here 
+       require( "ControlScene" )
+kwkexp:pause( )
+
+--timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )
+--_G.Subtitle = false
+--_G.AutoNextPage = true
+
+_G.Level = 1
+_G.Phase = 2
+
+local aud = {"exp_br6.mp3"}
+local sub = {"Vaya que tarde se me ha hecho. Debo ponerme rumbo al Amazonas. Espero no perderme en la selva más grande del mundo."}
+
+addCharacter(kwkexp, aud, sub)
+
+local sec = {1}
+setSecuence( sec )
+
+playScene( "page_32" ) 
 
 
     end 
     drawScreen() 
+
+    function clean() 
+       cleanSprite() 
+    end 
 
     return menuGroup 
 end 

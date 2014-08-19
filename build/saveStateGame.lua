@@ -2,16 +2,15 @@
   Refactorizar este código. Cambiar las funciones de guardar y cargar juego a un fichero aparte, preferiblemente añadirlas a una tabla
 como clase.
 ]]
+
 local widget = require( "widget" )
 local facebook = require "facebook"
 require("MyDialog")
+require("ControlScene")
 local backgroundGroup = display.newGroup( )
 
 -- functions
-local createPauseMenu
 local continueGame
-local changeDifficult
-local selectDifficult
 local backMenu
 local removePauseMenu 
 local onKeyEvent
@@ -22,11 +21,8 @@ local printTable
 local rectangle
 local rectangleHiddle
 local continue
-local selectDefficult
+local btnOptions
 local backMainMenu
-local difficultEasy
-local difficultNormal
-local difficultHard
 local createdPauseMenu = false
 
 local rectangleExer
@@ -51,6 +47,32 @@ printTable = function ( myTable)
 	print( "-------FIN IMPRESION-------" )
 end
 
+function pauseAllTransition( )
+    -- body
+    local k, v
+
+    for k,v in pairs(gtStash) do
+        v:pause();
+    end
+
+    for k,v in pairs(transitionStash) do
+        transition.pause( v )
+    end
+end
+
+function resumeAllTransition( )
+    -- body
+    local k, v
+
+    for k,v in pairs(gtStash) do
+        v:play();
+    end
+
+    for k,v in pairs(transitionStash) do
+        transition.resume( v )
+    end
+end
+
 function pauseMyTimers( )
 	-- body
 	local k, v
@@ -67,6 +89,12 @@ function resumeMyTimers(  )
     for k,v in pairs(timerStash) do
         timer.resume( v )
     end
+end
+
+function unlockToy( level, phase )
+    -- body
+    local index = (level*2 - 1)+(phase-1)
+    _G.Toys[index].block = true
 end
 
 function savedTable(filename )
@@ -117,45 +145,60 @@ function loadSettingGame( )
 		_G.TimerResults = gameSettingsVars.timeResults
 		_G.numDigCoin = gameSettingsVars.numDigCoin
 		_G.CurrentPage = gameSettingsVars.currentPage
+    _G.LastPage = gameSettingsVars.lastPage
 		_G.IndexStat = gameSettingsVars.indexStat
-    	_G.TakePhoto = gameSettingsVars.takePhoto
-    	_G.IsTakePhot = gameSettingsVars.isTakePhot
-    	_G.UploadImageTable = gameSettingsVars.uploadTable
-    	_G.UploadImageDraw = gameSettingsVars.uploadDraw
-    	_G.DrawLevel = gameSettingsVars.drawLevel
-    	_G.DrawPhase = gameSettingsVars.drawPhase
-    	_G.SecondFaseDraw = gameSettingsVars.secondFaseDraw
-    	_G.Subtitle = gameSettingsVars.subtitule
-    	_G.Age = gameSettingsVars.age
-    	_G.AutoNextPage = gameSettingsVars.autoNextPage
+    _G.TakePhoto = gameSettingsVars.takePhoto
+    _G.IsTakePhot = gameSettingsVars.isTakePhot
+    _G.UploadImageTable = gameSettingsVars.uploadTable
+    _G.UploadImageDraw = gameSettingsVars.uploadDraw
+    _G.DrawLevel = gameSettingsVars.drawLevel
+    _G.DrawPhase = gameSettingsVars.drawPhase
+    _G.SecondFaseDraw = gameSettingsVars.secondFaseDraw
+    _G.Subtitle = gameSettingsVars.subtitule
+    _G.Age = gameSettingsVars.age
+    _G.AutoNextPage = gameSettingsVars.autoNextPage
+    _G.UpLevelSample = gameSettingsVars.upLevelSample
+    _G.Toys = gameSettingsVars.toys
+    --_G.MyCurrentSubtitle = gameSettingsVars.currentSubtitles
 	else
 		print( "--------JUEGO INICIAL--------" )
 		_G.NameUser = "Pedro" -- Name of the user 
-       _G.Phase = 1 -- Phase of Level : 1=normal or 2=advance 
-       _G.Level = 2 -- Level selected by user, [1,5] 
-       _G.DifficultLevel = 2 -- Difficult selected by user 
-       _G.Coin = 000 --  
-       _G.Results = {} --  
-       _G.TimerResults = {} --  
-       _G.numDigCoin = 4 --  
-       _G.CurrentPage = 1 --  
-       _G.GameStarted = false -- 
-       _G.IndexStat = 0 
-       _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
-       _G.IsTakePhot = false -- if true the screen shot been taken
-       _G.UploadImageTable = false
-       _G.UploadImageDraw = false
-       _G.DrawLevel = 0
-       _G.DrawPhase = 0
-       _G.SecondFaseDraw = {false, false, false, false, false}
-       _G.Subtitle = false
-       _G.Age = 3
-       _G.AutoNextPage = true
-    end
+        _G.Phase = 1 -- Phase of Level : 1=normal or 2=advance 
+        _G.Level = 2 -- Level selected by user, [1,5] 
+        _G.DifficultLevel = 2 -- Difficult selected by user 
+        _G.Coin = 000 --  
+        _G.Results = {} --  
+        _G.TimerResults = {} --  
+        _G.numDigCoin = 4 --  
+        _G.CurrentPage = 1 --
+        _G.LastPage = nil  
+        _G.MyCurrentSubtitle = nil
+        _G.GameStarted = false -- 
+        _G.IndexStat = 0 
+        _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
+        _G.IsTakePhot = false -- if true the screen shot been taken
+        _G.UploadImageTable = false
+        _G.UploadImageDraw = false
+        _G.DrawLevel = 0
+        _G.DrawPhase = 0
+        _G.SecondFaseDraw = {false, false, false, false, false}
+        if (_G.Subtitle == nil) then
+            _G.Subtitle = false
+        end
+        _G.Age = 3
+        if (_G.AutoNextPage == nil) then
+            _G.AutoNextPage = true
+        end
+        _G.UpLevelSample = {}
+        _G.Toys = {}
+        for i=1,10 do
+            _G.Toys[i] = {block = true, sold = false}    
+        end
+  end
 end
 
 createTableSetting = function ()
-	print( "Entra a crear tabla....." )
+	print( "-------------Entra a crear tabla.....--------------" )
 	local gameSettingsVars = {}
 
 	gameSettingsVars.gameStarted = _G.GameStarted
@@ -169,16 +212,20 @@ createTableSetting = function ()
 	gameSettingsVars.numDigCoin = _G.numDigCoin
 	gameSettingsVars.currentPage = _G.CurrentPage
 	gameSettingsVars.indexStat = _G.IndexStat
-    gameSettingsVars.takePhoto = _G.TakePhoto
-    gameSettingsVars.isTakePhot = _G.IsTakePhot
-    gameSettingsVars.uploadDraw = _G.UploadImageDraw
-    gameSettingsVars.uploadTable = _G.UploadImageTable
-    gameSettingsVars.drawLevel = _G.DrawLevel
-    gameSettingsVars.drawPhase = _G.DrawPhase
-    gameSettingsVars.secondFaseDraw = _G.SecondFaseDraw
-    gameSettingsVars.subtitule = _G.Subtitle
-    gameSettingsVars.age = _G.Age
-    gameSettingsVars.autoNextPage = _G.AutoNextPage
+  gameSettingsVars.takePhoto = _G.TakePhoto
+  gameSettingsVars.isTakePhot = _G.IsTakePhot
+  gameSettingsVars.uploadDraw = _G.UploadImageDraw
+  gameSettingsVars.uploadTable = _G.UploadImageTable
+  gameSettingsVars.drawLevel = _G.DrawLevel
+  gameSettingsVars.drawPhase = _G.DrawPhase
+  gameSettingsVars.secondFaseDraw = _G.SecondFaseDraw
+  gameSettingsVars.subtitule = _G.Subtitle
+  gameSettingsVars.age = _G.Age
+  gameSettingsVars.autoNextPage = _G.AutoNextPage
+  gameSettingsVars.upLevelSample = _G.UpLevelSample
+  gameSettingsVars.lastPage = _G.LastPage
+  gameSettingsVars.toys = _G.Toys
+
 	--printTable(gameSettingsVars)
 	return gameSettingsVars
 end
@@ -193,9 +240,10 @@ continueGame = function ( event )
         object.isFocus = true
     elseif object.isFocus then
       if event.phase == "ended" or event.phase == "cancelled" then
-          --transition.resume( )
+          resumeAllTransition()
           resumeMyTimers()
           audio.resume( 1 )
+          audio.resume( 2 )
           removePauseMenu() -- es opcional si se confirma que solo te puede salir del juego por el menu de pausa
           display.getCurrentStage():setFocus( nil )
           object.isFocus = false
@@ -204,9 +252,8 @@ continueGame = function ( event )
  	return true
 end
 
-changeDifficult = function ( event )
+viewOptions = function ( event )
 	-- body
-	print( "Cambiando dificultad ...." )
 	local object = event.target
 
 	if event.phase == "began" then
@@ -214,48 +261,9 @@ changeDifficult = function ( event )
         object.isFocus = true
     elseif object.isFocus then
         if event.phase == "ended" or event.phase == "cancelled" then
-        	if(object.name == easy) then
-				_G.DifficultLevel = 1
-			elseif(object.name == normal) then
-				_G.DifficultLevel = 2
-			elseif(object.name == hard) then
-				_G.DifficultLevel = 3
-			else
-				print( "Error en la seleccion de dificultad" )
-			end
-			continue.alpha = 1
-			selectedDefficult.alpha = 1
-			backMenu.alpha = 1
-			difficultEasy.alpha = 0
-			difficultNormal.alpha = 0
-			difficultHard.alpha = 0
 			display.getCurrentStage():setFocus( nil )
 			object.isFocus = false
-			print( "Nueva dificultad : ".._G.DifficultLevel )
-
-        end
-    end
-	return true
-end
-
-selectDifficult = function( event )
-	-- body
-	print( "Seleccionar dificultad ...." )
-	local object = event.target
-	if event.phase == "began" then
-
-        display.getCurrentStage():setFocus(object)
-        object.isFocus = true
-    elseif object.isFocus then
-        if event.phase == "ended" or event.phase == "cancelled" then
-        	continue.alpha = 0
-			selectedDefficult.alpha = 0
-			backMenu.alpha = 0
-			difficultEasy.alpha = 1
-			difficultNormal.alpha = 1
-			difficultHard.alpha = 1
-            display.getCurrentStage():setFocus( nil )
-            object.isFocus = false
+			createPanelOptions( )
         end
     end
 	return true
@@ -272,13 +280,14 @@ backMainMenu = function( event )
     elseif object.isFocus then
         if event.phase == "ended" or event.phase == "cancelled" then
         	--guardad y cambiar escena
+            finalizeScene( true )
 			savedTable("saveGame.json")
 			removePauseMenu()
 			display.getCurrentStage():setFocus( nil )
 			object.isFocus = false
 			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
 			director:changeScene( "page_1", "fade" ) 
-        end
+      end
     end
 	return true
 end
@@ -298,6 +307,8 @@ local function backMainMenuExer( event )
     	elseif object.isFocus then
         	if event.phase == "ended" or event.phase == "cancelled" then
         		--guardad y cambiar escena
+                _G.Coin = _G.Coin - _G.TotalAddCoinEx
+                print( "-------------------Nuevo COIN : ".._G.Coin )
 				savedTable("saveGame.json")
 				deleteMyDialog( myDialog )
 				removePauseMenuExer()
@@ -352,7 +363,7 @@ local function nothingTap( event )
 	return true
 end
 
-createPauseMenu = function ( event )
+createPauseMenuNormal = function ( event )
   if (not createdPauseMenu) then
 	createdPauseMenu = true
 
@@ -381,19 +392,19 @@ createPauseMenu = function ( event )
 	continue.x = display.contentCenterX
 	continue.y = display.contentCenterY - 200
 
-	selectedDefficult = widget.newButton{
+	btnOptions = widget.newButton{
 		width = 240,
     	height = 120,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
-    	label = "Dificultad",
+    	label = "Opciones",
     	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
     	fontSize = 25,
-    	onEvent = selectDifficult
+    	onEvent = viewOptions
 	}
 
-	selectedDefficult.x = display.contentCenterX
-	selectedDefficult.y = display.contentCenterY
+	btnOptions.x = display.contentCenterX
+	btnOptions.y = display.contentCenterY
 
 	backMenu = widget.newButton{
 		width = 240,
@@ -409,56 +420,6 @@ createPauseMenu = function ( event )
 	backMenu.x = display.contentCenterX
 	backMenu.y = display.contentCenterY + 200
 
-
-	difficultEasy = widget.newButton{
-		width = 240,
-    	height = 120,
-    	defaultFile = imgDir.. "button.png",
-    	--overFile = imgDir.. "button.png",
-    	label = "Facil",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    	fontSize = 25,
-    	onEvent = changeDifficult
-	}
-
-	difficultEasy.x = display.contentCenterX
-	difficultEasy.y = display.contentCenterY - 150
-
-	difficultNormal = widget.newButton{
-		width = 240,
-    	height = 120,
-    	defaultFile = imgDir.. "button.png",
-    	--overFile = imgDir.. "button.png",
-    	label = "Normal",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    	fontSize = 25,
-    	onEvent = changeDifficult
-	}
-
-	difficultNormal.x = display.contentCenterX
-	difficultNormal.y = display.contentCenterY 
-
-	difficultHard = widget.newButton{
-		width = 240,
-    	height = 120,
-    	defaultFile = imgDir.. "button.png",
-    	--overFile = imgDir.. "button.png",
-    	label = "Dificil",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    	fontSize = 25,
-    	onEvent = changeDifficult
-	}
-
-	difficultHard.x = display.contentCenterX
-	difficultHard.y = display.contentCenterY + 150
-
-	difficultEasy.name = easy
-	difficultNormal.name = normal
-	difficultHard.name = hard
-
-	difficultEasy.alpha = 0
-	difficultNormal.alpha = 0
-	difficultHard.alpha = 0
   end
 end
 
@@ -473,17 +434,11 @@ removePauseMenu = function ( )
 	rectangle = nil
 	continue:removeSelf( )
 	continue = nil
-	selectedDefficult:removeSelf( )
-	selectedDefficult = nil
+	btnOptions:removeSelf( )
+	btnOptions = nil
 	backMenu:removeSelf()
 	backMenu = nil
 
-	difficultEasy:removeSelf( )
-	difficultEasy = nil
-	difficultNormal:removeSelf( )
-	difficultNormal = nil
-	difficultHard:removeSelf( )
-	difficultHard = nil
 end
 
 createPauseMenuExer = function( )
@@ -546,33 +501,56 @@ removePauseMenuExer = function( event )
 
 end
 
+function createPauseMenu( isExercise )
+    -- body
+    pauseAllTransition()
+    --transition.pause( )
+    pauseMyTimers( )
+
+    if ( audio.isChannelActive( 1 ) ) then
+        audio.pause( 1 )    
+    end
+    if ( audio.isChannelActive( 2 ) ) then
+        audio.pause( 2 )
+    end
+
+    if (isExercise) then
+        createPauseMenuExer()
+    else
+        createPauseMenuNormal()
+    end
+end
+
 onKeyEvent = function ( event )
 	-- body
-	local phase = event.phase
     local keyName = event.keyName
+    local object = event.target
     
-    
-    if ((system.getInfo("environment")=="device" and "back" == keyName) or system.getInfo("environment")=="simulator") then
-    		if (_G.CurrentPage ~= 1) then
-    			local pageExercise = {15, 17, 18, 29, 38, 49, 57}
-    			print( "Indice Tabla pausa: ".._G.CurrentPage )
-    			print( table.indexOf( pageExercise, _G.CurrentPage ) )
-    			if (table.indexOf( pageExercise, _G.CurrentPage ) ~= nil) then
-    				createPauseMenuExer()
-    			else
-    				createPauseMenu()
-    			end
-    			--transition.pause( )
-    			pauseMyTimers( )
-    			audio.pause( 1 )
-    		else
-    			facebook.logout()
-    			savedTable("saveGame.json")
-    			native.requestExit()
-    		end
-    		return true
+    print( object.name )
+    if ((system.getInfo("environment")=="device" and "back" == keyName and event.phase == "up") or system.getInfo("environment")=="simulator") then
+            if (_G.CurrentPage ~= 1) then
+                local pageExercise = {15, 17, 18, 29, 38, 49, 57}
+                print( "Indice Tabla pausa: ".._G.CurrentPage )
+                print( table.indexOf( pageExercise, _G.CurrentPage ) )
+                if (table.indexOf( pageExercise, _G.CurrentPage ) ~= nil) then
+                    createPauseMenu(true)
+                elseif ( _G.CurrentPage == 24) then
+                    cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+                    director:changeScene("page_23")
+                elseif ( _G.CurrentPage == 23) then
+                    cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+                    director:changeScene("page_1")
+                else
+                    createPauseMenu(false)
+                end
+            else
+                facebook.logout()
+                savedTable("saveGame.json")
+                native.requestExit()
+            end
+            return true
     end 
-	return false    
+    return false  
 end
 
 local function onSystemEvent(event) 
@@ -589,6 +567,7 @@ if system.getInfo("environment")=="device" then
 	Runtime:addEventListener( "key", onKeyEvent )
 else
 	local rectangle2 = display.newRoundedRect( 100, 100, 100, 100, 10 )
+    rectangle2.name = "RectPause"
 	rectangle2:addEventListener( "tap", onKeyEvent )
 end
 

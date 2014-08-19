@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -112,6 +112,7 @@ function new()
             timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
  
+       _G.LastPage = curPage 
 
        -- kwkrectangle positioning 
        kwkrectangle = display.newImageRect( imgDir.. "kwkrectangle.png", 1280, 800 ); 

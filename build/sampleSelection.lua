@@ -68,13 +68,14 @@
        local timerTest = {}
        local maxNivel = 10
        local contadorTiempo 
+       _G.TotalAddCoinEx = 0
        
        textLevel = display.newText( "Nivel : "..nivelActual , 20, 70, native.systemFont, 30 ) 
        textLevel:setTextColor (229, 185, 89)
        menuGroup:insert(textLevel)
    
 
-       createTextCoin( )
+       menuGroup:insert( createTextCoin( ) )
 
        objetoCorrect = display.newImageRect( imgDir.. "objeto".._G.Level.._G.Level.._G.Phase..".png", 150, 135 ); 
        objetoCorrect.x = 680; objetoCorrect.y = 91; objetoCorrect.alpha = 1; objetoCorrect.oldAlpha = 1 
@@ -517,6 +518,8 @@
           end
           maxNivel = nivelActual + maxNivel
 
+          _G.UpLevelSample[_G.Level*2 - (math.fmod(_G.Phase, 2))] = {_G.DifficultLevel}
+
           print( "Maximo Nivel "..maxNivel )
           for i=nivelActual,maxNivel,1 do
             table.insert( resultsTest, -1 )
@@ -564,7 +567,7 @@
           if (_G.Phase == 1) then
             number = 28  
           else
-            number = 32
+            number = 33
           end
         elseif (_G.Level == 2) then
           if (_G.Phase == 1) then
@@ -597,7 +600,7 @@
 
 
        local function statisticsUpdate()
-          local auxLevel = math.fmod(nivelActual, 11) + 1 
+          local auxLevel = math.fmod(nivelActual, 11)
           print( "Statitics LEVEL : "..auxLevel )
           if (resultsTest[auxLevel] > 0) then
               resultsTest[auxLevel] = resultsTest[auxLevel] + n_fallosNivel
@@ -655,16 +658,14 @@
 
            statisticsUpdate()
 
-           nivelActual = nivelActual + 1
-           saveKwikVars({"nivelActual",nivelActual + 1})
-           textLevel.text =  "Nivel : "..nivelActual
-
-           if (nivelActual == maxNivel) then 
+           if (nivelActual+1 == maxNivel) then 
             finalizarEjercicio() 
            else
             --Increment and actually coint
-            _G.Coin = _G.Coin + incrementCoin
-            textCoinUpdate( )
+            
+            textCoinUpdate( incrementCoin, "add" )
+            _G.TotalAddCoinEx = _G.TotalAddCoinEx + incrementCoin
+
             if (n_aciertosSegTotales == maxAciertosSeguidosIncremento) then
               if (intervaloNuevoOb == 1) then
                 n_objetos_nuevos = n_objetos_nuevos + 1
@@ -672,6 +673,7 @@
                 intervaloNuevoOb = math.floor(intervaloNuevoOb / 2) -- division integer
                 n_aciertosSegTotales = 0
               end
+              table.insert( _G.UpLevelSample[_G.Level*2 - (math.fmod(_G.Phase, 2))], nivelActual)
             else
               n_aciertosSegTotales = n_aciertosSegTotales + 1  
             end
@@ -688,6 +690,9 @@
               n_aciertosSeg = n_aciertosSeg + 1
               saveKwikVars({"n_aciertosSeg",n_aciertosSeg + 1}) 
             end
+            nivelActual = nivelActual + 1
+            textLevel.text =  "Nivel : "..nivelActual
+
             act_cambiarAlph() 
             act_posicionarO() 
             act_play() -- Animation to applaud

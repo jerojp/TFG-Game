@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -46,6 +46,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- FondoPoloSurBar positioning 
        FondoPoloSurBar = display.newImageRect( imgDir.. "p42_fondopolosurbar.png", 1280, 800 ); 

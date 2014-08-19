@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -47,7 +47,6 @@ function new()
        local kwkrectangleW  
        local explSobered  
        local explHappy  
-       local kwkcoin  
 
        -- (TOP) External code will render here 
               require( "textCoin" )
@@ -120,13 +119,14 @@ function new()
        local timerTest = {}
        local maxNivel = 10
        local contadorTiempo 
+       _G.TotalAddCoinEx = 0
        
        textLevel = display.newText( "Nivel : "..nivelActual , 20, 70, native.systemFont, 30 ) 
        textLevel:setTextColor (229, 185, 89)
        menuGroup:insert(textLevel)
    
 
-       createTextCoin( )
+       menuGroup:insert( createTextCoin( ) )
 
        objetoCorrect = display.newImageRect( imgDir.. "objeto".._G.Level.._G.Level.._G.Phase..".png", 150, 135 ); 
        objetoCorrect.x = 680; objetoCorrect.y = 91; objetoCorrect.alpha = 1; objetoCorrect.oldAlpha = 1 
@@ -569,6 +569,8 @@ function new()
           end
           maxNivel = nivelActual + maxNivel
 
+          _G.UpLevelSample[_G.Level*2 - (math.fmod(_G.Phase, 2))] = {_G.DifficultLevel}
+
           print( "Maximo Nivel "..maxNivel )
           for i=nivelActual,maxNivel,1 do
             table.insert( resultsTest, -1 )
@@ -616,7 +618,7 @@ function new()
           if (_G.Phase == 1) then
             number = 28  
           else
-            number = 32
+            number = 33
           end
         elseif (_G.Level == 2) then
           if (_G.Phase == 1) then
@@ -649,8 +651,7 @@ function new()
 
 
        local function statisticsUpdate()
-          local auxLevel = math.fmod(nivelActual, 11) + 1
-          print( "Nivel Actual : "..nivelActual )
+          local auxLevel = math.fmod(nivelActual, 11)
           print( "Statitics LEVEL : "..auxLevel )
           if (resultsTest[auxLevel] > 0) then
               resultsTest[auxLevel] = resultsTest[auxLevel] + n_fallosNivel
@@ -708,16 +709,14 @@ function new()
 
            statisticsUpdate()
 
-           nivelActual = nivelActual + 1
-           saveKwikVars({"nivelActual",nivelActual + 1})
-           textLevel.text =  "Nivel : "..nivelActual
-
-           if (nivelActual == maxNivel) then 
+           if (nivelActual+1 == maxNivel) then 
             finalizarEjercicio() 
            else
             --Increment and actually coint
-            _G.Coin = _G.Coin + incrementCoin
-            textCoinUpdate( )
+            
+            textCoinUpdate( incrementCoin, "add" )
+            _G.TotalAddCoinEx = _G.TotalAddCoinEx + incrementCoin
+
             if (n_aciertosSegTotales == maxAciertosSeguidosIncremento) then
               if (intervaloNuevoOb == 1) then
                 n_objetos_nuevos = n_objetos_nuevos + 1
@@ -725,6 +724,7 @@ function new()
                 intervaloNuevoOb = math.floor(intervaloNuevoOb / 2) -- division integer
                 n_aciertosSegTotales = 0
               end
+              table.insert( _G.UpLevelSample[_G.Level*2 - (math.fmod(_G.Phase, 2))], nivelActual)
             else
               n_aciertosSegTotales = n_aciertosSegTotales + 1  
             end
@@ -741,6 +741,9 @@ function new()
               n_aciertosSeg = n_aciertosSeg + 1
               saveKwikVars({"n_aciertosSeg",n_aciertosSeg + 1}) 
             end
+            nivelActual = nivelActual + 1
+            textLevel.text =  "Nivel : "..nivelActual
+
             act_cambiarAlph() 
             act_posicionarO() 
             act_play() -- Animation to applaud
@@ -778,6 +781,7 @@ function new()
            act_letraIncorr() 
        end  
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- kwkrectangleW positioning 
        kwkrectangleW = display.newImageRect( imgDir.. "kwkrectanglew.png", 1280, 800 ); 
@@ -803,13 +807,6 @@ function new()
        explHappy.oriX = explHappy.x; explHappy.oriY = explHappy.y 
        explHappy.name = "explHappy" 
        menuGroup:insert(explHappy); menuGroup.explHappy = explHappy 
-
-       -- kwkcoin positioning 
-       kwkcoin = display.newImageRect( imgDir.. "kwkcoin.png", 54, 47 ); 
-       kwkcoin.x = 36; kwkcoin.y = 32; kwkcoin.alpha = 1; kwkcoin.oldAlpha = 1 
-       kwkcoin.oriX = kwkcoin.x; kwkcoin.oriY = kwkcoin.y 
-       kwkcoin.name = "kwkcoin" 
-       menuGroup:insert(kwkcoin); menuGroup.kwkcoin = kwkcoin 
  
        -- Group(s) creation 
 

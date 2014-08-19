@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -41,9 +41,13 @@ function new()
  
        -- Layer names 
        local FondoJapon  
+       local kwkjap  
+       local kwkexp  
+       local tablet  
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- FondoJapon positioning 
        FondoJapon = display.newImageRect( imgDir.. "p46_fondojapon.png", 1296, 800 ); 
@@ -51,6 +55,29 @@ function new()
        FondoJapon.oriX = FondoJapon.x; FondoJapon.oriY = FondoJapon.y 
        FondoJapon.name = "FondoJapon" 
        menuGroup:insert(1,FondoJapon); menuGroup.FondoJapon = FondoJapon 
+
+       -- kwkjap positioning 
+       kwkjap = display.newImageRect( imgDir.. "kwkjap.png", 258, 360 ); 
+       kwkjap.x = 160; kwkjap.y = 407; kwkjap.alpha = 1; kwkjap.oldAlpha = 1 
+       kwkjap.oriX = kwkjap.x; kwkjap.oriY = kwkjap.y 
+       kwkjap.name = "kwkjap" 
+       menuGroup:insert(kwkjap); menuGroup.kwkjap = kwkjap 
+
+       -- kwkexp positioning 
+       kwkexp = display.newImageRect( imgDir.. "kwkexp.png", 140, 220 ); 
+       kwkexp.x = 391; kwkexp.y = 433; kwkexp.alpha = 1; kwkexp.oldAlpha = 1 
+       kwkexp.xScale = 0.7; 
+       kwkexp.yScale = 0.7; 
+       kwkexp.oriX = kwkexp.x; kwkexp.oriY = kwkexp.y 
+       kwkexp.name = "kwkexp" 
+       menuGroup:insert(kwkexp); menuGroup.kwkexp = kwkexp 
+
+       -- tablet positioning 
+       tablet = display.newImageRect( imgDir.. "p46_tablet.png", 17, 41 ); 
+       tablet.x = 360; tablet.y = 447; tablet.alpha = 1; tablet.oldAlpha = 1 
+       tablet.oriX = tablet.x; tablet.oriY = tablet.y 
+       tablet.name = "tablet" 
+       menuGroup:insert(tablet); menuGroup.tablet = tablet 
  
        -- Group(s) creation 
 
@@ -63,6 +90,26 @@ function new()
        end 
 
        -- (BOTTOM) External code will render here 
+       require( "ControlScene" )
+kwkexp:pause( )
+kwkjap:pause( )
+
+--timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )
+--_G.Subtitle = false
+--_G.AutoNextPage = true
+
+_G.Level = 4
+_G.Phase = 1
+
+local aud = {"exp_ja6.mp3"}
+local sub = {"Ah, claro, un oso panda. Bueno, era parecido a lo que yo había dicho."}
+
+addCharacter(kwkexp, aud, sub)
+
+local sec = {1}
+setSecuence( sec )
+
+playScene( "page_47" ) 
 
 
     end 

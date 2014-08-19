@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -41,10 +41,108 @@ function new()
  
        -- Layer names 
        local FondoBrasil  
-       local FondoDisfrazado  
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+               local danceGroup = display.newGroup()
+        local audioHandle
+
+        local kwkgirl_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=2, y=2, width=180, height=265 }, -- carnavalMujer_00000
+               { x=184, y=2, width=180, height=265 }, -- carnavalMujer_00001
+               { x=366, y=2, width=180, height=265 }, -- carnavalMujer_00002
+               { x=548, y=2, width=180, height=265 }, -- carnavalMujer_00003
+               { x=730, y=2, width=180, height=265 }, -- carnavalMujer_00004
+               { x=2, y=269, width=180, height=265 }, -- carnavalMujer_00005
+               { x=184, y=269, width=180, height=265 }, -- carnavalMujer_00006
+               { x=366, y=269, width=180, height=265 }, -- carnavalMujer_00007
+               { x=548, y=269, width=180, height=265 }, -- carnavalMujer_00008
+               { x=730, y=269, width=180, height=265 }, -- carnavalMujer_00009
+               { x=2, y=536, width=180, height=265 }, -- carnavalMujer_00010
+               { x=184, y=536, width=180, height=265 }, -- carnavalMujer_00011
+               { x=366, y=536, width=180, height=265 }, -- carnavalMujer_00012
+               { x=548, y=536, width=180, height=265 }, -- carnavalMujer_00013
+               { x=730, y=536, width=180, height=265 }, -- carnavalMujer_00014
+               { x=2, y=803, width=180, height=265 }, -- carnavalMujer_00015
+               { x=184, y=803, width=180, height=265 }, -- carnavalMujer_00016
+           },
+    
+           sheetContentWidth = 912,
+           sheetContentHeight = 1070
+ 
+       } 
+       kwkgirl_sheet = graphics.newImageSheet( spriteDir.. "mujerbaila.png", kwkgirl_options ) 
+       kwkgirl_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       kwkgirl = display.newSprite(kwkgirl_sheet, kwkgirl_seq ) 
+       kwkgirl:play(); 
+       kwkgirl.x = 164; kwkgirl.y = 233;
+       danceGroup:insert(kwkgirl); 
+
+-- kwkexp positioning 
+       local kwkexp_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=0, y=0, width=175, height=272 }, -- exploradorDisfrazBaila_00000
+               { x=175, y=0, width=175, height=272 }, -- exploradorDisfrazBaila_00001
+               { x=350, y=0, width=175, height=272 }, -- exploradorDisfrazBaila_00002
+               { x=525, y=0, width=175, height=272 }, -- exploradorDisfrazBaila_00003
+               { x=700, y=0, width=175, height=272 }, -- exploradorDisfrazBaila_00004
+               { x=0, y=272, width=175, height=272 }, -- exploradorDisfrazBaila_00005
+               { x=175, y=272, width=175, height=272 }, -- exploradorDisfrazBaila_00006
+               { x=350, y=272, width=175, height=272 }, -- exploradorDisfrazBaila_00007
+               { x=525, y=272, width=175, height=272 }, -- exploradorDisfrazBaila_00008
+               { x=700, y=272, width=175, height=272 }, -- exploradorDisfrazBaila_00009
+               { x=0, y=544, width=175, height=272 }, -- exploradorDisfrazBaila_00010
+               { x=175, y=544, width=175, height=272 }, -- exploradorDisfrazBaila_00011
+               { x=350, y=544, width=175, height=272 }, -- exploradorDisfrazBaila_00012
+               { x=525, y=544, width=175, height=272 }, -- exploradorDisfrazBaila_00013
+               { x=700, y=544, width=175, height=272 }, -- exploradorDisfrazBaila_00014
+               { x=0, y=816, width=175, height=272 }, -- exploradorDisfrazBaila_00015
+               { x=175, y=816, width=175, height=272 }, -- exploradorDisfrazBaila_00016
+           },
+    
+           sheetContentWidth = 875,
+           sheetContentHeight = 1088
+ 
+       } 
+       kwkexp_sheet = graphics.newImageSheet( spriteDir.. "expbaila.png", kwkexp_options ) 
+       kwkexp_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       kwkexp = display.newSprite(kwkexp_sheet, kwkexp_seq ) 
+       kwkexp:play(); 
+       kwkexp.x = 370; kwkexp.y = 260;
+       kwkexp.xScale = 1.55; 
+       kwkexp.yScale = 1.57;  
+       danceGroup:insert(kwkexp); 
+
+       -- carrozaSimple positioning 
+       carrozaSimple = display.newImageRect( imgDir.. "p30_carrozasimple.png", 672, 575 ); 
+       carrozaSimple.x = 370; carrozaSimple.y = 395;
+       danceGroup:insert(carrozaSimple); 
+
+       menuGroup:insert( danceGroup )
+
+       danceGroup:translate( -danceGroup[3].contentWidth , 0 )
+
+       local function onCompleteTransition( event )
+        -- body
+        if ( audio.isChannelPlaying( 2 ) ) then
+          audio.stop( 2 )
+        end
+        audio.dispose( audioHandle )
+        audioHandle = nil
+        cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+        director:changeScene( "page_31", "fade" )
+       end
+
+       audioHandle = audio.loadSound( audioDir.."samba.mp3" )
+       audio.play( audioHandle, {channel = 2} )
+       transition.to( danceGroup, {  time=20000, x= display.contentWidth + danceGroup[3].contentWidth , y=0, onComplete=onCompleteTransition} )
+ 
+       _G.LastPage = curPage 
 
        -- FondoBrasil positioning 
        FondoBrasil = display.newImageRect( imgDir.. "p30_fondobrasil.png", 1288, 809 ); 
@@ -52,13 +150,6 @@ function new()
        FondoBrasil.oriX = FondoBrasil.x; FondoBrasil.oriY = FondoBrasil.y 
        FondoBrasil.name = "FondoBrasil" 
        menuGroup:insert(1,FondoBrasil); menuGroup.FondoBrasil = FondoBrasil 
-
-       -- FondoDisfrazado positioning 
-       FondoDisfrazado = display.newImageRect( imgDir.. "p30_fondodisfrazado.png", 1280, 799 ); 
-       FondoDisfrazado.x = 640; FondoDisfrazado.y = 399; FondoDisfrazado.alpha = 1; FondoDisfrazado.oldAlpha = 1 
-       FondoDisfrazado.oriX = FondoDisfrazado.x; FondoDisfrazado.oriY = FondoDisfrazado.y 
-       FondoDisfrazado.name = "FondoDisfrazado" 
-       menuGroup:insert(FondoDisfrazado); menuGroup.FondoDisfrazado = FondoDisfrazado 
  
        -- Group(s) creation 
 

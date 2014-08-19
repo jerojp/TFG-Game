@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -44,6 +44,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p18_capa_1.png", 0, 0 ); 
@@ -144,7 +145,7 @@ function new()
               if (_G.Phase == 1) then
                 number = 30  
               else
-                number = 33
+                number = 34
             end
             elseif (_G.Level == 2) then
               if (_G.Phase == 1) then

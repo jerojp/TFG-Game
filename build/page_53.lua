@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -41,9 +41,12 @@ function new()
  
        -- Layer names 
        local FodoChina  
+       local kwkjaponesa  
+       local kwkexp  
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- FodoChina positioning 
        FodoChina = display.newImageRect( imgDir.. "p53_fodochina.png", 1280, 808 ); 
@@ -51,6 +54,52 @@ function new()
        FodoChina.oriX = FodoChina.x; FodoChina.oriY = FodoChina.y 
        FodoChina.name = "FodoChina" 
        menuGroup:insert(1,FodoChina); menuGroup.FodoChina = FodoChina 
+
+       -- kwkjaponesa positioning 
+       kwkjaponesa = display.newImageRect( imgDir.. "kwkjaponesa.png", 258, 360 ); 
+       kwkjaponesa.x = 160; kwkjaponesa.y = 601; kwkjaponesa.alpha = 1; kwkjaponesa.oldAlpha = 1 
+       kwkjaponesa.oriX = kwkjaponesa.x; kwkjaponesa.oriY = kwkjaponesa.y 
+       kwkjaponesa.name = "kwkjaponesa" 
+       menuGroup:insert(kwkjaponesa); menuGroup.kwkjaponesa = kwkjaponesa 
+
+       -- kwkexp positioning 
+       local kwkexp_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=2, y=2, width=229, height=395 }, -- ExploradorJapones_00000
+               { x=233, y=2, width=229, height=395 }, -- ExploradorJapones_00001
+               { x=464, y=2, width=229, height=395 }, -- ExploradorJapones_00002
+               { x=695, y=2, width=229, height=395 }, -- ExploradorJapones_00003
+               { x=2, y=399, width=229, height=395 }, -- ExploradorJapones_00004
+               { x=233, y=399, width=229, height=395 }, -- ExploradorJapones_00005
+               { x=464, y=399, width=229, height=395 }, -- ExploradorJapones_00006
+               { x=695, y=399, width=229, height=395 }, -- ExploradorJapones_00007
+               { x=2, y=796, width=229, height=395 }, -- ExploradorJapones_00008
+               { x=233, y=796, width=229, height=395 }, -- ExploradorJapones_00009
+               { x=464, y=796, width=229, height=395 }, -- ExploradorJapones_00010
+               { x=695, y=796, width=229, height=395 }, -- ExploradorJapones_00011
+               { x=2, y=1193, width=229, height=395 }, -- ExploradorJapones_00012
+               { x=233, y=1193, width=229, height=395 }, -- ExploradorJapones_00013
+               { x=464, y=1193, width=229, height=395 }, -- ExploradorJapones_00014
+               { x=695, y=1193, width=229, height=395 }, -- ExploradorJapones_00015
+               { x=2, y=1590, width=229, height=395 }, -- ExploradorJapones_00016
+           },
+    
+           sheetContentWidth = 926,
+           sheetContentHeight = 1987
+ 
+       } 
+       kwkexp_sheet = graphics.newImageSheet( spriteDir.. "expjapones.png", kwkexp_options ) 
+       kwkexp_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       kwkexp = display.newSprite(kwkexp_sheet, kwkexp_seq ) 
+       kwkexp:play(); 
+       kwkexp.x = 416; kwkexp.y = 635; kwkexp.alpha = 1; kwkexp.oldAlpha = 1 
+       kwkexp.xScale = 0.7; 
+       kwkexp.yScale = 0.7; 
+       kwkexp.oriX = kwkexp.x; kwkexp.oriY = kwkexp.y 
+       kwkexp.name = "kwkexp" 
+       menuGroup:insert(kwkexp); menuGroup.kwkexp = kwkexp 
  
        -- Group(s) creation 
 
@@ -62,11 +111,70 @@ function new()
           cancelAllTimers(); cancelAllTransitions() 
        end 
 
+       function cleanSprite() 
+           kwkexp_sheet = nil; kwkexp = nil 
+ 
+       end 
+
        -- (BOTTOM) External code will render here 
+       require( "ControlScene" )
+require("viewGenius")
+
+kwkexp:pause( )
+
+--timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )
+--_G.Subtitle = false
+--_G.AutoNextPage = true
+_G.Level = 4
+_G.Phase = 2
+
+local gpGenius = createGenius( )
+gpGenius:scale( 0.3, 0.3 )
+gpGenius:translate( display.contentWidth - (gpGenius.Tablet.contentWidth*1.85) , display.contentHeight - (gpGenius.Tablet.contentHeight *1.10) )
+gpGenius.alpha = 0
+
+local cam = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
+cam:setFillColor( 250 )
+cam.alpha = 0
+
+local function onFinalizeScene( event )
+	-- body
+	local aud = {"exp_ja20.mp3"}
+	local sub = {"Estoy muy agusto aquí, pero es hora de irse. Aunque..., Ali, el jefe se va a enfadar porque no hemos encontrado ningún tesoro."}
+
+	addCharacter(kwkexp, aud, sub)
+
+	aud = {"genio_ja3.mp3"}
+	sub = {"Al contrario. La acción que has hecho de liberar a un animal preso es más valioso que cualquier premio. Así que aquí tienes tu recompensa."}
+
+	addCharacter(gpGenius.genius, aud, sub, gpGenius)
+
+	local sec = {1, 2}
+	setSecuence( sec )
+
+	playScene( "page_11" )
+
+end
+
+local function onCompletePhoto( event )
+		-- body
+	transition.to( cam, {time = 300, alpha = 0, onComplete=onFinalizeScene} )	
+end
+
+local function takePhoto( event )
+	-- body
+	transition.to( cam, {time = 300, alpha = 1, onComplete=onCompletePhoto} )
+end
+
+timerStash.photo = timer.performWithDelay( 700, takePhoto, 1 ) 
 
 
     end 
     drawScreen() 
+
+    function clean() 
+       cleanSprite() 
+    end 
 
     return menuGroup 
 end 

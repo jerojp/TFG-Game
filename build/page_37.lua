@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -46,6 +46,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
+       _G.LastPage = curPage 
 
        -- kwkfondoPS positioning 
        kwkfondoPS = display.newImageRect( imgDir.. "kwkfondops.png", 1280, 800 ); 
@@ -138,6 +139,8 @@ function new()
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
+require("viewGenius")
+
 kwkexp:pause( )
 kwkesq:pause()
 
@@ -157,12 +160,12 @@ addCharacter(kwkexp, aud, sub)
 aud = {"genio_ps1.mp3"}
 sub = {"¿Un qué? No sé qué es eso. Escríbelo en la tablet a ver que puedo encontrar en Internet."}
 
-addCharacter(gpGenius.genius, aud, sub, nil, gpGenius)
+addCharacter(gpGenius.genius, aud, sub, gpGenius)
 
 local sec = {1, 2}
 setSecuence( sec )
 
-playScene( "page_15" ) 
+playScene( "page_38" ) 
 
 
     end 

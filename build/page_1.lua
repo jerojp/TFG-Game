@@ -3,7 +3,7 @@
 module(..., package.seeall) 
 
 function new() 
-    local numPages = 64 
+    local numPages = 65 
     local menuGroup = display.newGroup() 
     local dispose 
     local _W = display.contentWidth; 
@@ -60,6 +60,7 @@ Refactorizar para quitar el nombre del archivo saveGame. Añadir la opcion de re
 ]]
 
 local widget = require( "widget" )
+require( "viewOptions" )
 
 local function butIntro(event) 
     if (event.phase == "ended" or event.phase == "cancelled") then
@@ -83,7 +84,7 @@ local function continueGame( event )
 	-- body
 	if (event.phase == "ended" or event.phase == "cancelled") then
         loadSettingGame( )
-        dispose(); director:changeScene( "page_".._G.CurrentPage, "fade" ) 
+        dispose(); director:changeScene( "page_".._G.LastPage, "fade" ) 
     end
 	
 	return true
@@ -97,9 +98,23 @@ local function btnEtadistics( event )
     end
 end
 
+local function btnOptions( event )
+    -- body
+    if (event.phase == "ended" or event.phase == "cancelled") then
+       createPanelOptions( )  
+    end
+end
+
+local function btnStoreToys( event )
+    -- body
+    if (event.phase == "ended" or event.phase == "cancelled") then
+       dispose(); director:changeScene( "page_65", "fade" ) 
+    end
+end
+
 local continue = widget.newButton{
 		width = 500,
-    	height = 130,
+    	height = 100,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
     	label = "Continuar",
@@ -109,10 +124,8 @@ local continue = widget.newButton{
 }
 
 continue.x = display.contentCenterX
-continue.y = display.contentCenterY - 200
+continue.y = display.contentCenterY - 300
 
-print( "Variable :" )
-print( _G.GameStarted )
 if (not _G.GameStarted) then
     continue.alpha = 0
 else 
@@ -121,7 +134,7 @@ end
 
 local inicGame  = widget.newButton{
 		width = 500,
-    	height = 130,
+    	height = 100,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
     	label = "Nueva Partida",
@@ -131,11 +144,40 @@ local inicGame  = widget.newButton{
 }
 
 inicGame.x = display.contentCenterX
-inicGame.y = display.contentCenterY
+inicGame.y = display.contentCenterY - 150
+
+
+local options  = widget.newButton{
+        width = 500,
+        height = 100,
+        defaultFile = imgDir.. "button.png",
+        --overFile = imgDir.. "button.png",
+        label = "Opciones",
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+        fontSize = 30,
+        onEvent = btnOptions
+}
+
+options.x = display.contentCenterX
+options.y = display.contentCenterY
+
+local storeToys  = widget.newButton{
+        width = 500,
+        height = 100,
+        defaultFile = imgDir.. "button.png",
+        --overFile = imgDir.. "button.png",
+        label = "Juguetes",
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+        fontSize = 30,
+        onEvent = btnStoreToys
+}
+
+storeToys.x = display.contentCenterX
+storeToys.y = display.contentCenterY + 150
 
 local statistics  = widget.newButton{
         width = 500,
-        height = 130,
+        height = 100,
         defaultFile = imgDir.. "button.png",
         --overFile = imgDir.. "button.png",
         label = "Estadisticas",
@@ -145,7 +187,7 @@ local statistics  = widget.newButton{
 }
 
 statistics.x = display.contentCenterX
-statistics.y = display.contentCenterY + 200
+statistics.y = display.contentCenterY + 300
  
        _G.CurrentPage = curPage 
 
@@ -237,7 +279,7 @@ statistics.y = display.contentCenterY + 200
        --Animations
        gtStash.gt_animSun = gtween.new( sun, 3, {  x=192, y=194,  alpha=1, rotation=0, xScale=1, yScale=1,}, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = true,  delay=0.1, ""}) 
 
-       local onEnd_animPlane_549 = function() 
+       local onEnd_animPlane_270 = function() 
           plane.x = plane.oriX; plane.y = plane.oriY; 
           plane.xScale = 1;plane.yScale = 1; plane.alpha = plane.oldAlpha; plane.rotation = 0; plane.isVisible = true; 
        end --ends reStart for animPlane 
@@ -251,7 +293,7 @@ statistics.y = display.contentCenterY + 200
          { x = -233, y = 72}, 
          { x = -233, y = 72}, 
          { x = -233, y = 72}, 
-angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0.1, onComplete=onEnd_animPlane_549, breadcrumb = true, breadAnchor = 6, breadShape = "circle", breadW = 10, breadH = 10, breadColor = {255,255,255}, breadInterval = 20, breadTimer = 1}, {  x=1407, y=237,  alpha=1, rotation=0, xScale=1, yScale=1, newAngle=180}) 
+angle = 0       }, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0.1, onComplete=onEnd_animPlane_270, breadcrumb = true, breadAnchor = 6, breadShape = "circle", breadW = 10, breadH = 10, breadColor = {255,255,255}, breadInterval = 20, breadTimer = 1}, {  x=1407, y=237,  alpha=1, rotation=0, xScale=1, yScale=1, newAngle=180}) 
 
 
        -- Button event listeners 
