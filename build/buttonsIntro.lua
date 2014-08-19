@@ -52,6 +52,8 @@ local function btnStoreToys( event )
     -- body
     if (event.phase == "ended" or event.phase == "cancelled") then
        dispose(); director:changeScene( "page_65", "fade" ) 
+       --[[local parameters = {nameToy="Elefante", pathToy="objeto241.png", costToy="300", widthToy = 233*1.5 , heightToy = 168*1.5}
+        dispose(); director:changeScene( parameters, "viewNewToy", "fade" ) ]]--
     end
 end
 
