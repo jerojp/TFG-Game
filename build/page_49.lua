@@ -44,7 +44,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p49_capa_1.png", 0, 0 ); 

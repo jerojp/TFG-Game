@@ -164,7 +164,7 @@ for i=1,#_G.TimerResults[_G.IndexStat] do
 		contAux = contAux + _G.TimerResults[_G.IndexStat][i]
 	end
 end
-textFailure = display.newText( "Tiempo total: "..roundToFirstDecimal(contAux), 640, 130, native.systemFont, 25 )
+textFailure = display.newText( "Tiempo total: "..roundToFirstDecimal(contAux).." seg", 640, 130, native.systemFont, 25 )
 textFailure:setFillColor( 117, 76, 36 )
 myGroup:insert(textFailure)
 
@@ -227,7 +227,7 @@ myGroup:insert(textFail)
 local textTime = display.newText( "TIEMPO", 60, 710, native.systemFontBold, 25 )
 textTime:setFillColor( 117, 76, 36 )
 myGroup:insert(textTime)
-local textExpTime = display.newText( "Indica el tiempo transcurrido en proporcionar una respuesta correcta valor de tiempo medio esperado : 1.50 s", 180, 710, 800, 0, native.systemFont, 25 )
+local textExpTime = display.newText( "Indica el tiempo transcurrido en proporcionar una respuesta correcta valor de tiempo medio esperado : 1.50 seg", 180, 710, 800, 0, native.systemFont, 25 )
 textExpTime:setFillColor( 117, 76, 36 )
 myGroup:insert(textExpTime)
 --[[
@@ -291,7 +291,7 @@ end
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_23", "fade" ) 
             end 
-            timerStash.newTimer_789 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_484 = timer.performWithDelay(0, myClosure_switch, 1) 
          end 
        end 
 

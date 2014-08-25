@@ -36,7 +36,9 @@ local function inicDialog( )
 	local sec = {2, 1, 2, 1, 3}
 	setSecuence( sec )
 
-	playScene( "page_11" )
+	local parameters = {nameToy="Abeja", pathToy="objeto141.png", costToy=_G.PriceToys.bee, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_11", indexToy = 2}
+
+	playScene( "viewNewToy", parameters )
 end
 
 local function onCompleteTransition( event )
@@ -54,7 +56,7 @@ local function inicTransition( event )
 	-- body
 	--audioHandle = audio.loadSound( audioDir.."samba.mp3" )
 	--audio.play( audioHandle, {channel = 2} )
-	transition.to( machine, {  time=1000, x= machine.x , y=machine.y + 200, onComplete=onCompleteTransition} )
+	transitionStash.machine = transition.to( machine, {  time=1000, x= machine.x , y=machine.y + 200, onComplete=onCompleteTransition} )
 end
 
 HoleUp.alpha = 1

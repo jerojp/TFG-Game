@@ -62,7 +62,7 @@
        local maxAciertosSeguidosIncremento = 3
        local n_aciertosSegTotales = 0
        local n_objetos_nuevos
-       local incrementCoin = 5
+       local incrementCoin = 25
        local timerApplause = false
        local resultsTest = {} -- number of failures for this exercices for each level : resultsTest[1] == X failure for level 1
        local timerTest = {}
@@ -70,7 +70,7 @@
        local contadorTiempo 
        _G.TotalAddCoinEx = 0
        
-       textLevel = display.newText( "Nivel : "..nivelActual , 20, 70, native.systemFont, 30 ) 
+       textLevel = display.newText( "Nivel : "..nivelActual , 20, 170, native.systemFont, 30 ) 
        textLevel:setTextColor (229, 185, 89)
        menuGroup:insert(textLevel)
    
@@ -357,6 +357,44 @@
 
        function act_eliminarVid(event) 
            --External code 
+        local myDialog
+        local function listenerC( event )
+          -- body
+          local object = event.target
+
+           if event.phase == "began" then
+            display.getCurrentStage():setFocus(object)
+            object.isFocus = true
+           elseif object.isFocus then
+            if event.phase == "ended" or event.phase == "cancelled" then
+                display.getCurrentStage():setFocus( nil )
+                object.isFocus = false
+                deleteMyDialog( myDialog )
+                cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+                director:changeScene( "page_15", "fade" ) 
+            end
+           end
+           return true
+        end
+        local function listenerD( event )
+          -- body
+          local object = event.target
+
+           if event.phase == "began" then
+            display.getCurrentStage():setFocus(object)
+            object.isFocus = true
+           elseif object.isFocus then
+            if event.phase == "ended" or event.phase == "cancelled" then
+                display.getCurrentStage():setFocus( nil )
+                object.isFocus = false
+                deleteMyDialog( myDialog )
+                cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+                director:changeScene( "page_11", "fade" ) 
+            end
+           end
+           return true
+        end
+
         if (vidas > 0) then
          kwkvida[vidas]:removeSelf( );
          kwkvida[vidas]=nil
@@ -364,6 +402,7 @@
          saveKwikVars({"vidas",vidas - 1}) 
          if (vidas == 0) then
             transitionStash.newTransition_577 = transition.to( TextoFinalIncor, {alpha=TextoFinalIncor.oldAlpha, time=1000, delay=0}) 
+            myDialog = createMyDialog( "Nivel no superado", "¿Deseas repetir el ejercicio?", nil, "Si", listenerC, "No", listenerD)
          end
        end 
       end 
@@ -594,13 +633,16 @@
             number = 1
           end
         end
-
+        cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
         dispose(); director:changeScene( "page_"..number, "fade" ) 
       end
 
 
        local function statisticsUpdate()
           local auxLevel = math.fmod(nivelActual, 11)
+          if (_G.Phase == 2) then
+            auxLevel = auxLevel + 1
+          end
           print( "Statitics LEVEL : "..auxLevel )
           if (resultsTest[auxLevel] > 0) then
               resultsTest[auxLevel] = resultsTest[auxLevel] + n_fallosNivel
@@ -673,7 +715,11 @@
                 intervaloNuevoOb = math.floor(intervaloNuevoOb / 2) -- division integer
                 n_aciertosSegTotales = 0
               end
-              table.insert( _G.UpLevelSample[_G.Level*2 - (math.fmod(_G.Phase, 2))], nivelActual)
+              local auxLevel = math.fmod(nivelActual, 11)
+              if (_G.Phase == 2) then
+                auxLevel = auxLevel + 1
+              end
+              table.insert( _G.UpLevelSample[_G.Level*2 - (math.fmod(_G.Phase, 2))], auxLevel)
             else
               n_aciertosSegTotales = n_aciertosSegTotales + 1  
             end

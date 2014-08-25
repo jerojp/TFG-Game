@@ -47,7 +47,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- background positioning 
        background = display.newImageRect( imgDir.. "p21_background.png", 1280, 798 ); 

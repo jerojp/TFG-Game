@@ -39,153 +39,221 @@ function new()
        end 
 
  
-       -- Button names 
-       local butLetraE
-       local but_127
-       local but_990
-       local but_545
-
        -- Layer names 
-       local continents  
-       local FlechaMapa  
-       local FlechaMapaCopia  
-       local O  
-       local U  
-       local I  
-       local A  
-       local E  
+       local Capa_1  
 
        -- (TOP) External code will render here 
-       _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       require("MyDialog")
+local groupFlLetter = display.newGroup( )
+local groupTick = display.newGroup( )
+local continents  
+local FlechaMapaU  
+local FlechaMapaE  
+local FlechaI  
+local FlechaMapaO  
+local FlechaMapaA  
+local Tickverde  
+local limitPages = {30, 34, 19, 22, 39, 43, 50, 53, 58, 61}
+local inicPages = {25, 12, 35, 44, 54}
+local myDialog
+local page
 
-       -- continents positioning 
-       continents = display.newImageRect( imgDir.. "p11_continents.png", 1280, 800 ); 
-       continents.x = 640; continents.y = 400; continents.alpha = 1; continents.oldAlpha = 1 
-       continents.oriX = continents.x; continents.oriY = continents.y 
-       continents.name = "continents" 
-       menuGroup:insert(1,continents); menuGroup.continents = continents 
+local function removeStatitics(  )
+  -- body
+  --Exercise Sample-Selection
+  local index = (_G.Level*2 - 1)
+  if (_G.Results[index] and _G.Results[index+1]) then
+    print( "Borradas estadisticas ejercicio IGUALACION-MUESTRA" )
+    table.remove( _G.Results, index )
+    table.remove( _G.Results, index+1 )
+    table.remove( _G.TimerResults, index )
+    table.remove( _G.TimerResults, index+1 )
+  end
+  --Exercise Draw
+  local results, reason = os.remove( system.pathForFile( "screen".._G.Level.."1.jpg", system.DocumentsDirectory  ) )
+  if results then
+     print( "Borradas estadisticas ejercicio GRAFIA" )
+  else
+     print( "file does not exist", reason )
+  end
+  results, reason = os.remove( system.pathForFile( "screen".._G.Level.."2.jpg", system.DocumentsDirectory  ) )
+  
+  --Exercise Rec
+  results, reason = os.remove( system.pathForFile( "audioExLet".._G.Level.."1.wav", system.DocumentsDirectory  ) )
+  if results then
+     print( "Borradas estadisticas ejercicio VOZ" )
+  else
+     print( "file does not exist", reason )
+  end
+  results, reason = os.remove( system.pathForFile( "audioExLet".._G.Level.."2.wav", system.DocumentsDirectory  ) )
+end
 
-       -- FlechaMapa positioning 
-       FlechaMapa = display.newImageRect( imgDir.. "p11_flechamapa.png", 85, 100 ); 
-       FlechaMapa.x = 632; FlechaMapa.y = 120; FlechaMapa.alpha = 1; FlechaMapa.oldAlpha = 1 
-       FlechaMapa.oriX = FlechaMapa.x; FlechaMapa.oriY = FlechaMapa.y 
-       FlechaMapa.name = "FlechaMapa" 
-       menuGroup:insert(FlechaMapa); menuGroup.FlechaMapa = FlechaMapa 
+local function goToPage( p )
+       -- body
+       dispose(); director:changeScene( "page_"..p, "fade" )
+end
 
-       -- FlechaMapaCopia positioning 
-       FlechaMapaCopia = display.newImageRect( imgDir.. "p11_flechamapacopia.png", 85, 100 ); 
-       FlechaMapaCopia.x = 414; FlechaMapaCopia.y = 373; FlechaMapaCopia.alpha = 1; FlechaMapaCopia.oldAlpha = 1 
-       FlechaMapaCopia.oriX = FlechaMapaCopia.x; FlechaMapaCopia.oriY = FlechaMapaCopia.y 
-       FlechaMapaCopia.name = "FlechaMapaCopia" 
-       menuGroup:insert(FlechaMapaCopia); menuGroup.FlechaMapaCopia = FlechaMapaCopia 
+local function listenerC( event )
+       -- body
+       local object = event.target
 
-       -- O positioning 
-       O = display.newImageRect( imgDir.. "p11_o.png", 55, 54 ); 
-       O.x = 1057; O.y = 197; O.alpha = 1; O.oldAlpha = 1 
-       O.oriX = O.x; O.oriY = O.y 
-       O.name = "O" 
-       menuGroup:insert(O); menuGroup.O = O 
+       if event.phase == "began" then
+        display.getCurrentStage():setFocus(object)
+        object.isFocus = true
+       elseif object.isFocus then
+        if event.phase == "ended" or event.phase == "cancelled" then
+            display.getCurrentStage():setFocus( nil )
+            object.isFocus = false
+            
+            removeStatitics()
 
-       -- U positioning 
-       U = display.newImageRect( imgDir.. "p11_u.png", 66, 60 ); 
-       U.x = 633; U.y = 334; U.alpha = 1; U.oldAlpha = 1 
-       U.oriX = U.x; U.oriY = U.y 
-       U.name = "U" 
-       menuGroup:insert(U); menuGroup.U = U 
+            deleteMyDialog( myDialog )
 
-       -- I positioning 
-       I = display.newImageRect( imgDir.. "p11_i.png", 63, 81 ); 
-       I.x = 643; I.y = 735; I.alpha = 1; I.oldAlpha = 1 
-       I.oriX = I.x; I.oriY = I.y 
-       I.name = "I" 
-       menuGroup:insert(I); menuGroup.I = I 
+            goToPage( page )
+        end
+       end
+       return true
+end
 
-       -- A positioning 
-       A = display.newImageRect( imgDir.. "p11_a.png", 35, 26 ); 
-       A.x = 414; A.y = 351; A.alpha = 1; A.oldAlpha = 1 
-       A.oriX = A.x; A.oriY = A.y 
-       A.name = "A" 
-       menuGroup:insert(A); menuGroup.A = A 
+local function listenerD( event )
+       -- body
+       local object = event.target
 
-       -- E positioning 
-       E = display.newImageRect( imgDir.. "p11_e.png", 30, 26 ); 
-       E.x = 633; E.y = 99; E.alpha = 1; E.oldAlpha = 1 
-       E.oriX = E.x; E.oriY = E.y 
-       E.name = "E" 
-       menuGroup:insert(E); menuGroup.E = E 
+       if event.phase == "began" then
+        display.getCurrentStage():setFocus(object)
+        object.isFocus = true
+       elseif object.isFocus then
+        if event.phase == "ended" or event.phase == "cancelled" then
+            display.getCurrentStage():setFocus( nil )
+            object.isFocus = false
+            deleteMyDialog( myDialog )
+        end
+       end
+       return true
+end
+
+local function goToLevelLetter( event )
+       -- body
+       local obj = event.target
+
+       if event.phase == "began" then
+        display.getCurrentStage():setFocus(obj)
+        obj.isFocus = true
+       elseif obj.isFocus then
+        if event.phase == "ended" or event.phase == "cancelled" then
+            display.getCurrentStage():setFocus( nil )
+            obj.isFocus = false
+            _G.Level = obj.index
+            print( "Nivel"..obj.index )
+            if (_G.LastPageLevel[obj.index] <= limitPages[obj.index*2 - 1]) then
+              _G.Phase = 1
+            else
+              _G.Phase = 2
+            end
+             
+            if (_G.LastPageLevel[obj.index] == limitPages[obj.index*2]) then
+              myDialog = createMyDialog( "ADVERTENCIA", "Ya has completado este nivel, si inicias de nuevo este nivel perderÃ¡s todos los resultados obtenidos en Ã©l.", nil, "Confirmar", listenerC, "Cancelar", listenerD)
+              page = inicPages[obj.index]
+            else
+              goToPage(_G.LastPageLevel[obj.index])    
+            end
+        end
+       end
+       return true
+end
+
+-- (TOP) External code will render here 
+_G.CurrentPage = curPage 
+_G.LastPage = curPage 
+
+-- continents positioning 
+continents = display.newImageRect( imgDir.. "p11_continents.png", 1280, 800 ); 
+continents.x = 640; continents.y = 400; 
+menuGroup:insert(1,continents);
+
+-- FlechaMapaA positioning 
+FlechaMapaA = display.newImageRect( imgDir.. "p11_flechamapaa.png", 132, 206 ); 
+FlechaMapaA.x = 394; FlechaMapaA.y = 326;
+FlechaMapaA.index = 1
+FlechaMapaA:addEventListener( "touch", goToLevelLetter )
+groupFlLetter:insert(FlechaMapaA);
+
+-- FlechaMapaE positioning 
+FlechaMapaE = display.newImageRect( imgDir.. "p11_flechamapae.png", 132, 167 ); 
+FlechaMapaE.x = 632; FlechaMapaE.y = 87;
+FlechaMapaE.index = 2
+FlechaMapaE:addEventListener( "touch", goToLevelLetter )
+groupFlLetter:insert(FlechaMapaE); 
+
+-- FlechaI positioning 
+FlechaI = display.newImageRect( imgDir.. "p11_flechai.png", 132, 204 ); 
+FlechaI.x = 675; FlechaI.y = 664; 
+FlechaI.index = 3
+FlechaI:addEventListener( "touch", goToLevelLetter )
+groupFlLetter:insert(FlechaI);
+
+-- FlechaMapaO positioning 
+FlechaMapaO = display.newImageRect( imgDir.. "p11_flechamapao.png", 132, 206 ); 
+FlechaMapaO.x = 1068; FlechaMapaO.y = 120;
+FlechaMapaO.index = 4
+FlechaMapaO:addEventListener( "touch", goToLevelLetter )
+groupFlLetter:insert(FlechaMapaO); 
+
+-- FlechaMapaU positioning 
+FlechaMapaU = display.newImageRect( imgDir.. "p11_flechamapau.png", 203, 138 ); 
+FlechaMapaU.x = 689; FlechaMapaU.y = 308; 
+FlechaMapaU.index = 5
+FlechaMapaU:addEventListener( "touch", goToLevelLetter )
+groupFlLetter:insert(FlechaMapaU);
+
+menuGroup:insert(groupFlLetter)
+
+
+for i=1,groupFlLetter.numChildren do
+       Tickverde = display.newImageRect( imgDir.. "tickVerde.png", 45, 50 ); 
+       Tickverde.x = groupFlLetter[i].x - Tickverde.contentWidth + 15; Tickverde.y = groupFlLetter[i].y - 62;
+       Tickverde.alpha = 0
+       groupTick:insert(Tickverde);
+       Tickverde = display.newImageRect( imgDir.. "tickVerde.png", 45, 50 ); 
+       Tickverde.x = groupFlLetter[i].x + Tickverde.contentWidth - 10; Tickverde.y = groupFlLetter[i].y - 62;
+       Tickverde.alpha = 0 
+       groupTick:insert(Tickverde);    
+end
+
+--Correct position of the tick E
+groupTick[3].y = groupTick[3].y + 10
+groupTick[4].y = groupTick[4].y + 10
+--Correct position of the tick U
+groupTick[groupTick.numChildren - 1].x = groupTick[groupTick.numChildren - 1].x + 30
+groupTick[groupTick.numChildren - 1].y = groupTick[groupTick.numChildren - 1].y + 30
+groupTick[groupTick.numChildren].x = groupTick[groupTick.numChildren].x + 30
+groupTick[groupTick.numChildren].y = groupTick[groupTick.numChildren].y + 30 
+menuGroup:insert(groupTick)
+
+local contLetter = 1
+for i=1,groupTick.numChildren, 2 do
+        print( "Nivel "..contLetter )
+        print( "Pagina ".._G.LastPageLevel[contLetter] )
+        print( "Limit "..limitPages[i] )
+       if (_G.LastPageLevel[contLetter] > limitPages[i]) then
+              groupTick[i].alpha = 1
+              if (_G.LastPageLevel[contLetter] >= limitPages[i+1]) then -- _G.lastPageLevel[1] can never be largue than 34  
+                     groupTick[i+1].alpha = 1
+              end
+       end
+       contLetter = contLetter + 1
+end 
+
+       -- Capa_1 positioning 
+       Capa_1 = display.newImageRect( imgDir.. "p11_capa_1.png", 0, 0 ); 
+       Capa_1.x = 0; Capa_1.y = 0; Capa_1.alpha = 1; Capa_1.oldAlpha = 1 
+       Capa_1.oriX = Capa_1.x; Capa_1.oriY = Capa_1.y 
+       Capa_1.name = "Capa_1" 
+       menuGroup:insert(1,Capa_1); menuGroup.Capa_1 = Capa_1 
  
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
-
-       -- Button event listeners 
-       local function onFlechaMapaEvent(event) 
-          butLetraE(FlechaMapa) 
-          return true 
-       end 
-       FlechaMapa:addEventListener("tap", onFlechaMapaEvent ) 
-       local function onIEvent(event) 
-          but_127(I) 
-          return true 
-       end 
-       I:addEventListener("tap", onIEvent ) 
-       local function onOEvent(event) 
-          but_990(O) 
-          return true 
-       end 
-       O:addEventListener("tap", onOEvent ) 
-       local function onAEvent(event) 
-          but_545(A) 
-          return true 
-       end 
-       A:addEventListener("tap", onAEvent ) 
-
-       -- Button functions 
-       function butLetraE(self) 
-           _G.Level = 2
-          saveKwikVars({"Level",2}) 
-           _G.Phase = 1
-          saveKwikVars({"Phase",1}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_12", "fade" ) 
-            end 
-            timerStash.newTimer_286 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
-
-       function but_127(self) 
-           _G.Level = 3
-          saveKwikVars({"Level",3}) 
-           _G.Phase = 1
-          saveKwikVars({"Phase",1}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_35", "fade" ) 
-            end 
-            timerStash.newTimer_303 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
-
-       function but_990(self) 
-           _G.Phase = 1
-          saveKwikVars({"Phase",1}) 
-           _G.Level = 4
-          saveKwikVars({"Level",4}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_44", "fade" ) 
-            end 
-            timerStash.newTimer_310 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
-
-       function but_545(self) 
-           _G.Level = 1
-          saveKwikVars({"Level",1}) 
-           _G.Phase = 1
-          saveKwikVars({"Phase",1}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_25", "fade" ) 
-            end 
-            timerStash.newTimer_318 = timer.performWithDelay(0, myClosure_switch, 1) 
-       end 
-
 
        -- do not swipe this page 
 

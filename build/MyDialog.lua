@@ -10,7 +10,7 @@ local function nothingTap( event )
 	return true
 end
 
-function createMyDialog ( labelPr, labelSec, listenerC, listenerD)
+function createMyDialog ( labelPr, labelSec, color, labelC, listenerC, labelD, listenerD)
 	-- body
 	local mygroup = display.newGroup( )
 
@@ -20,11 +20,15 @@ function createMyDialog ( labelPr, labelSec, listenerC, listenerD)
 	rectangleHiddle:addEventListener( "tap", nothingTap )
 	mygroup:insert( rectangleHiddle )
 
-	local rect = display.newRoundedRect( display.contentCenterX-300, display.contentCenterY-200, 600, 300, 10 )
-	rect:setFillColor( 100, 100, 100 )
+	local rect = display.newRoundedRect( display.contentCenterX-300, display.contentCenterY-200, 600, 300, 42 )
+	if (color) then
+		rect:setFillColor( color.R, color.G, color.B )
+	else
+		rect:setFillColor( 255,154,88 )
+	end
 	mygroup:insert( rect )
 
-	local textPr = display.newText( labelPr, display.contentCenterX, display.contentCenterY-180, native.systemFontBold, 38 )
+	local textPr = display.newText( labelPr, display.contentCenterX, display.contentCenterY-180, native.systemFontBold, 40 )
 	textPr.x = display.contentCenterX
 	mygroup:insert( textPr )
 
@@ -32,36 +36,44 @@ function createMyDialog ( labelPr, labelSec, listenerC, listenerD)
 	textSec.x = display.contentCenterX
 	mygroup:insert( textSec )
 
+	local colorLabelBtn = {R=10, G=25, B=106}
+	
 	local continue = widget.newButton{
 		width = 150,
-    	height = 80,
+    	height = 60,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
-    	label = "Confirmar",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+    	label = labelC,
+    	labelColor = { default={ colorLabelBtn.R, colorLabelBtn.G, colorLabelBtn.B }, over={ 0, 0, 210 } },
     	fontSize = 25,
     	onEvent = listenerC,
 	}
-
-	continue.x = display.contentCenterX - 150
 	continue.y = display.contentCenterY + 45
+	continue:setFillColor(  255,248,143 )
 	mygroup:insert( continue )
 
-	local cancel = widget.newButton{
-		width = 150,
-    	height = 80,
-    	defaultFile = imgDir.. "button.png",
-    	--overFile = imgDir.. "button.png",
-    	label = "Cancelar",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    	fontSize = 25,
-    	onEvent = listenerD,
-	}
+	if (listenerD) then
+		continue.x = display.contentCenterX - 150
 
-	cancel.x = display.contentCenterX + 150
-	cancel.y = display.contentCenterY + 45
-	mygroup:insert( cancel )
+		local cancel = widget.newButton{
+			width = 150,
+    		height = 60,
+    		defaultFile = imgDir.. "button.png",
+    		--overFile = imgDir.. "button.png",
+    		label = labelD,
+    		labelColor = { default={ colorLabelBtn.R, colorLabelBtn.G, colorLabelBtn.B }, over={ 0, 0, 210 } },
+    		fontSize = 25,
+    		onEvent = listenerD,
+		}
 
+		cancel.x = display.contentCenterX + 150
+		cancel.y = display.contentCenterY + 45
+		cancel:setFillColor( 253,87,110 )
+		mygroup:insert( cancel )
+
+	else
+		continue.x = display.contentCenterX
+	end
 	return mygroup
 end
 

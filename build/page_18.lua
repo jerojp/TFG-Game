@@ -44,7 +44,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p18_capa_1.png", 0, 0 ); 
@@ -65,6 +66,7 @@ function new()
 
        -- (BOTTOM) External code will render here 
               local widget = require( "widget" )
+       require( "textCoin" )
        -- Layer names 
        local but_recAudio
        local but_play
@@ -81,6 +83,8 @@ function new()
        local pink = {R=204, G=96, B=147}
        local yellow = {R=242, G=244, B=115}
        local backColors = {red, blue, green, pink, yellow}
+       local receivedMoney = false
+       _G.TotalAddCoinEx = 0
 
        -- (TOP) External code will render here 
 
@@ -91,6 +95,8 @@ function new()
        local ran = math.random(#backColors)
        background:setFillColor( backColors[ran].R, backColors[ran].G, backColors[ran].B)
        menuGroup:insert( background )
+
+       menuGroup:insert( createTextCoin( ) )
 
        local recAudio = display.newImageRect( imgDir.. "recaudio.png", 57, 81 ); 
        recAudio.x = display.contentCenterX-200; recAudio.y = 518;
@@ -172,7 +178,7 @@ function new()
                 number = 1
               end
             end
-
+            cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
             dispose(); director:changeScene( "page_"..number, "fade" ) 
           end
          end
@@ -258,6 +264,10 @@ function new()
                 print( "reproduce" )
                 audioHandle = audio.loadSound( dataFileName, system.DocumentsDirectory )
                 audio.play( audioHandle, {channel = audioChannel, onComplete = onCompleteSound} )
+                if (not receivedMoney) then
+                  textCoinUpdate( 50, "add" )
+                  receivedMoney = true
+                end
                 --media.playSound( dataFileName, system.DocumentsDirectory, onCompleteSound )
               end
             end 

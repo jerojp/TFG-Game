@@ -1,16 +1,14 @@
-    -- Button names 
+      require("MyDialog")
+      -- Button names 
        local butConfirm
-
        -- Action names 
        local actConfirmName 
-
        -- Layer names 
        local textInputName  
        local inputName  
-       local kwkbuttonConfir  
-
-       -- (TOP) External code will render here 
-
+       local kwkbuttonConfir 
+       --others 
+       local age
 
        -- textInputName positioning
        textInputName = display.newText( "Introduce tu edad:", 676, 133, native.systemFontBold, 28 )
@@ -20,7 +18,7 @@
        -- inputName positioning 
        local function fieldHandler_inputName(event) 
                if ( event.phase == "submitted" or event.phase == "ended" )  then  
-                  _G.Age = event.target.text
+                  age = event.target.text
                   native.setKeyboardFocus(nil) 
                end  
        end 
@@ -59,9 +57,34 @@
        kwkbuttonConfir:addEventListener("tap", onkwkbuttonConfirEvent ) 
 
        -- Button functions 
-       function butConfirm(self) 
+       function butConfirm(self)
+          if (age==nil or age="") and system.getInfo("environment")=="device" then
+            local myDialog
+            
+            local function functionC( event )
+              -- body
+              local object = event.target
+
+              if event.phase == "began" then
+                display.getCurrentStage():setFocus(object)
+                object.isFocus = true
+              elseif object.isFocus then
+                if event.phase == "ended" or event.phase == "cancelled" then
+                    display.getCurrentStage():setFocus( nil )
+                    object.isFocus = false
+
+                    deleteMyDialog( myDialog )
+                end
+              end
+              return true
+            end
+
+            myDialog = createMyDialog( "ADVERTENCIA", "Debes introducir tu edad.", nil, "Vale", listenerC)
+          else
             local myClosure_switch = function()
                 dispose(); director:changeScene( "page_63", "fade" ) 
             end 
+            _G.Age = age
             timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 
+          end
        end 

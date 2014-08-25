@@ -48,7 +48,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- casaEnfermeraEx positioning 
        casaEnfermeraEx = display.newImageRect( imgDir.. "p19_casaenfermeraex.png", 1280, 800 ); 
@@ -100,12 +101,11 @@ function new()
  
        -- Actions (functions) 
        function act_nextScn(event) 
-           _G.Phase = 2
-          saveKwikVars({"Phase",2}) 
-            local myClosure_switch = function() 
-                dispose(); director:changeScene( "page_20", "fade" ) 
-            end 
-            timerStash.newTimer_942 = timer.performWithDelay(0, myClosure_switch, 1) 
+           --External code 
+           _G.Level = 2
+_G.Phase = 2
+local parameters = {nameToy="Elefante", pathToy="objeto241.png", costToy=_G.PriceToys.elephant, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_20", indexToy = 3}
+dispose(); director:changeScene( parameters, "viewNewToy", "fade" ) 
        end 
 
  

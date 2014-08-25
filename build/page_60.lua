@@ -48,7 +48,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- kwkFondoAfrica positioning 
        kwkFondoAfrica = display.newImageRect( imgDir.. "kwkfondoafrica.png", 1280, 800 ); 
@@ -84,7 +85,7 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_57", "fade" ) 
             end 
-            timerStash.newTimer_555 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_560 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
 

@@ -44,7 +44,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- FondoCazador positioning 
        FondoCazador = display.newImageRect( imgDir.. "p47_fondocazador.png", 1280, 800 ); 

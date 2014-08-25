@@ -47,7 +47,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- FondoJapon positioning 
        FondoJapon = display.newImageRect( imgDir.. "p46_fondojapon.png", 1296, 800 ); 

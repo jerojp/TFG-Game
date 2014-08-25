@@ -1,5 +1,8 @@
 require( "Character" )
+--Functions
+local checkEvents
 
+--Vars
 local allCharacter = {}
 local secuence = {}
 local events = nil
@@ -9,6 +12,8 @@ local panelNext = nil
 local posX
 local moveRight = false
 local isMoveGenio = false
+local parameters
+local inEvent
 
 local function onCompleteGenioMove( )
 	-- body
@@ -83,49 +88,85 @@ local function nextScene( event )
        				audio.stop( 1 )
        				allCharacter[secuence[cont]]:finalize()	
        			end
-       			allCharacter[secuence[cont]]:clearObject()	
+       			checkEvents("panelAdvance")
        			moveRight = false
-       			playScene(nil)
        		end
        	end
     end
     return true
 end
 
-local function checkTimer(time)
+function createPanelAutoAdvance( )
 	-- body
-	if (not _G.Subtitle and _G.AutoNextPage) then
-		local function completeTimer( event )
-			-- body
-			allCharacter[secuence[cont]]:clearObject()
-			playScene(nil)
-		end
-		if (not time) then
-			time = 300
-		end
-		timerStash.timer_waitNext = timer.performWithDelay( time, completeTimer )
-	elseif(not panelNext) then
+	if (not panelNext) then
+		print( "Creando panel auto avance...." )
 		panelNext = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
 		panelNext.alpha = 0.01
 		panelNext:addEventListener( "touch", nextScene )
 	end
 end
 
-function onCompleteCharacter(event)
-	if (event.completed) then
-		allCharacter[secuence[cont]]:finalize()
+function isCreatedPanelAutoAdvance( )
+	-- body
+	if (panelNext) then
+		return true
+	else
+		return false
+	end
+end
+
+function removePanelAutoAdvance( )
+	-- body
+	panelNext:removeSelf( )
+	panelNext = nil
+	moveRight = false
+end
+
+local function checkTimer(time)
+	-- body
+	if (_G.Subtitle or not _G.AutoNextPage) then
+		if(not panelNext) then
+			createPanelAutoAdvance( )
+		end
+	end
+	local function completeTimer( event )
+			-- body
+		allCharacter[secuence[cont]]:clearObject()
+		playScene(nil)
+	end
+	if (not time) then
+		time = 300
+	end
+	timerStash.timer_waitNext = timer.performWithDelay( time, completeTimer )
+end
+
+checkEvents = function( origin )
+	-- body
+	if ((_G.Subtitle or not _G.AutoNextPage) and origin=="panelAdvance" and not inEvent ) or ((not _G.Subtitle and _G.AutoNextPage) and origin=="autoAdvance") then
+		print( "Entra checkEvents "..origin )
 		if (events and events[cont]) then
+			inEvent = true
 			if (events[cont].mytype == "effects") then
 				events[cont].value[2]( checkTimer )
 			elseif (events[cont].mytype == "image" and events[cont].value[1] == 1) then
 				allCharacter[secuence[cont]]:addImage(events[cont].value[2])
 				checkTimer(2300)
 			else
+				inEvent = false
 				checkTimer(300)	
 			end
 		else
-			checkTimer(300)
+			checkTimer(300)	
 		end
+	end
+end
+
+function onCompleteCharacter(event)
+	if (event.completed) then
+		if (allCharacter[secuence[cont]]) then
+			allCharacter[secuence[cont]]:finalize()			
+		end
+		checkEvents("autoAdvance")
 	end
 end
 
@@ -144,9 +185,7 @@ function finalizeScene( notGoNextPage )
 	end
 
 	if (panelNext) then
-		panelNext:removeSelf( )
-		panelNext = nil
-		moveRight = false
+		removePanelAutoAdvance()
 	end
 	table.remove( allCharacter )
 	allCharacter = nil
@@ -160,8 +199,12 @@ function finalizeScene( notGoNextPage )
 		if (_G.CurrentPage == 26) then
 			director:changeScene( page)
 		else
-			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
-			director:changeScene( page, "fade" )
+			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions()
+			if (parameters) then
+				director:changeScene(parameters, page, "fade" ) 	
+			else
+				director:changeScene(page, "fade" )
+			end
 		end
 	end
 end
@@ -184,15 +227,15 @@ local function playNextScene( )
 	end
 end
 
-function playScene( p )
+function playScene( p, param )
 	-- body
+	inEvent = false
 	if (p) then
 		cont = 0
 		page = p
+		parameters = param
 		if (_G.Subtitle or not _G.AutoNextPage) then
-			panelNext = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
-			panelNext.alpha = 0.01
-			panelNext:addEventListener( "touch", nextScene )
+			createPanelAutoAdvance( )
 		end
 		timerStash.timer_waitNext = timer.performWithDelay( 500, playNextScene )
 	else

@@ -46,7 +46,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- fondoBrasilBosq positioning 
        fondoBrasilBosq = display.newImageRect( imgDir.. "p33_fondobrasilbosq.png", 1298, 800 ); 

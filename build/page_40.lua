@@ -50,7 +50,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- fondoPoloSurDia positioning 
        fondoPoloSurDia = display.newImageRect( imgDir.. "p40_fondopolosurdia.png", 1280, 800 ); 
@@ -139,7 +140,7 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_41", "fade" ) 
             end 
-            timerStash.newTimer_523 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_638 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  

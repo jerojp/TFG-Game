@@ -53,7 +53,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- FodoChina positioning 
        FodoChina = display.newImageRect( imgDir.. "p51_fodochina.png", 1280, 808 ); 

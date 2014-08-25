@@ -1,4 +1,5 @@
        local widget = require( "widget" )
+       require( "textCoin" )
        -- Layer names 
        local but_recAudio
        local but_play
@@ -15,6 +16,8 @@
        local pink = {R=204, G=96, B=147}
        local yellow = {R=242, G=244, B=115}
        local backColors = {red, blue, green, pink, yellow}
+       local receivedMoney = false
+       _G.TotalAddCoinEx = 0
 
        -- (TOP) External code will render here 
 
@@ -25,6 +28,8 @@
        local ran = math.random(#backColors)
        background:setFillColor( backColors[ran].R, backColors[ran].G, backColors[ran].B)
        menuGroup:insert( background )
+
+       menuGroup:insert( createTextCoin( ) )
 
        local recAudio = display.newImageRect( imgDir.. "recaudio.png", 57, 81 ); 
        recAudio.x = display.contentCenterX-200; recAudio.y = 518;
@@ -106,7 +111,7 @@
                 number = 1
               end
             end
-
+            cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
             dispose(); director:changeScene( "page_"..number, "fade" ) 
           end
          end
@@ -192,6 +197,10 @@
                 print( "reproduce" )
                 audioHandle = audio.loadSound( dataFileName, system.DocumentsDirectory )
                 audio.play( audioHandle, {channel = audioChannel, onComplete = onCompleteSound} )
+                if (not receivedMoney) then
+                  textCoinUpdate( 50, "add" )
+                  receivedMoney = true
+                end
                 --media.playSound( dataFileName, system.DocumentsDirectory, onCompleteSound )
               end
             end 

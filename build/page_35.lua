@@ -45,7 +45,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- EntradaMuseo positioning 
        EntradaMuseo = display.newImageRect( imgDir.. "p35_entradamuseo.png", 1280, 800 ); 

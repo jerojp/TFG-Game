@@ -25,4 +25,6 @@ addCharacter(gpGenius.genius, aud, sub, gpGenius)
 local sec = {2, 1}
 setSecuence( sec )
 
-playScene( "page_40" )
+local parameters = {nameToy="Indio", pathToy="indio.png", costToy=_G.PriceToys.indian, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_40", indexToy = 5}
+
+playScene( "viewNewToy", parameters )

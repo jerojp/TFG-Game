@@ -48,7 +48,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
 
        -- kwkrectangle positioning 
        kwkrectangle = display.newImageRect( imgDir.. "kwkrectangle.png", 1280, 800 ); 
@@ -73,7 +73,7 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_4", "fade" ) 
             end 
-            timerStash.newTimer_207 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_429 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  
@@ -81,7 +81,7 @@ function new()
 
  
        -- Timers 
-       timerStash.timerNextPage = timer.performWithDelay( 5000, actNextPage, 1 ) 
+       timerStash.page4 = timer.performWithDelay( 4000, actNextPage, 1 ) 
  
        -- Page properties 
        menuGroup.xScale = 1; menuGroup.yScale = 1; 

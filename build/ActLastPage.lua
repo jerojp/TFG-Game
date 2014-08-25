@@ -1,1 +1,1 @@
-_G.LastPage = curPage
+_G.LastPage = curPage 

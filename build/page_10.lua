@@ -46,7 +46,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
 
        -- rectWh positioning 
        rectWh = display.newImageRect( imgDir.. "p10_rectwh.png", 1280, 800 ); 

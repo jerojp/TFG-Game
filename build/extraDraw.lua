@@ -1,3 +1,4 @@
+require( "textCoin" )
 local lineTable = {}
 local linePoints = {}
 local numPointPressed = 0
@@ -8,52 +9,18 @@ local MAX_FAULT = 2 --
 
 local function finalizeLevel( )
   -- body
-  local number
+  local function nextScene( event )
+    -- body
+    local screenCap = display.captureScreen( false )
+    display.save( screenCap, { filename="screen".._G.Level.._G.Phase..".jpg", baseDir=system.DocumentsDirectory, isFullResolution=true } )
+    director:changeScene( "page_"..18, "fade" ) 
+  end
   print( "FINALIZADO" )
-  local screenCap = display.captureScreen( false )
-  display.save( screenCap, { filename="screen".._G.Level.._G.Phase..".jpg", baseDir=system.DocumentsDirectory, isFullResolution=true } )
-  --[[
-        if (_G.Level == 1) then
-          if (_G.Phase == 1) then
-            number = 1  
-          else
-            number = 1
-          end
-        elseif (_G.Level == 2) then
-          if (_G.Phase == 1) then
-            number = 18  
-          else
-            number = 1
-          end
-        elseif (_G.Level == 3) then
-          if (_G.Phase == 1) then
-            number = 1  
-          else
-            number = 1
-          end
-        elseif (_G.Level == 3) then
-          if (_G.Phase == 1) then
-            number = 1  
-          else
-            number = 1
-          end
-        elseif (_G.Level == 4) then
-          if (_G.Phase == 1) then
-            number = 1  
-          else
-            number = 1
-          end
-        elseif (_G.Level == 5) then
-          if (_G.Phase == 1) then
-            number = 1  
-          else
-            number = 1
-          end
-        end
-  --]]
+
   _G.SecondFaseDraw[_G.Level] = true
-  number = 18
-  director:changeScene( "page_"..number, "fade" ) 
+  textCoinUpdate( 150, "add" )
+  timerStash.timeFinalize = timer.performWithDelay( 1500, nextScene )
+  return true
 end
 
 local function checkPoint( groupPoint, x, y, radiusPincel, maxChildren )
@@ -100,6 +67,7 @@ end
 function addExtra( menuGroup, Letra, groupPointOrigin, radius )
       --Groups
       local groupPoint = {}
+      _G.TotalAddCoinEx = 0
 
       if(_G.DifficultLevel == 1) then  -- Easy
         Letra:scale( 1.5, 1.5 )
@@ -214,7 +182,9 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
        PanelDibujo.name = "PanelDibujo"
        Letra.name = "Letra"
        menuGroup:insert(PanelDibujo)
- 
+       
+       menuGroup:insert( createTextCoin( ) )
+
        local eraseButton = widget.newButton{
         left = display.contentWidth-175,
         top = 50,

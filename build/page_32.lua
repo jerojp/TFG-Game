@@ -51,7 +51,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- fondoBrasilBosq positioning 
        fondoBrasilBosq = display.newImageRect( imgDir.. "p32_fondobrasilbosq.png", 1305, 800 ); 
@@ -233,12 +234,12 @@ local function inicTransArbol( event )
 	--audioHandle = audio.loadSound( audioDir.."samba.mp3" )
 	--audio.play( audioHandle, {channel = 2} )
 
-	transition.to( ArbolCaido, {  time=2000, x= 713 , y=340, rotation = -90, onComplete=onCompleteTransition} )
+	transitionStash.tree = transition.to( ArbolCaido, {  time=2000, x= 713 , y=340, rotation = -90, onComplete=onCompleteTransition} )
 end
 
 local function inicTransition( event )
 	-- body
-	transition.to( machine, {  time=4000, x= 950 , y= machine.y, onComplete=inicTransArbol} )	
+	transitionStash.machine = transition.to( machine, {  time=4000, x= 950 , y= machine.y, onComplete=inicTransArbol} )	
 end
 
 timerStash.timer_arbol = timer.performWithDelay( 500, inicTransition, 1 ) 

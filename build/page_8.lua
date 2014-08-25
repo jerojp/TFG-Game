@@ -48,7 +48,7 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
 
        -- kwkescenarioJef positioning 
        kwkescenarioJef = display.newImageRect( imgDir.. "kwkescenariojef.png", 1280, 800 ); 

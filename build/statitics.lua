@@ -5,9 +5,9 @@ local json = require( "json" )
 local groupImage = display.newGroup()
 local scrollView
 local imageTable
-local facebookGroup = display.newGroup( )
-
-local heightInic = 140
+local facebookGroup
+local color = {R = 0, G = 0, B = 0}
+local heightInic = 180
 local height = 106
 local myTabla = display.newGroup( )
 local myImage = display.newGroup( )
@@ -21,7 +21,6 @@ local image
 local imageClose
 local line
 local lineWidth = 3
-local color = {R = 0, G = 0, B = 0}
 local facebookImage = false
 local facebookTable = false
 local updateImage = false
@@ -29,7 +28,7 @@ local updateTable = false
 
 print( "------------Pagina 21------------" )
 
-imageTable = display.newImageRect( imgDir.."tablaEstadisticas.png", 1000, 1155)
+imageTable = display.newImageRect( imgDir.."tablaEstadistica.png", 1000, 1155)
 imageTable.x = display.contentCenterX ; imageTable.y = display.contentCenterY+200
 groupImage:insert( imageTable )
 
@@ -44,7 +43,7 @@ scrollView = widget.newScrollView{
     bottomPadding = 50,
     horizontalScrollDisabled = true,
     verticalScrollDisabled = false,
-    backgroundColor = { 237, 216, 197 }
+    backgroundColor = { 203,245,231}
 }
 
 scrollView:insert( groupImage )
@@ -230,6 +229,32 @@ local function buttonConfirmListener( event )
     end
 end
 
+
+local function removePanelUpdaeFacebook( )
+	-- body
+	menuGroup:remove( facebookGroup )
+	display.remove(facebookGroup)
+	facebookGroup = nil
+	updateImage = false
+	updateTable = false
+	return true
+end
+
+local function cancelUpdate( event )
+	-- body
+	local object = event.target
+	if event.phase == "began" then
+        display.getCurrentStage():setFocus(object)
+        object.isFocus = true
+    elseif object.isFocus then
+        if event.phase == "ended" or event.phase == "cancelled" then
+            display.getCurrentStage():setFocus( nil )
+            object.isFocus = false
+            removePanelUpdaeFacebook()
+        end
+    end
+end
+
 local function updateFacebook( event )
 	local object = event.target
 
@@ -249,10 +274,20 @@ local function updateFacebook( event )
 		end	
 	end
 
+	if (not facebookGroup) then
+		facebookGroup = display.newGroup( )
+	end
+	local color = {R = 255, G = 255, B = 255}
+
+	local panelBackHiddle = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
+	panelBackHiddle.alpha = 0.1
+	facebookGroup:insert( panelBackHiddle )
+
+	panelBackHiddle:addEventListener( "tap", nothing )
 	local rectangle = display.newRoundedRect( 0, 0, 670, 330, 25 )
 	rectangle.x = display.contentCenterX ; rectangle.y = display.contentCenterY
-	rectangle:setFillColor( 235 )
-	rectangle:addEventListener( "tap", nothing )
+	rectangle:setFillColor( 19,135,255 )
+	rectangle.alpha = 0.98
 	facebookGroup:insert( rectangle )
 
 	local textEx = display.newText( " Seleccione las imagenes de los resultados de los ejercicios que desea publicar en facebook :", rectangle.x - rectangle.width/2 + 10, rectangle.y - rectangle.height/2 + 20, rectangle.width-30, 55, native.systemFont, 23 )
@@ -300,15 +335,15 @@ local function updateFacebook( event )
 	end
     
     local buttonConfirm = widget.newButton{
-    	width = 200,
-    	height = 80,
+    	width = 150,
+    	height = 60,
     	defaultFile = imgDir.. "button.png",
     	label = "Confirmar",
     	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
     	fontSize = 25,
     	onEvent = buttonConfirmListener
 	}
-	buttonConfirm.x = rectangle.x - buttonConfirm.width/2 - 25
+	buttonConfirm.x = rectangle.x - buttonConfirm.width/2 - 50
 	buttonConfirm.y = rectangle.y + rectangle.height/2 - buttonConfirm.height/2 - 20
 	facebookGroup:insert( buttonConfirm )
 
@@ -323,15 +358,15 @@ local function updateFacebook( event )
 	end
 
 	local buttonCancel = widget.newButton{
-    	width = 200,
-    	height = 80,
+    	width = 150,
+    	height = 60,
     	defaultFile = imgDir.. "button.png",
     	label = "Cancelar",
     	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
     	fontSize = 25,
     	onEvent = cancelUpdate
 	}
-	buttonCancel.x = rectangle.x + buttonCancel.width/2 + 25
+	buttonCancel.x = rectangle.x + buttonCancel.width/2 + 50
 	buttonCancel.y = rectangle.y + rectangle.height/2 - buttonCancel.height/2 - 20
 	facebookGroup:insert( buttonCancel )
 
@@ -395,7 +430,7 @@ for i=1,10 do
     end
     if (facebookImage or facebookTable) then
     	local objectFacebook = display.newText( "Publicar", 990, heightInic + (height*(i-1)) + 2, native.systemFont, 25 )
-		objectFacebook:setFillColor( 0, 0, 150 )
+		objectFacebook:setFillColor( 19, 135, 255 )
 		if (facebookTable) then
 			objectFacebook.index = i
 			print( "Introuce index : "..objectFacebook.index )

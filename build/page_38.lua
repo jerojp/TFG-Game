@@ -44,7 +44,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p38_capa_1.png", 0, 0 ); 
@@ -80,6 +81,10 @@ function new()
       gp_letter:insert( rectBelow )
       gp_letter:insert( rectVert )
 
+      local pointTopLeft = display.newCircle( display.contentCenterX-90, display.contentCenterY-250, radius )
+      pointTopLeft:setFillColor( colorPoint, colorPoint, colorPoint )
+      gp_point:insert( pointTopLeft )
+
       local pointVertTop = display.newCircle( display.contentCenterX+8, display.contentCenterY-245, radius )
       pointVertTop:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointVertTop )
@@ -108,10 +113,6 @@ function new()
       pointBelowRight:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointBelowRight )
 
-      local pointTopLeft = display.newCircle( display.contentCenterX-90, display.contentCenterY-250, radius )
-      pointTopLeft:setFillColor( colorPoint, colorPoint, colorPoint )
-      gp_point:insert( pointTopLeft )
-
       local pointTopRight= display.newCircle( display.contentCenterX+100, display.contentCenterY-250, radius )
       pointTopRight:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointTopRight )
@@ -120,9 +121,29 @@ function new()
       gp_letter.anchorChildren = true
       gp_letter.x = -20
 
+      local completeOff
+      local completeOn
+
+      completeOn = function ( obj )
+            -- body
+            transitionStash["arrowOff"] = transition.to( obj, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
+      end
+
+      completeOff = function ( obj )
+            -- body
+            transitionStash["arrowOn"] = transition.to( obj, {time = 1000, xScale = 1.2, yScale =1.2, alpha = 1.0, onComplete = completeOn} )
+      end
+
+      local arrow = display.newImageRect( imgDir.."flechaRoja.png", 40, 60 )
+      arrow.x = pointTopLeft.x - arrow.contentWidth - 40; arrow.y = pointTopLeft.y;
+      arrow:rotate( -90 )
+      arrow:scale( 1.2, 1.2 )
+      transitionStash["arrowOff"] = transition.to( arrow, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
+
       addExtra( menuGroup, gp_letter, gp_point, radius )   
       menuGroup:insert( gp_letter ) 
-      menuGroup:insert( gp_point ) 
+      menuGroup:insert( gp_point )
+      menuGroup:insert(arrow) 
 
        -- do not swipe this page 
 

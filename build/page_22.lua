@@ -47,7 +47,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- background positioning 
        background = display.newImageRect( imgDir.. "p22_background.png", 1280, 798 ); 
@@ -193,7 +194,9 @@ addCharacter(gpGenius.genius, aud, sub, gpGenius)
 local sec = {2, 1, 3, 1, 3, 2 }
 setSecuence( sec )
 
-playScene( "page_11" ) 
+local parameters = {nameToy="Bicicleta", pathToy="objeto321.png", costToy=_G.PriceToys.bicycle, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_11", indexToy = 4}
+
+playScene( "viewNewToy", parameters ) 
 
 
     end 

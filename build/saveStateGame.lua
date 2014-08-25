@@ -7,28 +7,27 @@ local widget = require( "widget" )
 local facebook = require "facebook"
 require("MyDialog")
 require("ControlScene")
-local backgroundGroup = display.newGroup( )
+local normalPauseGroup
 
 -- functions
-local continueGame
-local backMenu
-local removePauseMenu 
 local onKeyEvent
 local createTableSetting
 local printTable
+local removePauseMenu 
+local removePauseMenuExer
+local createPauseMenuNormal
+local createPauseMenuExer
+local continueGame
+local viewOptions
+local backMainMenu
+local continueExercise
+local onKeyEvent
 
 -- display and vars
-local rectangle
-local rectangleHiddle
-local continue
-local btnOptions
 local backMainMenu
 local createdPauseMenu = false
 
-local rectangleExer
-local rectangleHiddleExer
-local continueExer
-local backMainMenuExer
+local exerPauseGroup
 local createdPauseMenuExer = false
 
 -- names
@@ -77,6 +76,7 @@ function pauseMyTimers( )
 	-- body
 	local k, v
 
+    print( "Pausados TODOS los TIMERS" )
     for k,v in pairs(timerStash) do
         timer.pause( v )
     end
@@ -159,6 +159,8 @@ function loadSettingGame( )
     _G.AutoNextPage = gameSettingsVars.autoNextPage
     _G.UpLevelSample = gameSettingsVars.upLevelSample
     _G.Toys = gameSettingsVars.toys
+    _G.PriceToys = gameSettingsVars.priceToys
+    _G.LastPageLevel = gameSettingsVars.lastPageLevel
     --_G.MyCurrentSubtitle = gameSettingsVars.currentSubtitles
 	else
 		print( "--------JUEGO INICIAL--------" )
@@ -194,6 +196,8 @@ function loadSettingGame( )
         for i=1,10 do
             _G.Toys[i] = {block = true, sold = false}    
         end
+        _G.PriceToys = {mask = 289, bee = 324, elephant = 361, bicycle = 400, indian = 441, dolphin = 484, sheep = 529, donkey = 576, guitar = 625, unicorn = 676}
+        _G.LastPageLevel = {25, 12, 35, 44, 54}
   end
 end
 
@@ -225,6 +229,8 @@ createTableSetting = function ()
   gameSettingsVars.upLevelSample = _G.UpLevelSample
   gameSettingsVars.lastPage = _G.LastPage
   gameSettingsVars.toys = _G.Toys
+  gameSettingsVars.priceToys = _G.PriceToys
+  gameSettingsVars.lastPageLevel = _G.LastPageLevel
 
 	--printTable(gameSettingsVars)
 	return gameSettingsVars
@@ -240,6 +246,17 @@ continueGame = function ( event )
         object.isFocus = true
     elseif object.isFocus then
       if event.phase == "ended" or event.phase == "cancelled" then
+          local notAutoAdv = {2, 3, 4, 6, 7, 11, 19, 30, 62, 63}
+          if (table.indexOf( notAutoAdv, _G.CurrentPage ) == nil) then
+              if ( (_G.Subtitle or not _G.AutoNextPage) and not isCreatedPanelAutoAdvance( )) then
+                print( "Se crea panel de AVANCE AUTO PAGINA ")
+                createPanelAutoAdvance( )
+              elseif ( not _G.Subtitle and _G.AutoNextPage and isCreatedPanelAutoAdvance( ) ) then
+                print( "Se elimina panel de AVANCE AUTO PAGINA " )
+                removePanelAutoAdvance( )
+              end
+          end
+          
           resumeAllTransition()
           resumeMyTimers()
           audio.resume( 1 )
@@ -290,6 +307,28 @@ backMainMenu = function( event )
       end
     end
 	return true
+end
+
+continueExercise = function ( event )
+    -- body
+    local object = event.target
+
+    if event.phase == "began" then
+        display.getCurrentStage():setFocus(object)
+        object.isFocus = true
+    elseif object.isFocus then
+      if event.phase == "ended" or event.phase == "cancelled" then
+          print( "Continuar juego ...." )
+          resumeAllTransition()
+          resumeMyTimers()
+          audio.resume( 1 )
+          audio.resume( 2 )
+          removePauseMenuExer()
+          display.getCurrentStage():setFocus( nil )
+          object.isFocus = false
+      end
+    end
+    return true
 end
 
 local function backMainMenuExer( event )
@@ -345,7 +384,8 @@ local function backMainMenuExer( event )
         	if event.phase == "ended" or event.phase == "cancelled" then
         		display.getCurrentStage():setFocus( nil )
 				object.isFocus = false
-        		myDialog = createMyDialog("Salir", "Si abandonas el ejercicio perderas el progreso realizado", onCompleteC, onCompleteD)
+
+        		myDialog = createMyDialog("Salir", " Si abandonas el ejercicio perderas el progreso realizado", nil, "Confirmar", onCompleteC, "Cancelar" , onCompleteD)
         	end
     end
 	return true
@@ -364,61 +404,78 @@ local function nothingTap( event )
 end
 
 createPauseMenuNormal = function ( event )
-  if (not createdPauseMenu) then
-	createdPauseMenu = true
+  if (not normalPauseGroup) then
+	normalPauseGroup = display.newGroup( )
+    createdPauseMenu = true
 
-	rectangleHiddle = display.newRect( 0, 0, display.contentWidth, display.contentHeight)
-	rectangleHiddle:addEventListener( "touch", nothingTouch )
-	rectangleHiddle:addEventListener( "tap", nothingTap )
-	rectangleHiddle.alpha = 0.01
+    local rectangleHiddle = display.newRect( 0, 0, display.contentWidth, display.contentHeight)
+    rectangleHiddle:addEventListener( "touch", nothingTouch )
+    rectangleHiddle:addEventListener( "tap", nothingTap )
+    rectangleHiddle:setFillColor( 182,210,236 )
+    rectangleHiddle.alpha = 0.6
+    normalPauseGroup:insert( rectangleHiddle )
 
-	rectangle = display.newRoundedRect( display.contentWidth/2-250, 100, 500, 600, 10 )
-	
-	rectangle:setFillColor( 210, 210, 210 )
-	rectangle.alpha = 0.9
-	backgroundGroup:insert(rectangle)
+    local rectangle = display.newRoundedRect( display.contentCenterX-250, 100, 500, 600, 38 )
+    rectangle:setFillColor( 56,187,105 )
+    normalPauseGroup:insert(rectangle)
 
-	continue = widget.newButton{
+    local colorLabelBtn = {R=10, G=25, B=106}
+    
+    local textPr = display.newText( "Pausa", display.contentCenterX, rectangle.y - rectangle.contentHeight/2 + 50, native.systemFontBold, 60 )
+    textPr.x = display.contentCenterX
+    textPr:setFillColor(  255 )
+    normalPauseGroup:insert( textPr )
+
+	local continue = widget.newButton{
 		width = 240,
-    	height = 120,
+    	height = 70,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
     	label = "Continuar",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    	fontSize = 25,
+    	labelColor = { default={ colorLabelBtn.R, colorLabelBtn.G, colorLabelBtn.B }, over={ 0, 0, 210 } },
+        font = native.systemFontBold,
+    	fontSize = 28,
     	onEvent = continueGame
 	}
 
-	continue.x = display.contentCenterX
-	continue.y = display.contentCenterY - 200
+	continue.x = rectangle.x
+	continue.y = rectangle.y - continue.contentHeight
+    continue:setFillColor(  255,248,143 )
+    normalPauseGroup:insert( continue )
 
-	btnOptions = widget.newButton{
+	local btnOptions = widget.newButton{
 		width = 240,
-    	height = 120,
+    	height = 70,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
     	label = "Opciones",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    	fontSize = 25,
+    	labelColor = { default={ colorLabelBtn.R, colorLabelBtn.G, colorLabelBtn.B }, over={ 0, 0, 210 } },
+        font = native.systemFontBold,
+    	fontSize = 28,
     	onEvent = viewOptions
 	}
 
-	btnOptions.x = display.contentCenterX
-	btnOptions.y = display.contentCenterY
+	btnOptions.x = rectangle.x
+	btnOptions.y = continue.y + continue.contentHeight/2 + 50 + btnOptions.contentHeight/2
+    btnOptions:setFillColor( 255,132,107 )
+    normalPauseGroup:insert( btnOptions )
 
-	backMenu = widget.newButton{
+	local backMenu = widget.newButton{
 		width = 240,
-    	height = 120,
+    	height = 70,
     	defaultFile = imgDir.. "button.png",
     	--overFile = imgDir.. "button.png",
     	label = "Menu Principal",
-    	labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    	fontSize = 25,
+    	labelColor = { default={ colorLabelBtn.R, colorLabelBtn.G, colorLabelBtn.B }, over={ 0, 0, 210 } },
+        font = native.systemFontBold,
+    	fontSize = 28,
     	onEvent = backMainMenu
 	}
 
-	backMenu.x = display.contentCenterX
-	backMenu.y = display.contentCenterY + 200
+	backMenu.x = rectangle.x
+	backMenu.y = btnOptions.y + backMenu.contentHeight/2 + 50 + backMenu.contentHeight/2
+    backMenu:setFillColor( 185,129,221 )
+    normalPauseGroup:insert( backMenu )
 
   end
 end
@@ -427,62 +484,66 @@ removePauseMenu = function ( )
 	-- body
 	createdPauseMenu = false
 
-	rectangleHiddle:removeSelf( )
-	rectangleHiddle = nil
-
-	rectangle:removeSelf( )
-	rectangle = nil
-	continue:removeSelf( )
-	continue = nil
-	btnOptions:removeSelf( )
-	btnOptions = nil
-	backMenu:removeSelf()
-	backMenu = nil
+	display.remove( normalPauseGroup )
+    normalPauseGroup = nil
 
 end
 
 createPauseMenuExer = function( )
 	-- body
-	if (not createdPauseMenuExer) then
+	if (not exerPauseGroup) then
 		createdPauseMenuExer = true
+        exerPauseGroup = display.newGroup( )
 
-		rectangleHiddleExer = display.newRect( 0, 0, display.contentWidth, display.contentHeight)
+		local rectangleHiddleExer = display.newRect( 0, 0, display.contentWidth, display.contentHeight)
 		rectangleHiddleExer:addEventListener( "touch", nothingTouch )
 		rectangleHiddleExer:addEventListener( "tap", nothingTap )
-		rectangleHiddleExer.alpha = 0.01
+        rectangleHiddleExer:setFillColor( 182,210,236 )
+		rectangleHiddleExer.alpha = 0.6
+        exerPauseGroup:insert( rectangleHiddleExer )
 
-		rectangleExer = display.newRoundedRect( display.contentWidth/2-250, 100, 500, 600, 10 )
-	
-		rectangleExer:setFillColor( 210, 210, 210 )
-		rectangleExer.alpha = 0.9
+		local rectangleExer = display.newRoundedRect( display.contentCenterX-250, display.contentCenterY-225 , 500, 450, 28 )
+		rectangleExer:setFillColor( 56,187,105 )
+        exerPauseGroup:insert( rectangleExer )
 
-		continueExer = widget.newButton{
+        local colorLabelBtn = {R=10, G=25, B=106}
+        
+        local textPr = display.newText( "Pausa", display.contentCenterX, rectangleExer.y - rectangleExer.contentHeight/2 + 50, native.systemFontBold, 60 )
+        textPr.x = display.contentCenterX
+        textPr:setFillColor(  255 )
+        exerPauseGroup:insert( textPr )
+
+		local continueExer = widget.newButton{
 			width = 240,
-    		height = 120,
+    		height = 70,
     		defaultFile = imgDir.. "button.png",
     		--overFile = imgDir.. "button.png",
     		label = "Continuar",
-    		labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    		fontSize = 25,
-    		onEvent = continueGame
+    		labelColor = { default={ colorLabelBtn.R, colorLabelBtn.G, colorLabelBtn.B }, over={ 0, 0, 210 } },
+    		fontSize = 28,
+    		onEvent = continueExercise
 		}
 
-		continueExer.x = display.contentCenterX
-		continueExer.y = display.contentCenterY - 200
+		continueExer.x = rectangleExer.x
+		continueExer.y = rectangleExer.y - continueExer.contentHeight + 50
+        continueExer:setFillColor(  255,248,143 )
+        exerPauseGroup:insert( continueExer )
 
-		backMenuExer = widget.newButton{
+		local backMenuExer = widget.newButton{
 			width = 240,
-    		height = 120,
+    		height = 70,
     		defaultFile = imgDir.. "button.png",
     		--overFile = imgDir.. "button.png",
     		label = "Menu Principal",
-    		labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
-    		fontSize = 25,
+    		labelColor = { default={ colorLabelBtn.R, colorLabelBtn.G, colorLabelBtn.B }, over={ 0, 0, 210 } },
+    		fontSize = 28,
     		onEvent = backMainMenuExer
 		}
 
-		backMenuExer.x = display.contentCenterX
-		backMenuExer.y = display.contentCenterY + 200	
+		backMenuExer.x = rectangleExer.x
+		backMenuExer.y = continueExer.y + continueExer.contentHeight/2 + 50 + backMenuExer.contentHeight/2
+        backMenuExer:setFillColor( 185,129,221 )	
+        exerPauseGroup:insert( backMenuExer )
 	end
 end
 
@@ -490,14 +551,8 @@ removePauseMenuExer = function( event )
 	-- body
 	createdPauseMenuExer = false
 
-	rectangleHiddleExer:removeSelf( )
-	rectangleHiddleExer = nil
-	rectangleExer:removeSelf( )
-	rectangleExer = nil
-	continueExer:removeSelf( )
-	continueExer = nil
-	backMenuExer:removeSelf()
-	backMenuExer = nil
+    display.remove( exerPauseGroup )
+    exerPauseGroup = nil
 
 end
 
@@ -537,7 +592,7 @@ onKeyEvent = function ( event )
                 elseif ( _G.CurrentPage == 24) then
                     cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
                     director:changeScene("page_23")
-                elseif ( _G.CurrentPage == 23) then
+                elseif ( _G.CurrentPage == 23 or _G.CurrentPage == 65) then
                     cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
                     director:changeScene("page_1")
                 else

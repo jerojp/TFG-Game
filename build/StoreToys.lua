@@ -12,7 +12,6 @@
        local indio  
        local objeto141
        local maxLevel = 10
-       local baseCost = 50
        local kwkcoin
        local block
        local obj
@@ -61,24 +60,44 @@
        local function buyToy( event )
               -- body
               local object = event.target
+              if (_G.Coin < object.cost) then
+                     local myDialog
+                     local function onCompleteC( event )
+                            -- body
+                            local object = event.target
+                            if event.phase == "began" then
+                                   display.getCurrentStage():setFocus(object)
+                                   object.isFocus = true
+                            elseif object.isFocus then
+                                   if event.phase == "ended" or event.phase == "cancelled" then
+                                   display.getCurrentStage():setFocus( nil )
+                                   object.isFocus = false
+                                   deleteMyDialog(myDialog)
+                                   end
+                            end
+                            return true
+                     end
+                     myDialog = createMyDialog("COMPRA DENEGADA", "No tienes suficiente dinero para comprar este objeto", color, "Confirmar", onCompleteC)
 
-              print( groupTextCoin[object.index].name )
-              print( groupImgCoin[object.index].name )
-              display.remove( groupTextCoin[object.index] )
-              groupTextCoin[object.index] = nil
+              else
+                     print( groupTextCoin[object.index].name )
+                     print( groupImgCoin[object.index].name )
+                     display.remove( groupTextCoin[object.index] )
+                     groupTextCoin[object.index] = nil
 
-              display.remove( groupImgCoin[object.index] )
-              groupImgCoin[object.index] = nil              
+                     display.remove( groupImgCoin[object.index] )
+                     groupImgCoin[object.index] = nil              
 
-              _G.Toys[object.index].sold = true
+                     _G.Toys[object.index].sold = true
 
-              object.alpha = 1.0
+                     object.alpha = 1.0
 
-              textCoinUpdate( object.cost, "substract" )
+                     textCoinUpdate( object.cost, "substract" )
 
-              object:removeEventListener( "tap", buyToy )
-              object:addEventListener( "tap", playSoundToy )
-              print( "Eliminado evento buyToy de "..object.name )
+                     object:removeEventListener( "tap", buyToy )
+                     object:addEventListener( "tap", playSoundToy )
+                     print( "Eliminado evento buyToy de "..object.name )
+              end
               return true
        end
 
@@ -151,15 +170,20 @@
        objeto552.name = "Unicornio" 
        menuGroup:insert(objeto552);
 
-       _G.Toys[3].block = false
-       
+       local prices = {_G.PriceToys.mask, _G.PriceToys.bee, _G.PriceToys.elephant, _G.PriceToys.bicycle, _G.PriceToys.indian, _G.PriceToys.dolphin, _G.PriceToys.sheep, _G.PriceToys.donkey,
+                      _G.PriceToys.guitar, _G.PriceToys.unicorn}
        for i=1,maxLevel do
               table.insert( groupTextCoin, nil )
               table.insert( groupImgCoin, nil )
         end 
+        _G.Toys[1].block = false
+       _G.Toys[3].block = false
+       _G.Toys[4].block = false
+       _G.Toys[7].block = false
+       
        for i=1,maxLevel do
               obj = menuGroup[i+1]
-              obj.cost = baseCost*i
+              obj.cost = prices[i]
               obj.index = i
               if (_G.Toys[i]) then
                      if (_G.Toys[i].block) then

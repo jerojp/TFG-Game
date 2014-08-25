@@ -46,7 +46,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- FodoChina positioning 
        FodoChina = display.newImageRect( imgDir.. "p53_fodochina.png", 1280, 808 ); 
@@ -152,18 +153,20 @@ local function onFinalizeScene( event )
 	local sec = {1, 2}
 	setSecuence( sec )
 
-	playScene( "page_11" )
+	local parameters = {nameToy="Burro", pathToy="objeto541.png", costToy=_G.PriceToys.donkey, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_11", indexToy = 8}
+
+	playScene( "viewNewToy", parameters )
 
 end
 
 local function onCompletePhoto( event )
 		-- body
-	transition.to( cam, {time = 300, alpha = 0, onComplete=onFinalizeScene} )	
+	transitionStash.takePhoto2 = transition.to( cam, {time = 300, alpha = 0, onComplete=onFinalizeScene} )	
 end
 
 local function takePhoto( event )
 	-- body
-	transition.to( cam, {time = 300, alpha = 1, onComplete=onCompletePhoto} )
+	transitionStash.takePhoto1 = transition.to( cam, {time = 300, alpha = 1, onComplete=onCompletePhoto} )
 end
 
 timerStash.photo = timer.performWithDelay( 700, takePhoto, 1 ) 

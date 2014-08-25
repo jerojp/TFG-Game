@@ -2,7 +2,7 @@ function createGenius( )
        -- Tablet positioning 
        local geniusGroup = display.newGroup( )
 
-       local Tablet = display.newImageRect( imgDir.. "p10_tablet.png", 585, 800 ); 
+       local Tablet = display.newImageRect( imgDir.. "tablet.png", 585, 800 ); 
        Tablet.x = 668; Tablet.y = 400; Tablet.alpha = 1; Tablet.oldAlpha = 1 
        Tablet.oriX = Tablet.x; Tablet.oriY = Tablet.y 
        Tablet.name = "Tablet" 

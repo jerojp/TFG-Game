@@ -46,7 +46,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- kwkfondoPS positioning 
        kwkfondoPS = display.newImageRect( imgDir.. "kwkfondops.png", 1280, 800 ); 

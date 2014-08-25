@@ -10,12 +10,12 @@ end
 
 local function onCompletePhoto( event )
 		-- body
-	transition.to( cam, {time = 500, alpha = 0, onComplete=onFinalizeScene} )	
+	transitionStash.cam2 = transition.to( cam, {time = 500, alpha = 0, onComplete=onFinalizeScene} )	
 end
 
 local function takePhoto( event )
 	-- body
-	transition.to( cam, {time = 500, alpha = 1, onComplete=onCompletePhoto} )
+	transitionStash.cam = transition.to( cam, {time = 500, alpha = 1, onComplete=onCompletePhoto} )
 end
 
 timerStash.photo = timer.performWithDelay( 700, takePhoto, 1 )

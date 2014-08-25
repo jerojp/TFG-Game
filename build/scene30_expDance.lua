@@ -1,6 +1,8 @@
         local danceGroup = display.newGroup()
         local audioHandle
 
+        audioHandle = audio.loadSound( audioDir.."samba.mp3" )
+
         local kwkgirl_options = { 
            -- created with TexturePacker (http://www.texturepacker.com)
            frames = {
@@ -28,9 +30,9 @@
            sheetContentHeight = 1070
  
        } 
-       kwkgirl_sheet = graphics.newImageSheet( spriteDir.. "mujerbaila.png", kwkgirl_options ) 
-       kwkgirl_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
-       kwkgirl = display.newSprite(kwkgirl_sheet, kwkgirl_seq ) 
+       local kwkgirl_sheet = graphics.newImageSheet( spriteDir.. "mujerbaila.png", kwkgirl_options ) 
+       local kwkgirl_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       local kwkgirl = display.newSprite(kwkgirl_sheet, kwkgirl_seq ) 
        kwkgirl:play(); 
        kwkgirl.x = 164; kwkgirl.y = 233;
        danceGroup:insert(kwkgirl); 
@@ -63,9 +65,9 @@
            sheetContentHeight = 1088
  
        } 
-       kwkexp_sheet = graphics.newImageSheet( spriteDir.. "expbaila.png", kwkexp_options ) 
-       kwkexp_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
-       kwkexp = display.newSprite(kwkexp_sheet, kwkexp_seq ) 
+       local kwkexp_sheet = graphics.newImageSheet( spriteDir.. "expbaila.png", kwkexp_options ) 
+       local kwkexp_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       local kwkexp = display.newSprite(kwkexp_sheet, kwkexp_seq ) 
        kwkexp:play(); 
        kwkexp.x = 370; kwkexp.y = 260;
        kwkexp.xScale = 1.55; 
@@ -73,10 +75,10 @@
        danceGroup:insert(kwkexp); 
 
        -- carrozaSimple positioning 
-       carrozaSimple = display.newImageRect( imgDir.. "p30_carrozasimple.png", 672, 575 ); 
+       local carrozaSimple = display.newImageRect( imgDir.. "carrozaSimple.png", 672, 575 ); 
        carrozaSimple.x = 370; carrozaSimple.y = 395;
        danceGroup:insert(carrozaSimple); 
-
+       danceGroup.alpha = 0
        menuGroup:insert( danceGroup )
 
        danceGroup:translate( -danceGroup[3].contentWidth , 0 )
@@ -89,9 +91,12 @@
         audio.dispose( audioHandle )
         audioHandle = nil
         cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
-        director:changeScene( "page_31", "fade" )
+        _G.Level = 1
+        _G.Phase = 2
+        local parameters = {nameToy="Antifaz", pathToy="objeto111.png", costToy=_G.PriceToys.mask, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_31", indexToy = 1}
+        director:changeScene( parameters, "viewNewToy", "fade" )
        end
 
-       audioHandle = audio.loadSound( audioDir.."samba.mp3" )
        audio.play( audioHandle, {channel = 2} )
-       transition.to( danceGroup, {  time=20000, x= display.contentWidth + danceGroup[3].contentWidth , y=0, onComplete=onCompleteTransition} )
+       danceGroup.alpha = 1
+       transitionStash.danceGroup = transition.to( danceGroup, {  time=20000, x= display.contentWidth + danceGroup[3].contentWidth , y=0, onComplete=onCompleteTransition} )

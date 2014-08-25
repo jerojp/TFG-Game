@@ -47,7 +47,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- kwkrectangleW positioning 
        kwkrectangleW = display.newImageRect( imgDir.. "kwkrectanglew.png", 1280, 800 ); 

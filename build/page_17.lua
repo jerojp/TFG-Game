@@ -44,7 +44,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p17_capa_1.png", 0, 0 ); 
@@ -131,9 +132,30 @@ function new()
 
       gp_point.anchorChildren = true
 
+      local completeOff
+      local completeOn
+
+      completeOn = function ( obj )
+            -- body
+            transitionStash["arrowOff"] = transition.to( obj, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
+      end
+
+      completeOff = function ( obj )
+            -- body
+            transitionStash["arrowOn"] = transition.to( obj, {time = 1000, xScale = 1.2, yScale =1.2, alpha = 1.0, onComplete = completeOn} )
+      end
+
+      local arrow = display.newImageRect( imgDir.."flechaRoja.png", 40, 60 )
+      arrow.x = pointTop.x + 80; arrow.y = pointTop.y;
+      arrow:rotate( 90 )
+      arrow:scale( 1.2, 1.2 )
+
+      transitionStash["arrowOff"] = transition.to( arrow, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
+
       addExtra( menuGroup, gp_letter, gp_point, radius )   
       menuGroup:insert(gp_letter)
-      menuGroup:insert(gp_point) 
+      menuGroup:insert(gp_point)
+      menuGroup:insert(arrow) 
  
        -- Page properties 
        menuGroup.xScale = 1; menuGroup.yScale = 1; 

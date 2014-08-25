@@ -46,7 +46,8 @@ function new()
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
-       _G.LastPage = curPage 
+       _G.LastPage = curPage  
+       _G.LastPageLevel[_G.Level] = curPage 
 
        -- fondoPoloSurDia positioning 
        fondoPoloSurDia = display.newImageRect( imgDir.. "p43_fondopolosurdia.png", 1280, 800 ); 
@@ -159,7 +160,9 @@ addCharacter(kwkesq, aud, sub)
 local sec = {1, 2, 1}
 setSecuence( sec )
 
-playScene( "page_11" ) 
+local parameters = {nameToy="Delfin", pathToy="objeto341.png", costToy=_G.PriceToys.dolphin, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_11", indexToy = 6}
+
+playScene( "viewNewToy", parameters ) 
 
 
     end 

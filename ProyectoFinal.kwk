@@ -55,35 +55,6 @@
       <alpha>100</alpha>
       <showNav>true</showNav>
       <inApp/>
-      <replacement id="cloud">
-        <name>cloud</name>
-        <type>Multiplier</type>
-        <layer>cloud</layer>
-        <copies>3</copies>
-        <interval>0</interval>
-        <distance>Random</distance>
-        <startX>0</startX>
-        <endX>1280</endX>
-        <startY>120</startY>
-        <endY>200</endY>
-        <startAlpha>60</startAlpha>
-        <endAlpha>80</endAlpha>
-        <scaleStartX>50</scaleStartX>
-        <scaleEndX>100</scaleEndX>
-        <scaleStartY>50</scaleStartY>
-        <scaleEndY>100</scaleEndY>
-        <physics>false</physics>
-        <forever>false</forever>
-        <rot1>0</rot1>
-        <rot2>0</rot2>
-        <event>When page starts</event>
-        <gravity>Normal</gravity>
-        <wind>0</wind>
-        <isSensor>false</isSensor>
-        <weightStart>3</weightStart>
-        <weightEnd>3</weightEnd>
-        <scaleLock>true</scaleLock>
-      </replacement>
       <anim id="animSun">
         <name>animSun</name>
         <target>Layer</target>
@@ -117,43 +88,6 @@
         <breadDispose>true</breadDispose>
         <breadSec>1</breadSec>
         <groupControl>false</groupControl>
-      </anim>
-      <anim id="animPlane">
-        <name>animPlane</name>
-        <target>Layer</target>
-        <type>Path</type>
-        <layer>plane</layer>
-        <endX>1294</endX>
-        <endY>168</endY>
-        <path>airplaneTrace</path>
-        <closedPath>false</closedPath>
-        <autoTurn>false</autoTurn>
-        <angle>0</angle>
-        <adjAngle>180</adjAngle>
-        <endAlpha>100</endAlpha>
-        <duration>3</duration>
-        <delay>0</delay>
-        <easing>Linear</easing>
-        <pause>false</pause>
-        <linearLoop>forever</linearLoop>
-        <linearReverse>false</linearReverse>
-        <rotate>0</rotate>
-        <anchor>MiddleCenter</anchor>
-        <scaleW>100</scaleW>
-        <scaleH>100</scaleH>
-        <event>When page starts</event>
-        <reStart>true</reStart>
-        <audio>None</audio>
-        <trigger>None</trigger>
-        <breadCrumb>true</breadCrumb>
-        <breadAnchor>Center/Right</breadAnchor>
-        <breadShape>Circle</breadShape>
-        <breadWidth>10</breadWidth>
-        <breadHeight>10</breadHeight>
-        <breadColor>255,255,255</breadColor>
-        <breadInterval>20</breadInterval>
-        <breadDispose>true</breadDispose>
-        <breadSec>1</breadSec>
       </anim>
       <variables>
         <variable id="TakePhoto">
@@ -209,17 +143,17 @@
           <type>Show/Hide Navigation</type>
         </action>
       </button>
-      <code id="codeButton">
-        <name>codeButton</name>
-        <code/>
-        <position>top</position>
-        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/buttonsIntro.lua</extFile>
-      </code>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
+      </code>
+      <code id="codeButton">
+        <name>codeButton</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/buttonsIntro.lua</extFile>
       </code>
     </page>
     <page id="Introduction">
@@ -227,12 +161,6 @@
       <number>3</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/Introduction.psd</file>
       <fileName>Introduction.psd</fileName>
-      <timer id="timerNextPage">
-        <name>timerNextPage</name>
-        <delay>5</delay>
-        <trigger>actNextPage</trigger>
-        <loop>1</loop>
-      </timer>
       <swipePage>true</swipePage>
       <swipeSpacer>120</swipeSpacer>
       <scaleW>100</scaleW>
@@ -262,6 +190,12 @@
           <wait>0</wait>
         </action>
       </trigger>
+      <timer id="page4">
+        <name>page4</name>
+        <delay>4</delay>
+        <trigger>actNextPage</trigger>
+        <loop>1</loop>
+      </timer>
     </page>
     <page id="IntroductionMuseum">
       <name>IntroductionMuseum</name>
@@ -640,12 +574,6 @@
       <number>2</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/DifficultyLevelSelection.psd</file>
       <fileName>DifficultyLevelSelection.psd</fileName>
-      <code id="codeListener">
-        <name>codeListener</name>
-        <code/>
-        <position>bottom</position>
-        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/listenerSelectedDifficult.lua</extFile>
-      </code>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
@@ -657,6 +585,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_428">
+        <name>code_428</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/panelDifficulty.lua</extFile>
       </code>
     </page>
     <page id="selectionLevel">
@@ -676,125 +610,11 @@
         <jpgQuality>6</jpgQuality>
         <renderAs>E</renderAs>
       </layer>
-      <button id="butLetraE">
-        <name>butLetraE</name>
-        <layer>FlechaMapa</layer>
-        <rollover>FlechaMapa</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_330">
-          <name>var_330</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>2</value>
-        </action>
-        <action id="var_528">
-          <name>var_528</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>1</value>
-        </action>
-        <action id="goPage_065">
-          <name>goPage_065</name>
-          <type>Go to Page</type>
-          <page>levelE_Intro</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
-      <button id="but_127">
-        <name>but_127</name>
-        <layer>I</layer>
-        <rollover>I</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_207">
-          <name>var_207</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>3</value>
-        </action>
-        <action id="var_123">
-          <name>var_123</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>1</value>
-        </action>
-        <action id="goPage_494">
-          <name>goPage_494</name>
-          <type>Go to Page</type>
-          <page>LevelI_</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
-      <button id="but_990">
-        <name>but_990</name>
-        <layer>O</layer>
-        <rollover>O</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_126">
-          <name>var_126</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>1</value>
-        </action>
-        <action id="var_803">
-          <name>var_803</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>4</value>
-        </action>
-        <action id="goPage_960">
-          <name>goPage_960</name>
-          <type>Go to Page</type>
-          <page>LevelO_Intro</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
-      <button id="but_545">
-        <name>but_545</name>
-        <layer>A</layer>
-        <rollover>A</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_051">
-          <name>var_051</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>1</value>
-        </action>
-        <action id="var_416">
-          <name>var_416</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>1</value>
-        </action>
-        <action id="goPage_634">
-          <name>goPage_634</name>
-          <type>Go to Page</type>
-          <page>LevelA_Intro</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
-      <code id="code_CurPage">
-        <name>code_CurPage</name>
+      <code id="code_670">
+        <name>code_670</name>
         <code/>
         <position>top</position>
-        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/CurrentPage.lua</extFile>
-      </code>
-      <code id="code_lastPage">
-        <name>code_lastPage</name>
-        <code/>
-        <position>top</position>
-        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/panelSelectionLevel.lua</extFile>
       </code>
     </page>
     <page id="levelE_Intro">
@@ -834,6 +654,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
     </page>
     <page id="levelE_Call">
@@ -961,6 +787,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="levelE_IntroStep1">
       <name>levelE_IntroStep1</name>
@@ -996,6 +828,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
@@ -1041,6 +879,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_LastPageLevel">
+        <name>code_LastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <audio id="aplausos">
         <name>aplausos</name>
@@ -1113,6 +957,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="recAudio">
       <name>recAudio</name>
@@ -1137,6 +987,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelE_Skier">
       <name>LevelE_Skier</name>
@@ -1160,6 +1016,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="explSkier">
         <name>explSkier</name>
@@ -1200,6 +1062,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="nurse">
         <name>nurse</name>
         <type>Sprite Sheet</type>
@@ -1221,28 +1089,21 @@
         <useSheet>None</useSheet>
         <export2>true</export2>
       </replacement>
-      <trigger id="act_nextScn">
-        <name>act_nextScn</name>
-        <action id="var_057">
-          <name>var_057</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>2</value>
-        </action>
-        <action id="goPage_434">
-          <name>goPage_434</name>
-          <type>Go to Page</type>
-          <page>LevelE_Meeting</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </trigger>
       <timer id="timer_nextScn">
         <name>timer_nextScn</name>
         <delay>4</delay>
         <trigger>act_nextScn</trigger>
         <loop>1</loop>
       </timer>
+      <trigger id="act_nextScn">
+        <name>act_nextScn</name>
+        <action id="code_148">
+          <name>code_148</name>
+          <type>External Code</type>
+          <code/>
+          <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene19_nextToy.lua</extFile>
+        </action>
+      </trigger>
     </page>
     <page id="LevelE_Meeting">
       <name>LevelE_Meeting</name>
@@ -1345,6 +1206,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="Statistics">
       <name>Statistics</name>
@@ -1445,6 +1312,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="kwkboss">
         <name>kwkboss</name>
         <type>Sprite Sheet</type>
@@ -1490,13 +1363,19 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
         <type>Sprite Sheet</type>
         <layer>kwkexp</layer>
         <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
-        <frameWidth>140</frameWidth>
-        <frameHeight>220</frameHeight>
+        <frameWidth>142</frameWidth>
+        <frameHeight>248</frameHeight>
         <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
         <exporter>TexturePacker</exporter>
         <frameStart>1</frameStart>
@@ -1504,7 +1383,7 @@
         <frameLength>1</frameLength>
         <loop>forever</loop>
         <paused>false</paused>
-        <direction>true</direction>
+        <direction>false</direction>
         <sheetWidth>512</sheetWidth>
         <sheetHeight>512</sheetHeight>
         <mainSeq>default</mainSeq>
@@ -1534,6 +1413,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
@@ -1580,6 +1465,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
         <type>Sprite Sheet</type>
@@ -1624,6 +1515,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
@@ -1691,6 +1588,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
         <type>Sprite Sheet</type>
@@ -1750,6 +1653,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
@@ -1852,6 +1761,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
         <type>Sprite Sheet</type>
@@ -1917,6 +1832,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <layer id="humo">
         <name>humo</name>
@@ -2007,6 +1928,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkjap">
         <name>kwkjap</name>
@@ -2101,6 +2028,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelO_Rescue">
       <name>LevelO_Rescue</name>
@@ -2125,6 +2058,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelO_Chine">
       <name>LevelO_Chine</name>
@@ -2148,6 +2087,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkjap">
         <name>kwkjap</name>
@@ -2227,6 +2172,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="kwkexpf">
         <name>kwkexpf</name>
         <type>Sprite Sheet</type>
@@ -2271,6 +2222,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkexpf">
         <name>kwkexpf</name>
@@ -2317,6 +2274,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <layer id="kwkexp">
         <name>kwkexp</name>
         <scaleW>155</scaleW>
@@ -2352,6 +2315,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwksamin">
         <name>kwksamin</name>
@@ -2419,6 +2388,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="kwksamin">
         <name>kwksamin</name>
         <type>Sprite Sheet</type>
@@ -2463,6 +2438,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwksamin">
         <name>kwksamin</name>
@@ -2608,6 +2589,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelE_MeetingFinal">
       <name>LevelE_MeetingFinal</name>
@@ -2710,6 +2697,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelI_IgluEnd">
       <name>LevelI_IgluEnd</name>
@@ -2727,6 +2720,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>
@@ -2794,6 +2793,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
         <type>Sprite Sheet</type>
@@ -2859,6 +2864,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <replacement id="kwkesq">
         <name>kwkesq</name>
@@ -2926,6 +2937,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <layer id="kwkexp">
         <name>kwkexp</name>
         <scaleW>70</scaleW>
@@ -2962,6 +2979,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelO_Chine2">
       <name>LevelO_Chine2</name>
@@ -2985,6 +3008,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <layer id="kwkexp">
         <name>kwkexp</name>
@@ -3043,6 +3072,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
       <layer id="kwkexp">
         <name>kwkexp</name>
         <scaleW>70</scaleW>
@@ -3094,6 +3129,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelU_IntroFood">
       <name>LevelU_IntroFood</name>
@@ -3139,6 +3180,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelU_Food2">
       <name>LevelU_Food2</name>
@@ -3157,6 +3204,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelU_FoodEnd">
       <name>LevelU_FoodEnd</name>
@@ -3174,6 +3227,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
     </page>
     <page id="LevelU_IntroToys">
@@ -3220,6 +3279,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="LevelU_Toys2">
       <name>LevelU_Toys2</name>
@@ -3237,6 +3302,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
       <button id="but_840">
         <name>but_840</name>
@@ -3283,6 +3354,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="DrawLetterA">
       <name>DrawLetterA</name>
@@ -3306,6 +3383,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
     </page>
     <page id="DrawLetterI">
@@ -3331,6 +3414,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="DrawLetterO">
       <name>DrawLetterO</name>
@@ -3355,6 +3444,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
       </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
     </page>
     <page id="DrawLetterU">
       <name>DrawLetterU</name>
@@ -3378,6 +3473,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/ActLastPage.lua</extFile>
+      </code>
+      <code id="code_lastPageLevel">
+        <name>code_lastPageLevel</name>
+        <code/>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
     </page>
     <page id="EnterAge">

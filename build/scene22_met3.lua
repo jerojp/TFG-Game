@@ -34,4 +34,6 @@ addCharacter(gpGenius.genius, aud, sub, gpGenius)
 local sec = {2, 1, 3, 1, 3, 2 }
 setSecuence( sec )
 
-playScene( "page_11" )
+local parameters = {nameToy="Bicicleta", pathToy="objeto321.png", costToy=_G.PriceToys.bicycle, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_11", indexToy = 4}
+
+playScene( "viewNewToy", parameters )

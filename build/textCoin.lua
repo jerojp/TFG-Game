@@ -26,7 +26,10 @@ local function textCoinFormat( )
     for i=1, numCero do
         text = "0"..text
     end
-    myGroup[2].text = text
+    if (myGroup) then
+       myGroup[2].text = text 
+       print( "SE LLAMAAAAAAAAAAAAAAAAAAA "..myGroup[2].text.." "..myGroup.numChildren )
+    end
 end
 
 function createTextCoin(  )
@@ -63,9 +66,11 @@ function textCoinUpdate( incCoin, operation )
 
         textCoinFormat( )
 
-        newTextCoin:removeSelf( )
-        newTextCoin = nil
-
+        if ( newTextCoin ) then
+            newTextCoin:removeSelf( )
+            newTextCoin = nil    
+        end
+        print( "Completada transicion" )
         return true        
     end
 
@@ -93,5 +98,5 @@ function textCoinUpdate( incCoin, operation )
     newTextCoin.x = newTextCoin.x - newTextCoin.contentWidth/2 - ((contNumDig(incCoin)-1)*10)
     newTextCoin:setTextColor (229, 185, 89) 
 
-    transition.to( newTextCoin, {  time=1000, y=myGroup[2].y, alpha = 0, onComplete=onCompleteTransition} )
+    transitionStash.newcoin = transition.to( newTextCoin, {  time=1000, y=myGroup[2].y, alpha = 0, onComplete=onCompleteTransition} )
 end
