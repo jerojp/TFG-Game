@@ -12,6 +12,11 @@ local limitPages = {30, 34, 19, 22, 39, 43, 50, 53, 58, 61}
 local inicPages = {25, 12, 35, 44, 54}
 local myDialog
 local page
+local ch = 1
+local handleFirstVisit
+local handleGoBackEx
+local handleGoBackEnd
+local handleGoBackExComplete
 
 local function removeStatitics(  )
   -- body
@@ -118,6 +123,60 @@ local function goToLevelLetter( event )
        return true
 end
 
+local function doNothing( event )
+  -- body
+  return true
+end
+
+local function createHiddenPanel( )
+  -- body
+  hiddenPanel = newRect( 0, 0, display.contentWidth, display.contentHeight )
+  hiddenPanel.alpha = 0.1
+  menuGroup:insert(hiddenPanel)
+  hiddenPanel:addEventListener( "touch", doNothing )
+  hiddenPanel:addEventListener( "tap", doNothing )
+end
+
+local function removeHiddenPanel( )
+  -- body
+  if (hiddenPanel) then
+    menuGroup:remove(hiddenPanel)
+    hiddenPanel:removeSelf( )
+    hiddenPanel = nil
+  end
+end
+
+local function onCompleteFirstVisit( event )
+  -- body
+  audio.dispose( handleFirstVisit )
+  handleFirstVisit = nil
+  _G.FirstVisitMap = false
+  removeHiddenPanel( )
+end
+
+local function onCompleteGoBackEx( event )
+  -- body
+  audio.dispose( handleGoBackEx )
+  handleGoBackEx = nil
+  _G.goBackForExercise = false
+  removeHiddenPanel( )
+end
+
+local function onCompleteGoBackEnd( event )
+  -- body
+  audio.dispose( handleGoBackEnd )
+  handleGoBackEnd = nil
+  _G.goBackEnd = false
+  removeHiddenPanel( )
+end
+
+local function onCompleteGoBackExComplete( event )
+  -- body
+  audio.dispose( handleGoBackExComplete )
+  handleGoBackExComplete = nil
+  removeHiddenPanel( )
+end
+
 -- (TOP) External code will render here 
 _G.CurrentPage = curPage 
 _G.LastPage = curPage 
@@ -198,4 +257,22 @@ for i=1,groupTick.numChildren, 2 do
               end
        end
        contLetter = contLetter + 1
+end
+
+if(_G.goBackForExercise) then
+  handleGoBackEx = audio.loadSound( audioDir.."geniusGBFE.mp3" )
+  audio.play( handleGoBackEx, {channel = ch, onComplete = onCompleteGoBackEx} )
+  createHiddenPanel( )
+elseif (_G.FirstVisitMap) then
+  handleFirstVisit = audio.loadSound( audioDir.."geniusFVM.mp3" )
+  audio.play( handleFirstVisit, {channel = ch, onComplete = onCompleteFirstVisit} )
+  createHiddenPanel( )
+elseif(_G.goBackEnd)
+  handleGoBackEnd = audio.loadSound( audioDir.."geniusGBEND.mp3" )
+  audio.play( handleGoBackEnd, {channel = ch, onComplete = onCompleteGoBackEnd} )
+  createHiddenPanel( )
+else
+  handleGoBackExComplete = audio.loadSound( audioDir.."geniusGBEC.mp3" )
+  audio.play( handleGoBackExComplete, {channel = ch, onComplete = onCompleteGoBackExComplete} )
+  createHiddenPanel( )
 end

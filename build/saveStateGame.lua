@@ -35,6 +35,8 @@ local easy = "easy"
 local normal = "normal"
 local hard = "hard"
 
+gSprites = {}
+
 printTable = function ( myTable)
 	-- body
 	print( "-------INICIO IMPRESION-------" )
@@ -44,6 +46,25 @@ printTable = function ( myTable)
 	end
 
 	print( "-------FIN IMPRESION-------" )
+end
+
+function pauseAllSprites(  )
+    -- body
+    local k, v
+
+    for k,v in pairs(gSprites) do
+        v:pause();
+    end
+
+end
+
+function resumeAllSprites( )
+    -- body
+    local k, v
+
+    for k,v in pairs(gSprites) do
+        v:play();
+    end
 end
 
 function pauseAllTransition( )
@@ -200,6 +221,9 @@ function loadSettingGame( )
         _G.PriceToys = {mask = 289, bee = 324, elephant = 361, bicycle = 400, indian = 441, dolphin = 484, sheep = 529, donkey = 576, guitar = 625, unicorn = 676}
         _G.LastPageLevel = {25, 12, 35, 44, 54}
         _G.StoreToysUnlocked = false
+        _G.goBackForExercise = false
+        _G.FirstVisitMap = false
+        _G.goBackEnd = false
   end
 end
 
@@ -259,7 +283,7 @@ continueGame = function ( event )
                 removePanelAutoAdvance( )
               end
           end
-          
+          resumeAllSprites()
           resumeAllTransition()
           resumeMyTimers()
           audio.resume( 1 )
@@ -561,6 +585,7 @@ end
 
 function createPauseMenu( isExercise )
     -- body
+    pauseAllSprites()
     pauseAllTransition()
     --transition.pause( )
     pauseMyTimers( )

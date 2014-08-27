@@ -159,6 +159,7 @@ function new()
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
+gSprites.nurse = nurse
 nurse:pause( )
 
 _G.Level = 2

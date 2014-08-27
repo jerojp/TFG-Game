@@ -1,4 +1,5 @@
 require( "ControlScene" )
+gSprites.nurse = nurse
 nurse:pause( )
 
 _G.Level = 2

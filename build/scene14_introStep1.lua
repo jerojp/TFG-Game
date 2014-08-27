@@ -1,4 +1,5 @@
 require( "ControlScene" )
+gSprites.exp = explorer
 kwkexp:pause( )
 
 _G.Level = 2

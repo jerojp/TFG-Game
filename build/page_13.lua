@@ -156,6 +156,8 @@ function new()
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
+gSprites.exp = expCall
+gSprites.nurse = girlCall
 girlCall:pause( )
 expCall:pause()
 

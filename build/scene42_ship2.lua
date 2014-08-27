@@ -1,4 +1,6 @@
 require( "ControlScene" )
+gSprites.exp = kwkexp
+gSprites.esq = kwkesq
 kwkexp:pause( )
 kwkesq:pause()
 

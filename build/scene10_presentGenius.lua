@@ -2,7 +2,6 @@ require( "ControlScene" )
 require("viewGenius")
 
 local gpGenius = createGenius( )
-
 menuGroup:insert( gpGenius )
 gpGenius.genius:pause( )
 

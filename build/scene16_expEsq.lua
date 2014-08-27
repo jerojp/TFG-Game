@@ -1,4 +1,5 @@
 require( "ControlScene" )
+gSprites.exp = explSkier
 explSkier:pause( )
 
 _G.Level = 2

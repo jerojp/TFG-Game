@@ -102,7 +102,8 @@ function new()
       gp_totalLetter.anchorChildren = true
 
       gp_totalLetter.y = gp_totalLetter.y - 20
-      addExtra( menuGroup, gp_letter, gp_point, 5, arrow, gp_totalLetter )  
+      addExtra( menuGroup, gp_letter, gp_point, 5, arrow, gp_totalLetter ) 
+      menuGroup:insert( gp_totalLetter ) 
 
        
 

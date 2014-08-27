@@ -181,7 +181,8 @@ function new()
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
 require("viewGenius")
-
+gSprites.exp = kwkexp
+gSprites.samin = kwksamin
 kwkexp:pause( )
 kwksamin:pause()
 _G.Level = 1

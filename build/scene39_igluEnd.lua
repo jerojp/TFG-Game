@@ -1,6 +1,7 @@
 require( "ControlScene" )
 require("viewGenius")
-
+gSprites.exp = kwkexp
+gSprites.esq = kwkesq
 kwkexp:pause( )
 kwkesq:pause()
 

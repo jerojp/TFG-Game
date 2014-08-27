@@ -1,4 +1,5 @@
 require( "ControlScene" )
+gSprites.boss = kwkboss
 kwkboss:pause( )
 
 

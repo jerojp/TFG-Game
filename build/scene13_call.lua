@@ -1,4 +1,6 @@
 require( "ControlScene" )
+gSprites.exp = expCall
+gSprites.nurse = girlCall
 girlCall:pause( )
 expCall:pause()
 

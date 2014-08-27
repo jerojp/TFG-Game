@@ -340,17 +340,45 @@ local function updateFacebook( event )
 	facebookGroup:insert( textEx )
 
 	local textTable = nil
+	local SheetInfo = {}
+	SheetInfo.sheet =
+	{
+	    frames = {
+	        {
+	            -- MyCheckOff
+	            x=1,
+	            y=1,
+	            width=62,
+	            height=62,
+	        },
+	        {
+	            -- MyCheckOn
+	            x=64,
+	            y=1,
+	            width=62,
+	            height=62,
+	        },
+	    },
+	    sheetContentWidth = 128,
+	    sheetContentHeight = 64
+	}
+	local checkboxSheet = graphics.newImageSheet( imgDir.."checkBox.png", SheetInfo.sheet )
+
 	if (object.index) then
 		textTable = display.newText( "- Igualacion-muestra", rectangle.x - rectangle.width/2 + 20, rectangle.y - rectangle.height/2 + 100 , native.systemFont, 25 )
 		textTable:setFillColor( color.R, color.G, color.B )
 		facebookGroup:insert( textTable )
+	
 		local checkTable = widget.newSwitch{
     		left = rectangle.x - 20,
     		top = rectangle.y - rectangle.height/2 + 100,
     		style = "checkbox",
     		id = "checkTable",
     		initialSwitchState = true,
-    		onPress = onSwitchPress
+    		onPress = onSwitchPress,
+    		sheet = checkboxSheet,
+    		frameOff = 1,
+    		frameOn = 2
 		}
 		updateTable = true
 		facebookGroup:insert( checkTable ) 	

@@ -400,8 +400,7 @@ function new()
               myDialog  = createMyDialog("Armario cerrado", "Lo siento, el genio todavia no ha desbloqueado este armario magico", nil, "Confirmar", onCompleteC)
               menuGroup:insert(myDialog)
        end
-       menuGroup:insert( createTextCoin( ) )
-       textCoinUpdate(2000, "add") 
+       menuGroup:insert( createTextCoin( ) ) 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p65_capa_1.png", 0, 0 ); 

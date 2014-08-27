@@ -132,6 +132,7 @@ function new()
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
+gSprites.exp = kwkexp
 kwkexp:pause( )
 
 local aud = {"exp_1.mp3"}
