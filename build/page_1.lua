@@ -213,7 +213,7 @@ local cont = 0
 onCompleteTransitionBackWard = function( obj )
     -- body
     print( "Hacia delante otra vez" )
-    transitionStash["cloud"..cont] = transition.to( obj, {  time=obj.timeSpeed, x = obj.x+150, onComplete=onCompleteTransitionForward}  )
+    transitionStash["cloud1"] = transition.to( obj, {  time=obj.timeSpeed, x = obj.x+150, onComplete=onCompleteTransitionForward}  )
     cont = cont + 1
 end
 
@@ -221,14 +221,13 @@ end
 onCompleteTransitionForward = function( obj )
     -- body
     obj.timeSpeed = math.random(3000,12000)
-    transitionStash["cloud"..cont] = transition.to( obj, {  time=obj.timeSpeed, x = obj.x-150, onComplete=onCompleteTransitionBackWard}  )
+    transitionStash["cloud2"] = transition.to( obj, {  time=obj.timeSpeed, x = obj.x-150, onComplete=onCompleteTransitionBackWard}  )
     cont = cont + 1
 end
 
 for i=1,gp_cloud.numChildren do
     gp_cloud[i].timeSpeed = math.random(3000,12000)
-    transitionStash["cloud"..cont] = transition.to( gp_cloud[i], {  time=gp_cloud[i].timeSpeed, x = gp_cloud[i].x+100, onComplete=onCompleteTransitionForward}  )
-    cont = cont + 1
+    transitionStash["cloud1"] = transition.to( gp_cloud[i], {  time=gp_cloud[i].timeSpeed, x = gp_cloud[i].x+100, onComplete=onCompleteTransitionForward}  )
 end
 
 local continue = widget.newButton{

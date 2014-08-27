@@ -62,6 +62,7 @@ function new()
       local gp_line = display.newGroup()
       local gp_letter = display.newGroup()
       local gp_point = display.newGroup()
+      local gp_totalLetter = display.newGroup( )
       local color = 220
       local colorPoint = color - 20
       local radius = 100
@@ -70,9 +71,9 @@ function new()
       local an
       local line
       
-      local rectLeft = display.newRoundedRect( display.contentCenterX - radius, display.contentCenterY-50, 55, 319, 12 )
+      local rectLeft = display.newRoundedRect( display.contentCenterX - radius, display.contentCenterY-15, 55, 220, 12 )
       rectLeft:setFillColor( color, color, color )
-      local rectRight = display.newRoundedRect( display.contentCenterX + radius, display.contentCenterY-50, 55, 319, 12 )
+      local rectRight = display.newRoundedRect( display.contentCenterX + radius, display.contentCenterY-15, 55, 220, 12 )
       rectRight:setFillColor( color, color, color )
       
       for i=0,n_div do
@@ -84,7 +85,7 @@ function new()
 
       --gp_line:translate( display.contentCenterX, display.contentCenterY )
       gp_line.x = display.contentCenterX+28
-      gp_line.y = display.contentCenterY+265
+      gp_line.y = display.contentCenterY+200
       
       gp_letter:insert( gp_line )
       gp_letter:insert(rectLeft)
@@ -92,27 +93,27 @@ function new()
       gp_letter.x = -10
       gp_letter.y = -280
       
-      local pointTopLeft = display.newCircle( 1-radius, -285, radiusPoint )
+      local pointTopLeft = display.newCircle( 1-radius, -185, radiusPoint )
       pointTopLeft:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointTopLeft )
       
-      local pointTopRight = display.newCircle( radius+1, -285, radiusPoint )
+      local pointTopRight = display.newCircle( radius+1, -185, radiusPoint )
       pointTopRight:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointTopRight )
 
-      local pointMiddleLeft = display.newCircle( -radius+1, -185, radiusPoint )
+      local pointMiddleLeft = display.newCircle( -radius+1, -125, radiusPoint )
       pointMiddleLeft:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointMiddleLeft )
       
-      local pointMiddleRight = display.newCircle( radius+1, -185, radiusPoint )
+      local pointMiddleRight = display.newCircle( radius+1, -125, radiusPoint )
       pointMiddleRight:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointMiddleRight )
       
-      local pointBelowLeft = display.newCircle( -radius+1, -85, radiusPoint )
+      local pointBelowLeft = display.newCircle( -radius+1, -65, radiusPoint )
       pointBelowLeft:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointBelowLeft )
       
-      local pointBelowRight = display.newCircle( radius+1, -85, radiusPoint )
+      local pointBelowRight = display.newCircle( radius+1, -65, radiusPoint )
       pointBelowRight:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointBelowRight )
 
@@ -120,19 +121,26 @@ function new()
       for i=0,n_div do
             an = (math.pi/n_div)*i;
             line = display.newCircle( radius*math.cos(an), radius*math.sin(an), radiusPoint )
-            line:setFillColor( color-20, color-20, color-20 )
+            line:setFillColor(color-20, color-20, color-20)
             gp_point:insert(line)
       end
       gp_point.x = display.contentCenterX + 18
-      gp_point.y = display.contentCenterY - 15
+      gp_point.y = display.contentCenterY - 80
 
-      gp_point.anchorChildren = true
-      gp_letter.anchorChildren = true
+      local arrow = display.newImageRect( imgDir.."flechaRoja.png", 40, 60 )
+      arrow.x = rectLeft.x - 10 ; arrow.y = 65 ;
+      arrow:scale( 1.2, 1.2 )
       
-      addExtra( menuGroup, gp_letter, gp_point, 5 )  
+      gp_totalLetter:insert( gp_letter )
+      gp_totalLetter:insert( gp_point )
+      gp_totalLetter:insert( arrow )
 
-      menuGroup:insert( gp_letter ) 
-      menuGroup:insert( gp_point ) 
+      --gp_point.anchorChildren = true
+      gp_totalLetter.anchorChildren = true
+      
+      addExtra( menuGroup, gp_letter, gp_point, 5 , arrow, gp_totalLetter)  
+
+      menuGroup:insert( gp_totalLetter )  
 
        -- do not swipe this page 
 

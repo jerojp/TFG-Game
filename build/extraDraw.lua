@@ -1,11 +1,11 @@
 require( "textCoin" )
-local lineTable = {}
-local linePoints = {}
-local numPointPressed = 0
-local pressedPointLeft = false
-local isErase = false
-local faultCounter = 1 -- Misses out of the drawing area 
-local MAX_FAULT = 2 --
+local lineTable
+local linePoints
+local numPointPressed
+local pressedPointLeft
+local isErase 
+local faultCounter -- Misses out of the drawing area 
+local MAX_FAULT  
 
 local function finalizeLevel( )
   -- body
@@ -17,7 +17,12 @@ local function finalizeLevel( )
   end
   print( "FINALIZADO" )
 
-  _G.SecondFaseDraw[_G.Level] = true
+  if (_G.Phase == 1) then
+    _G.SecondFaseDraw[_G.Level] = true  
+  else
+    _G.SecondFaseDraw[_G.Level] = false
+  end
+  
   textCoinUpdate( 150, "add" )
   timerStash.timeFinalize = timer.performWithDelay( 1500, nextScene )
   return true
@@ -63,49 +68,7 @@ local function checkPoint( groupPoint, x, y, radiusPincel, maxChildren )
 
 end
 
-
-function addExtra( menuGroup, Letra, groupPointOrigin, radius )
-      --Groups
-      local groupPoint = {}
-      _G.TotalAddCoinEx = 0
-
-      if(_G.DifficultLevel == 1) then  -- Easy
-        Letra:scale( 1.5, 1.5 )
-        groupPointOrigin:scale( 1.5, 1.5 )
-        radius = radius * 1.5
-      elseif (_G.DifficultLevel == 3) then  -- Hard
-        Letra:scale( 0.7, 0.7 )      
-        groupPointOrigin:scale( 0.7, 0.7 )
-        radius = radius * 0.7
-      end
-
-      if (_G.SecondFaseDraw[_G.Level]) then
-        Letra:scale( 0.85, 0.85 )
-        groupPointOrigin:scale( 0.85, 0.85 )
-        radius = radius * 0.85
-      end
-
-      --Function extra
-      local function copyToTable()
-        if (table.maxn(groupPoint) ~= 0) then
-          for i=1,table.maxn(groupPoint) do
-            groupPoint[i] = nil
-          end  
-        end
-        for i=1,groupPointOrigin.numChildren do
-          table.insert( groupPoint, groupPointOrigin[i] )
-        end
-      end
-
-      local function resetVar()
-        -- body
-        numPointPressed = 0
-        pressedPointLeft = false
-        --faultCounter = 0
-        copyToTable()
-      end
-
-      copyToTable()
+function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
 
       -- Button names 
        local but_Black
@@ -140,9 +103,78 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
        local lineColor = {R=255, G=0, B=0} -- Color for the brush 
        local widget = require "widget"
        local enterPaleta = false
+      --Groups
+      local groupPoint = {}
+      _G.TotalAddCoinEx = 0
+      local completeOff
+      local completeOn
 
-    -- This is only included because I used the widget.newButton API for the example "undo" & "erase" buttons. It's not required for the drawing functionality.
+      completeOn = function ( obj )
+            -- body
+            transitionStash["arrowOff"] = transition.to( obj, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
+      end
 
+      completeOff = function ( obj )
+            -- body
+            transitionStash["arrowOn"] = transition.to( obj, {time = 1000, xScale = 1.2, yScale =1.2, alpha = 1.0, onComplete = completeOn} )
+      end
+
+      --Function extra
+      local function copyToTable()
+        if (table.maxn(groupPoint) ~= 0) then
+          for i=1,table.maxn(groupPoint)-1 do -- for not copy Arrow in the new group Point
+            groupPoint[i] = nil
+          end  
+        end
+        for i=1,groupPointOrigin.numChildren do
+          table.insert( groupPoint, groupPointOrigin[i] )
+        end
+      end
+
+      local function resetVar()
+        -- body
+        numPointPressed = 0
+        pressedPointLeft = false
+        --faultCounter = 0
+        copyToTable()
+      end
+
+      local function erase()
+          for i = 1, #lineTable do
+                lineTable[i]:removeSelf()
+                lineTable[i] = nil
+          end
+          isErase = false
+          resetVar()
+          transition.resume(arrow)
+          return true
+      end
+
+      transitionStash["arrowOff"] = transition.to( arrow, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
+
+      lineTable = {}
+      linePoints = {}
+      pressedPointLeft = false
+      numPointPressed = 0
+      isErase = false
+      faultCounter = 1 -- Misses out of the drawing area 
+      MAX_FAULT = 2
+
+      if(_G.DifficultLevel == 1) then  -- Easy
+        gpTotal:scale( 1.5, 1.5 )
+        radius = radius * 1.5
+      elseif (_G.DifficultLevel == 3) then  -- Hard
+        gpTotal:scale( 0.7, 0.7 )      
+        radius = radius * 0.7
+      end
+
+      if (_G.SecondFaseDraw[_G.Level]) then
+        print( "Segunda Fase" )
+        gpTotal:scale( 0.85, 0.85 )
+        radius = radius * 0.85
+      end
+
+      copyToTable()
 
        -- (TOP) External code will render here 
 
@@ -164,16 +196,6 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
         defaultFile = imgDir.."button.png",
         onRelease = undo 
        }--]]
-      
-      local function erase()
-          for i = 1, #lineTable do
-                lineTable[i]:removeSelf()
-                lineTable[i] = nil
-          end
-          isErase = false
-          resetVar()
-          return true
-      end
       
        -- PanelDibujo positioning 
        PanelDibujo = display.newImageRect( imgDir.. "paneldibujo.png", 1280, 600 ); 
@@ -305,6 +327,8 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
 
       local function inicDraw( event )
         -- body
+        transition.pause( arrow )
+
         i = #lineTable+1
         lineTable[i]=display.newGroup()
         --display.getCurrentStage():setFocus(event.target)
@@ -415,7 +439,6 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
        Amarillo:addEventListener("tap", onAmarilloEvent ) 
 
        local function onPaletaEvent(event)
-
         if (event.phase=="began" or event.phase=="moved") then
           if (not enterPaleta) then
             enterPaleta = true
@@ -427,8 +450,7 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius )
             else 
               if (Letra.contentHeight*1.05 < 600) then
                 print( "ESCALAAAAAAA" )
-                Letra:scale( 1.05, 1.05 )
-                groupPointOrigin:scale( 1.05, 1.05 )
+                gpTotal:scale( 1.05, 1.05 )
                 radius = radius * 1.05
               end
               faultCounter = 1

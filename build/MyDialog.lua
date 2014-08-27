@@ -74,6 +74,7 @@ function createMyDialog ( labelPr, labelSec, color, labelC, listenerC, labelD, l
 	else
 		continue.x = display.contentCenterX
 	end
+	print( "CREADO DIALOG" )
 	return mygroup
 end
 

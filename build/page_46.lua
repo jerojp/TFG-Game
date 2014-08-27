@@ -58,14 +58,66 @@ function new()
        menuGroup:insert(1,FondoJapon); menuGroup.FondoJapon = FondoJapon 
 
        -- kwkjap positioning 
-       kwkjap = display.newImageRect( imgDir.. "kwkjap.png", 258, 360 ); 
+       local kwkjap_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=2, y=2, width=258, height=360 }, -- Japonesa_00000
+               { x=262, y=2, width=258, height=360 }, -- Japonesa_00001
+               { x=522, y=2, width=258, height=360 }, -- Japonesa_00002
+               { x=2, y=364, width=258, height=360 }, -- Japonesa_00003
+               { x=262, y=364, width=258, height=360 }, -- Japonesa_00004
+               { x=522, y=364, width=258, height=360 }, -- Japonesa_00005
+               { x=2, y=726, width=258, height=360 }, -- Japonesa_00006
+               { x=262, y=726, width=258, height=360 }, -- Japonesa_00007
+               { x=522, y=726, width=258, height=360 }, -- Japonesa_00008
+           },
+    
+           sheetContentWidth = 782,
+           sheetContentHeight = 1088
+ 
+       } 
+       kwkjap_sheet = graphics.newImageSheet( spriteDir.. "japonesa.png", kwkjap_options ) 
+       kwkjap_seq = { name = "default", start = 1, count = 9, time = 1000, loopCount = 0, loopDirection = "forward" }; 
+       kwkjap = display.newSprite(kwkjap_sheet, kwkjap_seq ) 
+       kwkjap:play(); 
        kwkjap.x = 160; kwkjap.y = 407; kwkjap.alpha = 1; kwkjap.oldAlpha = 1 
        kwkjap.oriX = kwkjap.x; kwkjap.oriY = kwkjap.y 
        kwkjap.name = "kwkjap" 
        menuGroup:insert(kwkjap); menuGroup.kwkjap = kwkjap 
 
        -- kwkexp positioning 
-       kwkexp = display.newImageRect( imgDir.. "kwkexp.png", 140, 220 ); 
+       local kwkexp_options = { 
+           -- created with TexturePacker (http://www.texturepacker.com)
+           frames = {
+             
+               { x=2, y=2, width=229, height=395 }, -- ExploradorJapones_00000
+               { x=233, y=2, width=229, height=395 }, -- ExploradorJapones_00001
+               { x=464, y=2, width=229, height=395 }, -- ExploradorJapones_00002
+               { x=695, y=2, width=229, height=395 }, -- ExploradorJapones_00003
+               { x=2, y=399, width=229, height=395 }, -- ExploradorJapones_00004
+               { x=233, y=399, width=229, height=395 }, -- ExploradorJapones_00005
+               { x=464, y=399, width=229, height=395 }, -- ExploradorJapones_00006
+               { x=695, y=399, width=229, height=395 }, -- ExploradorJapones_00007
+               { x=2, y=796, width=229, height=395 }, -- ExploradorJapones_00008
+               { x=233, y=796, width=229, height=395 }, -- ExploradorJapones_00009
+               { x=464, y=796, width=229, height=395 }, -- ExploradorJapones_00010
+               { x=695, y=796, width=229, height=395 }, -- ExploradorJapones_00011
+               { x=2, y=1193, width=229, height=395 }, -- ExploradorJapones_00012
+               { x=233, y=1193, width=229, height=395 }, -- ExploradorJapones_00013
+               { x=464, y=1193, width=229, height=395 }, -- ExploradorJapones_00014
+               { x=695, y=1193, width=229, height=395 }, -- ExploradorJapones_00015
+               { x=2, y=1590, width=229, height=395 }, -- ExploradorJapones_00016
+           },
+    
+           sheetContentWidth = 926,
+           sheetContentHeight = 1987
+ 
+       } 
+       kwkexp_sheet = graphics.newImageSheet( spriteDir.. "expjapones.png", kwkexp_options ) 
+       kwkexp_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "forward" }; 
+       kwkexp = display.newSprite(kwkexp_sheet, kwkexp_seq ) 
+       kwkexp:play(); 
        kwkexp.x = 391; kwkexp.y = 433; kwkexp.alpha = 1; kwkexp.oldAlpha = 1 
        kwkexp.xScale = 0.7; 
        kwkexp.yScale = 0.7; 
@@ -88,6 +140,12 @@ function new()
 
        dispose = function(event) 
           cancelAllTimers(); cancelAllTransitions() 
+       end 
+
+       function cleanSprite() 
+           kwkjap_sheet = nil; kwkjap = nil 
+    kwkexp_sheet = nil; kwkexp = nil 
+ 
        end 
 
        -- (BOTTOM) External code will render here 
@@ -115,6 +173,10 @@ playScene( "page_47" )
 
     end 
     drawScreen() 
+
+    function clean() 
+       cleanSprite() 
+    end 
 
     return menuGroup 
 end 

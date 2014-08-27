@@ -58,32 +58,35 @@
 
        -- Button functions 
        function butConfirm(self)
-          if (age==nil or age="") and system.getInfo("environment")=="device" then
-            local myDialog
-            
-            local function functionC( event )
-              -- body
-              local object = event.target
+          local myClosure_switch = function()
+              dispose(); director:changeScene( "page_63", "fade" ) 
+          end 
+          if (age==nil or age=="") then
+            if (system.getInfo("environment")=="device") then
+              local myDialog
+              
+              local function functionC( event )
+                -- body
+                local object = event.target
 
-              if event.phase == "began" then
-                display.getCurrentStage():setFocus(object)
-                object.isFocus = true
-              elseif object.isFocus then
-                if event.phase == "ended" or event.phase == "cancelled" then
-                    display.getCurrentStage():setFocus( nil )
-                    object.isFocus = false
-
-                    deleteMyDialog( myDialog )
+                if event.phase == "began" then
+                  display.getCurrentStage():setFocus(object)
+                  object.isFocus = true
+                elseif object.isFocus then
+                  if event.phase == "ended" or event.phase == "cancelled" then
+                      display.getCurrentStage():setFocus( nil )
+                      object.isFocus = false
+                      deleteMyDialog( myDialog )
+                  end
                 end
+                return true
               end
-              return true
+              myDialog = createMyDialog( "ADVERTENCIA", "Debes introducir tu edad.", nil, "Vale", listenerC)  
+            else
+              _G.Age = "3"
+              timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 
             end
-
-            myDialog = createMyDialog( "ADVERTENCIA", "Debes introducir tu edad.", nil, "Vale", listenerC)
           else
-            local myClosure_switch = function()
-                dispose(); director:changeScene( "page_63", "fade" ) 
-            end 
             _G.Age = age
             timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 
           end

@@ -7,8 +7,7 @@ menuGroup:insert( gpGenius )
 gpGenius.genius:pause( )
 
 --timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )
-_G.Subtitle = true
-_G.AutoNextPage = true
+_G.StoreToysUnlocked = true
 
 local aud = {"genio_1.mp3", "genio_2.mp3", "genio_3.mp3", "genio_4.mp3"}
 local sub = {"Hola, soy el genio mágico Ali encerrado en esta tablet mágica. ¿Que puedo hacer por ti?",
@@ -28,7 +27,8 @@ local sec = {1, 2, 1, 2, 1, 1 }
 setSecuence( sec )
 
 local img = {path = imgDir.."continentes.jpg"}
-local events = {nil, nil, nil, nil, {mytype = "image", value = {0, img } }, nil}
+local imgStore = {path = imgDir.."storeToys.jpg"}
+local events = {nil, nil, {mytype = "image", value = {1, imgStore } }, nil, {mytype = "image", value = {0, img } }, nil}
 setEventsControlScene(events)
 
 playScene( "page_11" )

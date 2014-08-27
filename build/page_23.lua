@@ -331,7 +331,7 @@ local function updateFacebook( event )
 	panelBackHiddle:addEventListener( "tap", nothing )
 	local rectangle = display.newRoundedRect( 0, 0, 670, 330, 25 )
 	rectangle.x = display.contentCenterX ; rectangle.y = display.contentCenterY
-	rectangle:setFillColor( 19,135,255 )
+	rectangle:setFillColor( 19,135,255 ) -- 1â€“93â€“188
 	rectangle.alpha = 0.98
 	facebookGroup:insert( rectangle )
 
@@ -458,16 +458,16 @@ for i=1,10 do
 			scrollView:insert(line)
 			io.close(fhd)
    	end
-   	path = system.pathForFile("audioExLet"..level..phase..".pcm", system.DocumentsDirectory ) 
+   	path = system.pathForFile("audioExLet"..level..phase..".wav", system.DocumentsDirectory ) 
     fhd = io.open(path, "r")
     if fhd then 
-        local objectAudio = display.newText( "Reproducir Audio", 776, heightInic + (height*(i-1)) + 2, native.systemFont, 22 )
+        local objectAudio = display.newText( "Reproducir Audio", 776, heightInic + (height*(i-1)) + 2, native.systemFont, 21 )
 		objectAudio:setFillColor( color.R, color.G, color.B )
 		objectAudio.level = level
 		objectAudio.phase = phase
 		objectAudio:addEventListener( "tap", playAudio )
 		myAudio:insert( objectAudio )
-		line = display.newLine( 776, heightInic + (height*(i-1))+30, 800, heightInic + (height*(i-1))+30 )
+		line = display.newLine( 776, heightInic + (height*(i-1))+30, 940, heightInic + (height*(i-1))+30 )
 		line:setColor(color.R, color.G, color.B);
         line.width=lineWidth;
 		scrollView:insert(line)

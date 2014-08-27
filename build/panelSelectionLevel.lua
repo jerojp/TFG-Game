@@ -16,13 +16,14 @@ local page
 local function removeStatitics(  )
   -- body
   --Exercise Sample-Selection
-  local index = (_G.Level*2 - 1)
+  local index = _G.Level*2 - 1
+  print( "Indice para borrar: "..index..","..index+1 )
   if (_G.Results[index] and _G.Results[index+1]) then
     print( "Borradas estadisticas ejercicio IGUALACION-MUESTRA" )
-    table.remove( _G.Results, index )
-    table.remove( _G.Results, index+1 )
-    table.remove( _G.TimerResults, index )
-    table.remove( _G.TimerResults, index+1 )
+    _G.Results[index] = nil
+    _G.Results[index+1] = nil
+    _G.TimerResults[index] = nil
+    _G.TimerResults[index+1] = nil
   end
   --Exercise Draw
   local results, reason = os.remove( system.pathForFile( "screen".._G.Level.."1.jpg", system.DocumentsDirectory  ) )

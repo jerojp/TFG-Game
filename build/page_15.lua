@@ -120,20 +120,8 @@ function new()
        local maxNivel = 10
        local contadorTiempo 
        _G.TotalAddCoinEx = 0
-       
-       textLevel = display.newText( "Nivel : "..nivelActual , 20, 170, native.systemFont, 30 ) 
-       textLevel:setTextColor (229, 185, 89)
-       menuGroup:insert(textLevel)
    
-
        menuGroup:insert( createTextCoin( ) )
-
-       objetoCorrect = display.newImageRect( imgDir.. "objeto".._G.Level.._G.Level.._G.Phase..".png", 150, 135 ); 
-       objetoCorrect.x = 680; objetoCorrect.y = 91; objetoCorrect.alpha = 1; objetoCorrect.oldAlpha = 1 
-       objetoCorrect.oriX = objetoCorrect.x; objetoCorrect.oriY = objetoCorrect.y 
-       objetoCorrect.name = "objetoCorrect" 
-       menuGroup:insert(objetoCorrect); menuGroup.objetoCorrect = objetoCorrect
-
        local l
        if(_G.Level==1) then
         l = "A"
@@ -147,9 +135,20 @@ function new()
         l = "U"
        end
 
-       local textCorrect = display.newText( "Letra "..l, 630, 180, native.systemFont, 30 )
+       local textCorrect = display.newText( "Letra "..l, display.contentCenterX, 5, native.systemFont, 38 )
+       textCorrect.x = display.contentCenterX
        textCorrect:setFillColor( 0, 0, 0 )
        menuGroup:insert(textCorrect)
+
+
+       objetoCorrect = display.newImageRect( imgDir.. "objeto".._G.Level.._G.Level.._G.Phase..".png", 120, 100 ); 
+       objetoCorrect.x = display.contentCenterX; objetoCorrect.y = 110;
+       menuGroup:insert(objetoCorrect); 
+
+       textLevel = display.newText( "Nivel : "..nivelActual , display.contentCenterX, 180, native.systemFont, 30 ) 
+       textLevel.x = display.contentCenterX
+       textLevel:setTextColor (229, 185, 89)
+       menuGroup:insert(textLevel)
 
        backgroundLower = display.newImageRect( imgDir.. "backgroundLower".._G.Level.._G.Phase..".png", 1280, 551 ); 
        backgroundLower.x = 640; backgroundLower.y = 524; backgroundLower.alpha = 1; backgroundLower.oldAlpha = 1 
@@ -453,7 +452,7 @@ function new()
          saveKwikVars({"vidas",vidas - 1}) 
          if (vidas == 0) then
             transitionStash.newTransition_577 = transition.to( TextoFinalIncor, {alpha=TextoFinalIncor.oldAlpha, time=1000, delay=0}) 
-            myDialog = createMyDialog( "Nivel no superado", "Â¿Deseas repetir el ejercicio?", nil, "Si", listenerC, "No", listenerD)
+            myDialog = createMyDialog( "Ejercicio no superado", " Â¿ Deseas repetir el ejercicio ? ", nil, "Si", listenerC, "No", listenerD)
          end
        end 
       end 
@@ -644,8 +643,8 @@ function new()
         --!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Hay que hacer esto independiente del numero de letras: guardar letras en una tabla y quitar el 5
         
         if (_G.Results[index]) then
-          table.remove( _G.Results, index )
-          table.remove( _G.TimerResults, index )
+          _G.Results[index] = nil
+          _G.TimerResults[index] = nil
         end
         table.insert( _G.Results, index, resultsTest )
         table.insert( _G.TimerResults, index, timerTest )

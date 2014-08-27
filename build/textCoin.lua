@@ -28,7 +28,6 @@ local function textCoinFormat( )
     end
     if (myGroup) then
        myGroup[2].text = text 
-       print( "SE LLAMAAAAAAAAAAAAAAAAAAA "..myGroup[2].text.." "..myGroup.numChildren )
     end
 end
 
@@ -55,14 +54,6 @@ function textCoinUpdate( incCoin, operation )
 
     local function onCompleteTransition( event )
         -- body
-        if (operation == "add") then
-            _G.Coin = _G.Coin + incCoin 
-        else
-            _G.Coin = _G.Coin - incCoin
-            if (_G.Coin < 0) then
-                _G.Coin = 0
-            end
-        end
 
         textCoinFormat( )
 
@@ -90,7 +81,7 @@ function textCoinUpdate( incCoin, operation )
         --parent = textGroup,
         text = symbol..incCoin,     
         x = myGroup[2].x,
-        y = myGroup[2].y + 50,
+        y = myGroup[2].y + 40,
         font = native.systemFontBold,   
         fontSize = 40,
     }
@@ -98,5 +89,8 @@ function textCoinUpdate( incCoin, operation )
     newTextCoin.x = newTextCoin.x - newTextCoin.contentWidth/2 - ((contNumDig(incCoin)-1)*10)
     newTextCoin:setTextColor (229, 185, 89) 
 
-    transitionStash.newcoin = transition.to( newTextCoin, {  time=1000, y=myGroup[2].y, alpha = 0, onComplete=onCompleteTransition} )
+    if (operation == "add") then
+            _G.Coin = _G.Coin + incCoin 
+    end
+    transitionStash.newcoin = transition.to( newTextCoin, {  time=500, y=myGroup[2].y, alpha = 0, onComplete=onCompleteTransition} )
 end

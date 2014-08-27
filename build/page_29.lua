@@ -60,6 +60,7 @@ function new()
              require("extraDraw");
       local gp_letter = display.newGroup()
       local gp_point = display.newGroup()
+      local gp_totalLetter = display.newGroup( )
       local rectRight
       local rectLeft
       local rectMiddle
@@ -86,7 +87,7 @@ function new()
       gp_letter:insert( rectRight )
       gp_letter:insert( rectTop )
 
-      local pointTop = display.newCircle( display.contentCenterX+27, display.contentCenterY-245, radius )
+      local pointTop = display.newCircle( display.contentCenterX+27, display.contentCenterY-240, radius )
       pointTop:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointTop )
       
@@ -127,33 +128,19 @@ function new()
       pointMiddleLeftBelow:setFillColor( colorPoint, colorPoint, colorPoint )
       gp_point:insert( pointMiddleLeftBelow )
 
-      gp_point.anchorChildren = true
-      gp_letter.anchorChildren = true
+      local arrow = display.newImageRect( imgDir.."flechaRoja.png", 40, 60 )
+      arrow.x = pointTop.x; arrow.y = pointTop.y - arrow.contentHeight + 5;
+      arrow:scale( 1.2, 1.2 )
 
       gp_letter.y = -65
 
-      local completeOff
-      local completeOn
+      gp_totalLetter:insert( gp_letter ) 
+      gp_totalLetter:insert( gp_point )
+      gp_totalLetter:insert( arrow )
 
-      completeOn = function ( obj )
-            -- body
-            transitionStash["arrowOff"] = transition.to( obj, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
-      end
+      gp_totalLetter.anchorChildren = true
 
-      completeOff = function ( obj )
-            -- body
-            transitionStash["arrowOn"] = transition.to( obj, {time = 1000, xScale = 1.2, yScale =1.2, alpha = 1.0, onComplete = completeOn} )
-      end
-
-      local arrow = display.newImageRect( imgDir.."flechaRoja.png", 40, 60 )
-      arrow.x = pointTop.x; arrow.y = pointTop.y - arrow.contentHeight - 10;
-      arrow:scale( 1.2, 1.2 )
-      transitionStash["arrowOff"] = transition.to( arrow, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
-
-      addExtra( menuGroup, gp_letter, gp_point, radius )   
-      menuGroup:insert( gp_letter ) 
-      menuGroup:insert( gp_point )
-      menuGroup:insert(arrow) 
+      addExtra( menuGroup, gp_letter, gp_point, radius, arrow , gp_totalLetter)    
 
        -- do not swipe this page 
 

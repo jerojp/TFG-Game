@@ -2,7 +2,7 @@
 -- Copyright (C) 2012 kwiksher.com. All Rights Reserved. 
 -- uses Director class, by Ricardo Rauber 
 -- uses DMC classes, by David McCuskey 
--- Exported on Mon Aug 25 2014 18:35:00 GMT+0200 
+-- Exported on Wed Aug 27 2014 18:46:46 GMT+0200 
 -- uses gTween class, by Josh Tynjala (modified by Kwiksher) 
 
 _G.kwk_readMe = 0 
@@ -243,6 +243,7 @@ function loadSettingGame( )
     _G.Toys = gameSettingsVars.toys
     _G.PriceToys = gameSettingsVars.priceToys
     _G.LastPageLevel = gameSettingsVars.lastPageLevel
+    _G.StoreToysUnlocked = gameSettingsVars.storeToysUnlocked
     --_G.MyCurrentSubtitle = gameSettingsVars.currentSubtitles
 	else
 		print( "--------JUEGO INICIAL--------" )
@@ -280,6 +281,7 @@ function loadSettingGame( )
         end
         _G.PriceToys = {mask = 289, bee = 324, elephant = 361, bicycle = 400, indian = 441, dolphin = 484, sheep = 529, donkey = 576, guitar = 625, unicorn = 676}
         _G.LastPageLevel = {25, 12, 35, 44, 54}
+        _G.StoreToysUnlocked = false
   end
 end
 
@@ -313,6 +315,7 @@ createTableSetting = function ()
   gameSettingsVars.toys = _G.Toys
   gameSettingsVars.priceToys = _G.PriceToys
   gameSettingsVars.lastPageLevel = _G.LastPageLevel
+  gameSettingsVars.storeToysUnlocked = _G.StoreToysUnlocked
 
 	--printTable(gameSettingsVars)
 	return gameSettingsVars

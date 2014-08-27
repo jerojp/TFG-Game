@@ -1,6 +1,7 @@
       require("extraDraw");
       local gp_point = display.newGroup()
       local gp_letter = display.newGroup()
+      local gp_totalLetter = display.newGroup( )
       local rectTop
       local rectBelow
       local rectMiddle
@@ -24,7 +25,7 @@
       local pointTop = display.newCircle( display.contentCenterX+140, 155, radius )
       pointTop:setFillColor( color-20, color-20, color-20 )
       pointTop.name = "pointTop"
-      local pointMiddle = display.newCircle( display.contentCenterX+121, 298, radius )
+      local pointMiddle = display.newCircle( display.contentCenterX+115, 298, radius )
       pointMiddle:setFillColor( color-20, color-20, color-20 )
       pointMiddle.name = "pointMiddle"
       local pointBelow = display.newCircle( display.contentCenterX+140, 456, radius )
@@ -57,8 +58,6 @@
       gp_letter:insert( rectMiddle )
       gp_letter:insert( rectVert )
 
-      gp_letter.anchorChildren = true
-
       gp_point:insert( pointTop )
       gp_point:insert( pointVertTop )
       gp_point:insert( pointVertMiddle )
@@ -71,29 +70,15 @@
       gp_point:insert( pointVertHiddenTop )
       gp_point:insert( pointVertHiddenBelow )
 
-      gp_point.anchorChildren = true
-
-      local completeOff
-      local completeOn
-
-      completeOn = function ( obj )
-            -- body
-            transitionStash["arrowOff"] = transition.to( obj, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
-      end
-
-      completeOff = function ( obj )
-            -- body
-            transitionStash["arrowOn"] = transition.to( obj, {time = 1000, xScale = 1.2, yScale =1.2, alpha = 1.0, onComplete = completeOn} )
-      end
-
       local arrow = display.newImageRect( imgDir.."flechaRoja.png", 40, 60 )
       arrow.x = pointTop.x + arrow.contentWidth + 40 ; arrow.y = pointTop.y;
       arrow:rotate( 90 )
       arrow:scale( 1.2, 1.2 )
+      
+      gp_totalLetter:insert(gp_letter)
+      gp_totalLetter:insert(gp_point)
+      gp_totalLetter:insert( arrow )
 
-      transitionStash["arrowOff"] = transition.to( arrow, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
+      gp_totalLetter.anchorChildren = true
 
-      addExtra( menuGroup, gp_letter, gp_point, radius )   
-      menuGroup:insert(gp_letter)
-      menuGroup:insert(gp_point)
-      menuGroup:insert(arrow)
+      addExtra( menuGroup, gp_letter, gp_point, radius, arrow, gp_totalLetter )   

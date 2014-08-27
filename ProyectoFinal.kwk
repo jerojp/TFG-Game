@@ -2034,6 +2034,12 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
+      <code id="code_461">
+        <name>code_461</name>
+        <code></code>
+        <position>top</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene47_rescate.lua</extFile>
+      </code>
     </page>
     <page id="LevelO_Rescue">
       <name>LevelO_Rescue</name>
@@ -2955,6 +2961,48 @@
         <jpgQuality>6</jpgQuality>
         <renderAs>kwkexp</renderAs>
       </layer>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expJapones.png</file>
+        <frameWidth>140</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/ExploradorJapones/expJapones.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkjap">
+        <name>kwkjap</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkjap</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/japonesa.png</file>
+        <frameWidth>258</frameWidth>
+        <frameHeight>360</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/Japonesa/japonesa.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>9</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelO_Rescue2">
       <name>LevelO_Rescue2</name>

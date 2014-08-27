@@ -24,7 +24,7 @@ function new(parameters)
             
             local function onCompleteTransition( event )
                 -- body
-                timerStash.newTimer_vieToy2 = timer.performWithDelay(2000, myClosure_switch) 
+                timerStash.newTimer_vieToy2 = timer.performWithDelay(1000, myClosure_switch) 
             end            
             local endText
             if (nextScene == "page_11") then
@@ -43,7 +43,7 @@ function new(parameters)
 
             menuGroup:insert(finalText)
 
-            transition.to( finalText, { time = 4000, delay = 1000, alpha = 1.0, onComplete = onCompleteTransition} )
+            transitionStash.textFinal = transition.to( finalText, { time = 4000, delay = 1000, alpha = 1.0, onComplete = onCompleteTransition} )
        end
 
        local function createViewToy( )
@@ -54,16 +54,16 @@ function new(parameters)
             local audioHandle
         
                 local background = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
-                background:setFillColor( 237, 216, 197 )
+                background:setFillColor( 85,159,191 )
                 menuGroup:insert(background)
 
-            local backPanel = display.newRoundedRect( 0, 0, 500, 600, 5 )
-                backPanel.x = display.contentCenterX; backPanel.y = display.contentCenterY
+            local backPanel = display.newRoundedRect( 0, 0, 500, 600, 40 )
+                backPanel.x = display.contentCenterX; backPanel.y = display.contentCenterY - 50
                 backPanel:setFillColor( 0 )
                 menuGroup:insert( backPanel )
 
-                local frontPanel = display.newRoundedRect( 0, 0, 480, 580, 5 )
-                frontPanel.x = display.contentCenterX; frontPanel.y = display.contentCenterY
+                local frontPanel = display.newRoundedRect( 0, 0, 480, 580, 40 )
+                frontPanel.x = display.contentCenterX; frontPanel.y = display.contentCenterY - 50
                 frontPanel:setFillColor( 255 )
                 menuGroup:insert(frontPanel)
 
@@ -106,18 +106,19 @@ function new(parameters)
             end
 
             local btnConfirm = widget.newButton{
-                     width = 140,
+                   width = 180,
                    height = 60,
                    defaultFile = imgDir.. "button.png",
                     --overFile = imgDir.. "button.png",
                    label = "Continuar",
-                   labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
+                   labelColor = { default={ 255, 255, 255 }, over={ 0, 0, 210 } },
                    fontSize = 25,
                    onEvent = goNextPage
                 }
 
                 btnConfirm.x = display.contentCenterX
-                btnConfirm.y = backPanel.y + backPanel.contentHeight/2 + 50
+                btnConfirm.y = backPanel.y + backPanel.contentHeight/2 + 80
+                btnConfirm:setFillColor(228,89,145)
                 btnConfirm.alpha = 0
 
                 local function onCompleteTransition( event )

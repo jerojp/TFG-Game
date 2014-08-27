@@ -1,8 +1,8 @@
       require("extraDraw");
 
       local gp_point = display.newGroup()
-      local gp_line = display.newGroup()
       local gp_letter = display.newGroup()
+      local gp_totalLetter = display.newGroup( )
       local color = 220
       local radius = 140
       local n_div = 80
@@ -23,7 +23,7 @@
       n_div = 10
       
       for i=0,n_div do
-            an = (2*math.pi/n_div)*i;
+            an = (2*math.pi/n_div)*i - math.pi/2;
             line = display.newCircle( radius*math.cos(an), radius*math.sin(an), radiusPoint )
             line:setFillColor( color-20, color-20, color-20 )
             gp_point:insert(line)
@@ -32,10 +32,18 @@
       gp_point.x = display.contentCenterX+20
       gp_point.y = display.contentCenterY-100
 
-      gp_point.anchorChildren = true
-      gp_letter.anchorChildren = true
+      local arrow = display.newImageRect( imgDir.."flechaRoja.png", 40, 60 )
+      arrow.x = gp_point.x; arrow.y = gp_point.y - arrow.contentHeight - radius ;
+      arrow:scale( 1.2, 1.2 )
       
-      addExtra( menuGroup, gp_letter, gp_point, 5 )  
+      gp_totalLetter:insert( gp_letter ) 
+      gp_totalLetter:insert( gp_point )
+      gp_totalLetter:insert( arrow )
 
-      menuGroup:insert( gp_letter ) 
-      menuGroup:insert( gp_point )
+      gp_totalLetter.anchorChildren = true
+
+      gp_totalLetter.y = gp_totalLetter.y - 20
+      addExtra( menuGroup, gp_letter, gp_point, 5, arrow, gp_totalLetter ) 
+      menuGroup:insert( gp_totalLetter ) 
+
+      

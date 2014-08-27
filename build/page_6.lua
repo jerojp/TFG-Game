@@ -111,34 +111,40 @@ function new()
        -- Button functions 
        function butConfirm(self)
           local miDialog 
-          if (name==nil or name="") and system.getInfo("environment")=="device" then
-            local function listenerC( event )
+          local myClosure_switch = function()
+              dispose(); director:changeScene( "page_7", "fade" ) 
+          end 
+
+          if (name==nil or name=="") then
+            if (system.getInfo("environment")=="device") then
+              local function listenerC( event )
               -- body
-              local myDialog
-              
-              local function functionC( event )
-                -- body
-                local object = event.target
+                local myDialog
+                
+                local function functionC( event )
+                  -- body
+                  local object = event.target
 
-                if event.phase == "began" then
-                  display.getCurrentStage():setFocus(object)
-                  object.isFocus = true
-                elseif object.isFocus then
-                  if event.phase == "ended" or event.phase == "cancelled" then
-                      display.getCurrentStage():setFocus( nil )
-                      object.isFocus = false
+                  if event.phase == "began" then
+                    display.getCurrentStage():setFocus(object)
+                    object.isFocus = true
+                  elseif object.isFocus then
+                    if event.phase == "ended" or event.phase == "cancelled" then
+                        display.getCurrentStage():setFocus( nil )
+                        object.isFocus = false
 
-                      deleteMyDialog( myDialog )
+                        deleteMyDialog( myDialog )
+                    end
                   end
+                  return true
                 end
-                return true
               end
+              myDialog = createMyDialog( "ADVERTENCIA", "Debes introducir tu nombre.", nil, "Vale", listenerC)  
+            else
+              _G.NameUser = "Pedro"
+              timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 
             end
-            myDialog = createMyDialog( "ADVERTENCIA", "Debes introducir tu nombre.", nil, "Vale", listenerC)
           else
-            local myClosure_switch = function()
-                dispose(); director:changeScene( "page_7", "fade" ) 
-            end 
             _G.NameUser = name
             timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 
           end
