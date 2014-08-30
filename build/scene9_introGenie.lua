@@ -1,5 +1,5 @@
 require( "ControlScene" )
-gSprites.exp = kwkexp
+
 kwkexp:pause( )
 
 local aud = {"exp_1.mp3"}

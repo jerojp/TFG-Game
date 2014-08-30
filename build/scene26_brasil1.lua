@@ -1,5 +1,5 @@
 require( "ControlScene" )
-gSprites.exp = kwkexp
+
 kwkexp:pause( )
 local danceGroup = display.newGroup( )
 
@@ -72,7 +72,7 @@ local kwkgirl = display.newSprite(kwkgirl_sheet, kwkgirl_seq )
 kwkgirl:play(); 
 kwkgirl.x = 164; kwkgirl.y = 233;
 danceGroup:insert(kwkgirl); 
-gSprites.girl = kwkgirl
+
 
 -- carrozaSimple positioning 
 local carrozaSimple = display.newImageRect( imgDir.. "carrozaSimple.png", 672, 575 ); 

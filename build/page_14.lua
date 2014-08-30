@@ -109,7 +109,7 @@ function new()
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
-gSprites.exp = explorer
+
 kwkexp:pause( )
 
 _G.Level = 2

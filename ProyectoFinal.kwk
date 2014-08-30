@@ -661,6 +661,34 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
+      <trigger id="act_079">
+        <name>act_079</name>
+        <action id="var_613">
+          <name>var_613</name>
+          <type>Edit Variable</type>
+          <variable>Level</variable>
+          <value>2</value>
+        </action>
+        <action id="var_016">
+          <name>var_016</name>
+          <type>Edit Variable</type>
+          <variable>Phase</variable>
+          <value>1</value>
+        </action>
+        <action id="goPage_981">
+          <name>goPage_981</name>
+          <type>Go to Page</type>
+          <page>levelE_Call</page>
+          <transition>Fade</transition>
+          <wait>0</wait>
+        </action>
+      </trigger>
+      <timer id="timer_711">
+        <name>timer_711</name>
+        <delay>2</delay>
+        <trigger>act_079</trigger>
+        <loop>1</loop>
+      </timer>
     </page>
     <page id="levelE_Call">
       <name>levelE_Call</name>
@@ -886,22 +914,6 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
-      <audio id="aplausos">
-        <name>aplausos</name>
-        <audio>/e/ProyectosKwik2/ProyectoFinal/aplausos.mp3</audio>
-        <delay>0</delay>
-        <loop>forever</loop>
-        <isShort>false</isShort>
-        <allowRepeat>false</allowRepeat>
-        <isReadMe>false</isReadMe>
-        <keep>false</keep>
-        <autoPlay>false</autoPlay>
-        <lang>All</lang>
-        <channel>1</channel>
-        <volume>3</volume>
-        <fadeIn>false</fadeIn>
-        <fadeInAmount>.5</fadeInAmount>
-      </audio>
       <layer id="explHappy">
         <name>explHappy</name>
         <scaleW>130</scaleW>
@@ -2036,7 +2048,7 @@
       </code>
       <code id="code_461">
         <name>code_461</name>
-        <code></code>
+        <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene47_rescate.lua</extFile>
       </code>

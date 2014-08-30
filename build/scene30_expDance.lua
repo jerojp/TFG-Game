@@ -83,9 +83,6 @@
 
        danceGroup:translate( -danceGroup[3].contentWidth , 0 )
 
-       gSprites.girl = kwkgirl
-       gSprites.exp = kwkexp
-
        local function onCompleteTransition( event )
         -- body
         if ( audio.isChannelPlaying( 2 ) ) then

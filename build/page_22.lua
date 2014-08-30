@@ -169,8 +169,7 @@ gpGenius.alpha = 0
 menuGroup:insert( gpGenius )
 gpGenius.genius:pause( )
 
-gSprites.exp = explorer
-gSprites.nurse = nurse
+
 nurse:pause( )
 explorer:pause()
 

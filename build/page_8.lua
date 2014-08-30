@@ -149,7 +149,7 @@ function new()
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
-gSprites.boss = kwkboss
+
 kwkboss:pause( )
 
 local aud = {"jefe_3.mp3", "jefe_4.mp3", "jefe_5.mp3"}

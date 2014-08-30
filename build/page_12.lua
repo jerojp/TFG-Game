@@ -39,6 +39,9 @@ function new()
        end 
 
  
+       -- Action names 
+       local act_079 
+
        -- Layer names 
        local kwkentradaMuseo  
        local explCall  
@@ -90,6 +93,25 @@ function new()
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
+ 
+       -- Actions (functions) 
+       function act_079(event) 
+           _G.Level = 2
+          saveKwikVars({"Level",2}) 
+           _G.Phase = 1
+          saveKwikVars({"Phase",1}) 
+            local myClosure_switch = function() 
+                dispose(); director:changeScene( "page_13", "fade" ) 
+            end 
+            timerStash.newTimer_693 = timer.performWithDelay(0, myClosure_switch, 1) 
+       end 
+
+ 
+      --End Actions (functions) 
+
+ 
+       -- Timers 
+       timerStash.timer_711 = timer.performWithDelay( 2000, act_079, 1 ) 
 
        -- do not swipe this page 
 

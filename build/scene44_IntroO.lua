@@ -1,5 +1,5 @@
 require( "ControlScene" )
-gSprites.exp = kwkexp
+
 kwkexp:pause( )
 kwkexphumo:pause( )
 kwkexphumo.alpha = 0

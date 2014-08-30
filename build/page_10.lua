@@ -89,6 +89,7 @@ gpGenius.genius:pause( )
 
 --timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )
 _G.StoreToysUnlocked = true
+_G.FirstVisitMap = true
 
 local aud = {"genio_1.mp3", "genio_2.mp3", "genio_3.mp3", "genio_4.mp3"}
 local sub = {"Hola, soy el genio mágico Ali encerrado en esta tablet mágica. ¿Que puedo hacer por ti?",

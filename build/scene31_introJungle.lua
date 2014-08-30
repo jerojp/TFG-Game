@@ -1,5 +1,5 @@
 require( "ControlScene" )
-gSprites.exp = kwkexp
+
 kwkexp:pause( )
 
 --timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )

@@ -141,8 +141,7 @@ function new()
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
 require("viewGenius")
-gSprites.exp = kwkexp
-gSprites.esq = kwkesq
+
 kwkexp:pause( )
 kwkesq:pause()
 

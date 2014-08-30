@@ -2,7 +2,7 @@
 -- Copyright (C) 2012 kwiksher.com. All Rights Reserved. 
 -- uses Director class, by Ricardo Rauber 
 -- uses DMC classes, by David McCuskey 
--- Exported on Wed Aug 27 2014 20:58:14 GMT+0200 
+-- Exported on Sat Aug 30 2014 18:06:04 GMT+0200 
 -- uses gTween class, by Josh Tynjala (modified by Kwiksher) 
 
 _G.kwk_readMe = 0 
@@ -117,7 +117,7 @@ local easy = "easy"
 local normal = "normal"
 local hard = "hard"
 
-gSprites = {}
+_G.gSprites = nil
 
 printTable = function ( myTable)
 	-- body
@@ -132,20 +132,16 @@ end
 
 function pauseAllSprites(  )
     -- body
-    local k, v
-
-    for k,v in pairs(gSprites) do
-        v:pause();
+    if (_G.gSprites) then
+        _G.gSprites:pause( )
     end
 
 end
 
 function resumeAllSprites( )
     -- body
-    local k, v
-
-    for k,v in pairs(gSprites) do
-        v:play();
+    if (_G.gSprites) then
+        _G.gSprites:play( )
     end
 end
 
@@ -265,6 +261,9 @@ function loadSettingGame( )
     _G.PriceToys = gameSettingsVars.priceToys
     _G.LastPageLevel = gameSettingsVars.lastPageLevel
     _G.StoreToysUnlocked = gameSettingsVars.storeToysUnlocked
+    _G.goBackForExercise = gameSettingsVars.goBackForExercise
+    _G.FirstVisitMap = gameSettingsVars.firstVisitMap
+    _G.goBackEnd = gameSettingsVars.goBackEnd
     --_G.MyCurrentSubtitle = gameSettingsVars.currentSubtitles
 	else
 		print( "--------JUEGO INICIAL--------" )
@@ -304,8 +303,9 @@ function loadSettingGame( )
         _G.LastPageLevel = {25, 12, 35, 44, 54}
         _G.StoreToysUnlocked = false
         _G.goBackForExercise = false
-        _G.FirstVisitMap = false
+        _G.FirstVisitMap = true
         _G.goBackEnd = false
+        _G.firstSampleSel = true
   end
 end
 
@@ -340,6 +340,9 @@ createTableSetting = function ()
   gameSettingsVars.priceToys = _G.PriceToys
   gameSettingsVars.lastPageLevel = _G.LastPageLevel
   gameSettingsVars.storeToysUnlocked = _G.StoreToysUnlocked
+  gameSettingsVars.goBackForExercise =  _G.goBackForExercise
+  gameSettingsVars.firstVisitMap = _G.FirstVisitMap
+  gameSettingsVars.goBackEnd =  _G.goBackEnd
 
 	--printTable(gameSettingsVars)
 	return gameSettingsVars

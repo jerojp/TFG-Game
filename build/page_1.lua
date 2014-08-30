@@ -124,6 +124,8 @@ local function butIntro(event)
         else
             print( "file does not exist", reason )
         end
+        display.remove( gp_cloud )
+        gp_cloud = nil
         loadSettingGame( )
         _G.CurrentPage = 2 
         _G.GameStarted = true
@@ -135,6 +137,8 @@ end
 local function continueGame( event )
 	-- body
 	if (event.phase == "ended" or event.phase == "cancelled") then
+        display.remove( gp_cloud )
+        gp_cloud = nil
         loadSettingGame( )
         dispose(); director:changeScene( "page_".._G.LastPage, "fade" ) 
     end

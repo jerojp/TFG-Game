@@ -15,6 +15,7 @@ function Character:playCharacter(onCompleteSound)
 
 	if (self.sprite) then
 		self.sprite:play()
+		_G.gSprites = self.sprite
 	end
 	--[[if (self.images and self.images[self.cont] ~= -1) then
 		if (self.images[self.cont][1] == 0) then
@@ -68,6 +69,7 @@ end
 
 function Character:finalize()
 	if (self.sprite) then
+		_G.gSprites = nil
 		self.sprite:pause( )
 		self.sprite:setFrame( 1 )
 	end

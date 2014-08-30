@@ -10,11 +10,22 @@
        -- Action names 
        local act_cambiarAlph 
        local act_eliminarVid 
-       local act_letraIncorr 
+       local act_letraIncorr
+       local act_letraCorrec 
        local act_posicionarO 
        local act_addObjetosI
        local act_pause 
        local act_play  
+       local statisticsUpdate
+       local createHiddenPanel
+       local removeHiddenPanel
+       local nextSoundExp
+       local playSoundExpInic
+       local finalizarEjercicio
+       local generateLetter
+       local addNuevoObj
+       local activeNegacion
+
        --local act_addNuevoObj 
        -- Group names 
        local letrasCorGroup = display.newGroup() 
@@ -41,9 +52,10 @@
 
        -- Added variables before layers render 
        local incrementoAlpha --  
-       local n_fallos = 3 -- Fallos al seleccionar 
+       --local n_fallos = 3 -- Fallos al seleccionar 
        local nivelActual = 0-- Nievel de ejercicio, MAX = 20 
-       local vidas = 6 --  
+       local vidas = 6 --
+       local TotalVidas = vidas  
        local n_fallosNivel = 0 -- Numero de fallos totales para una letra 
        local objetos = {} -- Todos los objetos del ejercicio 
        local n_objetosFila = 3 -- Numero de objetos por fila 
@@ -64,16 +76,29 @@
        local n_objetos_nuevos
        local incrementCoin = 25
        local timerApplause = false
+       local isTimerNegacion = false
        local resultsTest = {} -- number of failures for this exercices for each level : resultsTest[1] == X failure for level 1
        local timerTest = {}
        local maxNivel = 10
        local contadorTiempo 
        _G.TotalAddCoinEx = 0
-   
-       menuGroup:insert( createTextCoin( ) )
        local l
+       local soundExp
+       local soundExp4
+       local hiddenPanel = nil
+       local handle 
+       local ch = 1
+       local ch2 = 2
+       local nextSoundExp
+       local mySoundsExp
+       local contExp = 1
+       local handleAplausos
+
+       menuGroup:insert( createTextCoin( ) )
+
        if(_G.Level==1) then
         l = "A"
+        soundExp = ""
        elseif(_G.Level==2) then
         l = "E"
        elseif(_G.Level==3) then
@@ -83,6 +108,9 @@
        else
         l = "U"
        end
+
+       soundExp = "geniusIM"..l
+       soundExp4 = "geniusIM4"..l
 
        local textCorrect = display.newText( "Letra "..l, display.contentCenterX, 5, native.systemFont, 38 )
        textCorrect.x = display.contentCenterX
@@ -203,34 +231,33 @@
           gtStash.gt_linearNegacion = gtween.new( negacion, 0.3, {  x=644.5, y=388.5,  alpha=1, rotation=35, xScale=1, yScale=1,}, {ease = gtween.easing.linear, repeatCount = 8, reflect = true,  delay=0.1, ""}) 
        end --closes function linearNegacion
 
-       local function pauseNegacion()
-         -- body
-         if gtStash.gt_linearNegacion then
-            gtStash.gt_linearNegacion:pause()
-         end
-
-         if (negacion) then
-            --menuGroup:remove(negacion)
-            negacion:removeSelf()
-            negacion = nil
-         end
-       end
-
        local function cancel_timer_Negacion(  )
-         timer.cancel(timerStash.timer_negacion)
-         if (negacion) then
-           pauseNegacion()
-         end     
+          if (isTimerNegacion) then
+             if (timerStash.timer_negacion) then
+               timer.cancel(timerStash.timer_negacion)
+               timerStash.timer_negacion = nil
+             end
+             isTimerNegacion = false
+             if (negacion) then
+               if gtStash.gt_linearNegacion then
+                  gtStash.gt_linearNegacion:pause()
+                  gtStash.gt_linearNegacion = nil
+               end
+                  --menuGroup:remove(negacion)
+                negacion:removeSelf()
+                negacion = nil
+             end
+          end
        end
 
-       local function activeNegacion( )
+       function activeNegacion( )
          -- body
-          if ManoSup then
-            act_pause()
+          if timerApplause then
+            cancel_timer_Applause()
           end
 
-          if negacion then
-            pauseNegacion()
+          if isTimerNegacion then
+            cancel_timer_Negacion()
           end
 
           negacion = display.newImageRect( imgDir.. "p15_negacion.png", 139, 163 ); 
@@ -242,7 +269,7 @@
           negacion:setReferencePoint(display.BottomCenterReferencePoint); 
 
           timerStash.timer_negacion = timer.performWithDelay( 2000, cancel_timer_Negacion, 1 )
-
+          isTimerNegacion = true
           linearNegacion()        
        end
        -- animation to applaud
@@ -267,45 +294,54 @@
  
        -- Actions (functions) 
        function act_pause(event)
-          timerApplause = false 
+         timerApplause = false 
 
-           if gtStash.gt_linear_sup then 
-              gtStash.gt_linear_sup:pause() 
-           end 
-           if gtStash.gt_linearInf then 
-              gtStash.gt_linearInf:pause() 
-           end
+         if gtStash.gt_linear_sup then 
+            gtStash.gt_linear_sup:pause() 
+            gtStash.gt_linear_sup = nil
+         end 
+         if gtStash.gt_linearInf then 
+            gtStash.gt_linearInf:pause() 
+            gtStash.gt_linearInf = nil
+         end
 
-           if (ManoInfer and ManoSup) then
-            --menuGroup:remove(ManoInfer)
-           -- menuGroup:remove(ManoSup)
-            
+         if (ManoInfer and ManoSup) then
+          --menuGroup:remove(ManoInfer)
+         -- menuGroup:remove(ManoSup)
             ManoInfer:removeSelf()
             ManoInfer = nil
             ManoSup:removeSelf()
             ManoSup = nil
-           end
+         end
 
-           explHappy.alpha = 0
-           if (audio.isChannelPlaying(1)) then
-             audio.rewind( 1 ) 
-             audio.stop( 1 ) 
-           end
+         explHappy.alpha = 0
+         if (audio.isChannelPlaying(ch2)) then 
+           audio.stop( ch2 ) 
+         end
+         audio.dispose( handleAplausos )
+         handleAplausos = nil
             
        end 
 
        function cancel_timer_Applause(  )
-          timer.cancel(timerStash.timer_249)
-          timerApplause = false
-          if (ManoInfer and ManoSup) then
-            act_pause()
+          if (timerApplause) then
+            if (timerStash.timer_249) then
+              timer.cancel(timerStash.timer_249)
+              timerStash.timer_249 = nil
+            end
+            timerApplause = false
+            if (ManoInfer and ManoSup) then
+              act_pause()
+            end  
           end
-
        end
 
        function act_play()
-           if negacion then
-            pauseNegacion()
+           if timerApplause then
+              cancel_timer_Applause()
+           end
+           if isTimerNegacion then
+              cancel_timer_Negacion(  )
            end
            
            explHappy.alpha = 1
@@ -325,10 +361,10 @@
            linear_sup() 
            linearInf()
 
-            timerStash.timer_249 = timer.performWithDelay( 2000, act_pause, 1 )
+            timerStash.timer_249 = timer.performWithDelay( 2000, cancel_timer_Applause, 1 )
             timerApplause = true
-            audio.setVolume(0.3, {channel=1} ) 
-           audio.play( aplausos, {channel=1, loops = 0 } )  
+            handleAplausos = audio.loadSound( audioDir.."aplausos.mp3" ) 
+            audio.play( handleAplausos, {channel=ch2} )  
        end 
 
 
@@ -375,6 +411,7 @@
            end
            return true
         end
+
         local function listenerD( event )
           -- body
           local object = event.target
@@ -386,6 +423,7 @@
             if event.phase == "ended" or event.phase == "cancelled" then
                 display.getCurrentStage():setFocus( nil )
                 object.isFocus = false
+                _G.goBackForExercise = true
                 deleteMyDialog( myDialog )
                 cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
                 director:changeScene( "page_11", "fade" ) 
@@ -393,20 +431,40 @@
            end
            return true
         end
+        if (kwkvida[vidas]) then
+          kwkvida[vidas]:removeSelf( );
+          kwkvida[vidas]=nil
+        end
+        vidas = vidas - 1
 
         if (vidas > 0) then
-         kwkvida[vidas]:removeSelf( );
-         kwkvida[vidas]=nil
-         vidas = vidas - 1
-         saveKwikVars({"vidas",vidas - 1}) 
-         if (vidas == 0) then
-            transitionStash.newTransition_577 = transition.to( TextoFinalIncor, {alpha=TextoFinalIncor.oldAlpha, time=1000, delay=0}) 
-            myDialog = createMyDialog( "Ejercicio no superado", " ¿ Deseas repetir el ejercicio ? ", nil, "Si", listenerC, "No", listenerD)
-         end
-       end 
+          activeNegacion() 
+      
+          if (vidas == math.floor(TotalVidas/2) ) then
+            createHiddenPanel( )
+            contExp = 1
+            mySoundsExp = { soundExp4 }
+            nextSoundExp()
+            if (nivelActual > 1) then
+              statisticsUpdate() 
+              nivelActual = nivelActual - 1
+              textLevel.text =  "Nivel : "..nivelActual 
+            end 
+            act_cambiarAlph()
+          end
+        else
+          if timerApplause then
+              cancel_timer_Applause()
+          end
+          if isTimerNegacion then
+              cancel_timer_Negacion(  )
+          end
+          --transitionStash.newTransition_577 = transition.to( TextoFinalIncor, {alpha=TextoFinalIncor.oldAlpha, time=1000, delay=0}) 
+          myDialog = createMyDialog( "Ejercicio no superado", "¿ Deseas repetir el ejercicio ?", nil, "Si", listenerC, "No", listenerD)
+        end
       end 
 
-       function actualizarEspacio(  )
+       local function actualizarEspacio(  )
           if (letrasCorGroup.numChildren + gp_letrasIncorr.numChildren >= n_objetosFila*3) then
             n_objetosFila = n_objetosFila + 1
             actualizarEspacio()
@@ -523,7 +581,66 @@
  
       end 
 
-       function act_addObjetosI(event) 
+      function createHiddenPanel( )
+        local function doNothing( event )
+          -- body
+          return true
+        end
+        -- body
+        hiddenPanel = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
+        hiddenPanel.alpha = 0.5
+        menuGroup:insert(hiddenPanel)
+        hiddenPanel:addEventListener( "touch", doNothing )
+        hiddenPanel:addEventListener( "tap", doNothing )
+      end
+
+      function removeHiddenPanel( )
+        -- body
+        if (hiddenPanel) then
+          menuGroup:remove(hiddenPanel)
+          hiddenPanel:removeSelf( )
+          hiddenPanel = nil
+        end
+      end
+
+      local function onCompleteSoundExp( event )
+          -- body
+        audio.dispose( handle )
+        handle = nil
+        nextSoundExp()
+      end
+
+      local function playSoundExp( name )
+        -- body
+        handle = audio.loadSound( audioDir..name..".mp3" )
+        audio.play( handle, {channel = ch, onComplete = onCompleteSoundExp} )
+      end
+
+      function nextSoundExp( )
+          -- body
+          if (contExp <= #mySoundsExp) then
+            playSoundExp( mySoundsExp[contExp] )
+            contExp = contExp + 1
+          else
+            removeHiddenPanel()
+          end
+      end
+
+      function playSoundExpInic( )
+        -- body 
+        if (_G.firstSampleSel) then
+          _G.firstSampleSel = false
+          mySoundsExp = { soundExp, "geniusIM2", "geniusIM3", soundExp4 }
+        else
+          mySoundsExp = { soundExp4 }
+        end
+        contExp = 1
+        act_addObjetosI()
+        createHiddenPanel( )
+        nextSoundExp()
+      end
+
+       function act_addObjetosI() 
            --External code 
           local objetosIniciales
 
@@ -637,7 +754,7 @@
       end
 
 
-       local function statisticsUpdate()
+       function statisticsUpdate()
           local auxLevel = math.fmod(nivelActual, 11)
           if (_G.Phase == 2) then
             auxLevel = auxLevel + 1
@@ -663,40 +780,15 @@
        end
 
        function act_letraIncorr(event)
-          if (timerApplause) then
-             cancel_timer_Applause()
-          end
-
           n_fallosNivel = n_fallosNivel + 1
-          saveKwikVars({"n_fallosNivel",n_fallosNivel + 1}) 
-          n_fallos = n_fallos - 1
-          saveKwikVars({"n_fallos",n_fallos - 1})
           n_aciertosSegTotales = 0
           
-          act_posicionarO() 
-
-          if (n_fallos == 0) then 
-           transitionStash.newTransition_692 = transition.to( ExplicacionFall, {alpha=ExplicacionFall.oldAlpha, time=1000, delay=0}) 
-           n_fallos = 3
-           saveKwikVars({"n_fallos",3}) 
-           if (nivelActual > 1) then
-            statisticsUpdate() 
-            nivelActual = nivelActual - 1
-            saveKwikVars({"nivelActual",nivelActual - 1})
-            textLevel.text =  "Nivel : "..nivelActual 
-           end 
-           act_cambiarAlph() 
-          end 
+          act_posicionarO()  
 
           act_eliminarVid() 
-          activeNegacion() 
        end 
 
        function act_letraCorrec(event)
-           if (timerApplause) then
-             cancel_timer_Applause()
-           end
-
            statisticsUpdate()
 
            if (nivelActual+1 == maxNivel) then 
@@ -749,7 +841,7 @@
 
  
        -- Timers 
-       timerStash.timer_addObjeto = timer.performWithDelay( 0, act_addObjetosI, 1 ) 
+       timerStash.timer_addObjeto = timer.performWithDelay( 0, playSoundExpInic, 1 ) 
 
        -- Button event listeners 
        ongp_letrasCorrectasEvent = function (event) 

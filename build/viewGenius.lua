@@ -40,7 +40,6 @@ function createGenius( )
        genius.x = 688; genius.y = 389; genius.alpha = 1; genius.oldAlpha = 1 
        genius.oriX = genius.x; genius.oriY = genius.y 
        genius.name = "genius" 
-       gSprites.gen = genius
        geniusGroup:insert(genius); geniusGroup.genius = genius 
 
        return geniusGroup

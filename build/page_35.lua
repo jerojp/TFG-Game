@@ -109,7 +109,6 @@ function new()
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
-gSprites.exp = kwkexp
 
 kwkexp:pause( )
 

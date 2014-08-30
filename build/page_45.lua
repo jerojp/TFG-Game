@@ -181,8 +181,7 @@ function new()
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
-gSprites.exp = kwkexp
-gSprites.jap = kwkjap
+
 kwkexp:pause( )
 kwkjap:pause( )
 
