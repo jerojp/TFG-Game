@@ -54,7 +54,15 @@ function textCoinUpdate( incCoin, operation )
 
     local function onCompleteTransition( event )
         -- body
-
+        local ch = 2
+        local audioHandle
+        local function onCompleteSoundCoin( event )
+            -- body
+            audio.dispose( audioHandle )
+            audioHandle = nil
+        end
+        audioHandle = audio.loadSound( audioDir.."coin.mp3")
+        audio.play( audioHandle , {channel = ch, onComplete = onCompleteSoundCoin})
         textCoinFormat( )
 
         if ( newTextCoin ) then

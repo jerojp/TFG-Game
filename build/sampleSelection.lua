@@ -88,7 +88,6 @@
        local hiddenPanel = nil
        local handle 
        local ch = 1
-       local ch2 = 2
        local nextSoundExp
        local mySoundsExp
        local contExp = 1
@@ -118,17 +117,17 @@
        menuGroup:insert(textCorrect)
 
 
-       objetoCorrect = display.newImageRect( imgDir.. "objeto".._G.Level.._G.Level.._G.Phase..".png", 120, 100 ); 
-       objetoCorrect.x = display.contentCenterX; objetoCorrect.y = 110;
+       objetoCorrect = display.newImageRect( imgDir.. "objeto".._G.Level.._G.Level.._G.Phase..".png", 120, 80 ); 
+       objetoCorrect.x = display.contentCenterX; objetoCorrect.y = 90;
        menuGroup:insert(objetoCorrect); 
 
-       textLevel = display.newText( "Nivel : "..nivelActual , display.contentCenterX, 180, native.systemFont, 30 ) 
+       textLevel = display.newText( "Nivel : "..nivelActual , display.contentCenterX, 134, native.systemFont, 28 ) 
        textLevel.x = display.contentCenterX
        textLevel:setTextColor (229, 185, 89)
        menuGroup:insert(textLevel)
 
-       backgroundLower = display.newImageRect( imgDir.. "backgroundLower".._G.Level.._G.Phase..".png", 1280, 551 ); 
-       backgroundLower.x = 640; backgroundLower.y = 524; backgroundLower.alpha = 1; backgroundLower.oldAlpha = 1 
+       backgroundLower = display.newImageRect( imgDir.. "backgroundLower".._G.Level.._G.Phase..".png", 1280, 660 ); 
+       backgroundLower.x = 640; backgroundLower.y = 470; backgroundLower.alpha = 1; backgroundLower.oldAlpha = 1 
        backgroundLower.oriX = backgroundLower.x; backgroundLower.oriY = backgroundLower.y 
        backgroundLower.name = "backgroundLower" 
        menuGroup:insert(1,backgroundLower); menuGroup.backgroundLower = backgroundLower 
@@ -315,8 +314,8 @@
          end
 
          explHappy.alpha = 0
-         if (audio.isChannelPlaying(ch2)) then 
-           audio.stop( ch2 ) 
+         if (audio.isChannelPlaying(ch)) then 
+           audio.stop( ch ) 
          end
          audio.dispose( handleAplausos )
          handleAplausos = nil
@@ -363,8 +362,8 @@
 
             timerStash.timer_249 = timer.performWithDelay( 2000, cancel_timer_Applause, 1 )
             timerApplause = true
-            handleAplausos = audio.loadSound( audioDir.."aplausos.mp3" ) 
-            audio.play( handleAplausos, {channel=ch2} )  
+            handleAplausos = audio.loadSound( audioDir.."geniusIM5.mp3" ) 
+            audio.play( handleAplausos, {channel=ch} )  
        end 
 
 
@@ -498,11 +497,11 @@
             t2[i].x = (display.contentWidth/n_objetosFila) * (math.fmod(contador, n_objetosFila) + 1) -  (display.contentWidth/n_objetosFila)/2
             t2[i+1].x = t2[i].x
             if (i/2 < n_objetosFila) then
-              t2[i].y = 510 --510
+              t2[i].y = 483 --212 411 607
             elseif (i/2 < n_objetosFila * 2) then
-              t2[i].y = 330
+              t2[i].y = 284
             elseif (i/2 < n_objetosFila * 3) then
-              t2[i].y = 690
+              t2[i].y = 679
             end
   
           t2[i+1].y = t2[i].y
@@ -553,13 +552,19 @@
            
           nuevaLetra = generateLetter()
           local objetoN 
+          local nameImgLetter 
 
-          objetoN = display.newImageRect( imgDir.. "objeto"..nuevaLetra.._G.Level.._G.Phase..".png", 190, 145 );
+          objetoN = display.newImageRect( imgDir.."objeto"..nuevaLetra.._G.Level.._G.Phase..".png" , 190, 145 );
           objetoN.alpha = 1 - levelAlpha
           objetoN.oldAlpha = objetoN.alpha
           objetoN.name = "objeto"..nuevaLetra..contador ; contador = contador + 1
 
-          letraN = display.newImageRect( imgDir.. "letra"..nuevaLetra..".png", 120, 145 );
+          if (not _G.LetterInSyllable or nuevaLetra==_G.Level) then
+            nameImgLetter = "letra"..nuevaLetra..".png"
+          else
+            nameImgLetter = "letra"..nuevaLetra.._G.Level.._G.Phase..".png"
+          end
+          letraN = display.newImageRect( imgDir..nameImgLetter, 120, 145 );
           letraN.alpha = levelAlpha
           if (letraN.alpha == 0) then
             letraN.alpha = 0.01
@@ -744,9 +749,9 @@
           end
         elseif (_G.Level == 5) then
           if (_G.Phase == 1) then
-            number = 1  
+            number = 56  
           else
-            number = 1
+            number = 60
           end
         end
         cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 

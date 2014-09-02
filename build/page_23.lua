@@ -46,6 +46,8 @@ function new()
        local widget = require( "widget" )
 local facebook = require "facebook"
 local json = require( "json" )
+
+local confirmUpdate
 -- Groups
 local groupImage = display.newGroup()
 local scrollView
@@ -191,9 +193,7 @@ local function onLoginSuccess()
     print( "Funcion onLoginSuccess" )
     if (_G.UploadImageDraw) then
     	uploadPhotoDraw( )
-    end
-
-    if (_G.UploadImageTable) then
+    elseif (_G.UploadImageTable) then
     	uploadPhotoTable( )
     end
 
@@ -210,14 +210,21 @@ local function fbListener( event )
 					
 		onLoginSuccess()
 	elseif ( "request" == event.type ) then
+		local response = json.encode( event.response )
+		print( event.response )
 		if ( not event.isError ) then
 			--Hay que resetear _G.UploadImageTable y _G.UploadImageDraw
-			native.showAlert( "Subida exitosa", "La foto ha sido publicada correctamente", { "OK" } )
+			native.showAlert( "EXITO", response, { "OK" } )
+			if (_G.UploadImageDraw) then
+				_G.UploadImageDraw = false
+				if (_G.UploadImageTable) then
+					confirmUpdate(nil)
+				end
+			elseif(_G.UploadImageTable) then
+				_G.UploadImageTable = false
+			end
 		else
-			native.showAlert( "ERROR", "Ha ocurrido un error al subir la foto", { "OK" } )
-
-			local response = json.encode( event.response )
-						
+			native.showAlert( "ERROR", "Ha ocurrido un error al subir la foto, intentelo mÃ¡s tarde", { "OK" } )
 			native.showAlert( "ERROR", response, { "OK" } )
 						
 		end
@@ -226,7 +233,7 @@ local function fbListener( event )
 end
 
 
-local function confirmUpdate( event )
+function confirmUpdate( event )
 	-- desactivar Runtime:addEventListener("system", onSystemEvent), aÃƒÂ±adir al build.settings permiso "android.permission.INTERNET"
 	-- You must use your own app id for this sample to work. 
 	local fbAppID = "1428997230712728"  --fake
@@ -313,9 +320,13 @@ local function updateFacebook( event )
 		local object = event.target
 		
 		if (object.id == "checkTable") then
+			print("Check IG")
 			updateTable = object.isOn	
+			print( updateTable )
 		else
+			print("Check DRAW")
 			updateImage = object.isOn
+			print(updateImage)
 		end	
 	end
 
@@ -470,6 +481,7 @@ for i=1,10 do
 		scrollView:insert(line)
 	end
 	path = system.pathForFile( "screen"..level..phase..".jpg", system.DocumentsDirectory )
+	print( path )
 	fhd = io.open( path )
 	if fhd then
 			facebookImage = true

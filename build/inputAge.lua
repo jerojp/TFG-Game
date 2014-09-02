@@ -11,8 +11,8 @@
        local age
 
        -- textInputName positioning
-       textInputName = display.newText( "Introduce tu edad:", 676, 133, native.systemFontBold, 28 )
-       textInputName.x = 676; textInputName.y = 133;
+       textInputName = display.newText( "Introduce tu edad:", 676, 133, native.systemFontBold, 68 )
+       textInputName.x = display.contentCenterX; textInputName.y = 133;
        menuGroup:insert(textInputName); menuGroup.textInputName = textInputName 
 
        -- inputName positioning 
@@ -25,7 +25,8 @@
 
        inputName = native.newTextField( 177, 270, 1000, 100 )  
        inputName.placeholder = "Edad"
-       inputName.font = native.newFont( native.systemFontBold, 24 ) 
+       inputName.font = native.newFont( native.systemFontBold, 24 )
+       --menuGroup:insert( inputName ) 
        inputName:addEventListener( "userInput", fieldHandler_inputName ) 
 
        -- kwkbuttonConfir positioning 
@@ -65,7 +66,7 @@
             if (system.getInfo("environment")=="device") then
               local myDialog
               
-              local function functionC( event )
+              local function listenerC( event )
                 -- body
                 local object = event.target
 
@@ -77,11 +78,15 @@
                       display.getCurrentStage():setFocus( nil )
                       object.isFocus = false
                       deleteMyDialog( myDialog )
+                      inputName.alpha = 1
+                      native.setKeyboardFocus(inputName) 
                   end
                 end
                 return true
               end
-              myDialog = createMyDialog( "ADVERTENCIA", "Debes introducir tu edad.", nil, "Vale", listenerC)  
+              native.setKeyboardFocus(nil)
+              inputName.alpha = 0
+              myDialog = createMyDialog( "ADVERTENCIA", " Debes introducir tu edad.", nil, "Vale", listenerC)  
             else
               _G.Age = "3"
               timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 

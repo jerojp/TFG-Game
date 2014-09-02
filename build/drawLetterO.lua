@@ -9,6 +9,16 @@
       local an
       local line
       local radiusPoint = 24
+      local imgBack
+
+      if (_G.Phase == 1) then
+            imgBack = display.newImageRect( imgDir.."osopeluche.png", 500, 490 )
+            imgBack.x = 250; imgBack.y = 300
+      else
+            imgBack = display.newImageRect( imgDir.."oveja.png", 233, 133 )
+            imgBack.x = 300; imgBack.y = 350
+      end
+      imgBack.alpha = 0.75
   
       for i=0,n_div do
             an = (2*math.pi/n_div)*i;
@@ -44,6 +54,5 @@
 
       gp_totalLetter.y = gp_totalLetter.y - 20
       addExtra( menuGroup, gp_letter, gp_point, 5, arrow, gp_totalLetter ) 
-      menuGroup:insert( gp_totalLetter ) 
 
-      
+      menuGroup:insert(imgBack)   

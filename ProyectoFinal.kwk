@@ -32,13 +32,8 @@
     <codes>
       <code id="code_487">
         <name>code_487</name>
-        <code/>
+        <code></code>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/saveStateGame.lua</extFile>
-      </code>
-      <code id="codeGlobalVars">
-        <name>codeGlobalVars</name>
-        <code/>
-        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/GlobalVars.lua</extFile>
       </code>
     </codes>
   </settings>
@@ -3195,39 +3190,39 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
+      <code id="code_352">
+        <name>code_352</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene54_IntroAf.lua</extFile>
+      </code>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/expLeyendo.png</file>
+        <frameWidth>86</frameWidth>
+        <frameHeight>220</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/ExploradorLeyendo/expLeyendo.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelU_IntroFood">
       <name>LevelU_IntroFood</name>
       <number>55</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/LevelU_IntroFood.psd</file>
       <fileName>LevelU_IntroFood.psd</fileName>
-      <button id="butSample">
-        <name>butSample</name>
-        <layer>kwkrecty</layer>
-        <rollover>kwkrecty</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_542">
-          <name>var_542</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>5</value>
-        </action>
-        <action id="var_115">
-          <name>var_115</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>1</value>
-        </action>
-        <action id="goPage_443">
-          <name>goPage_443</name>
-          <type>Go to Page</type>
-          <page>matchingSample</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
@@ -3246,6 +3241,78 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
+      <code id="code_396">
+        <name>code_396</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene55_Introfood.lua</extFile>
+      </code>
+      <layer id="Rectangulo_1">
+        <name>Rectangulo_1</name>
+        <scaleW>50</scaleW>
+        <scaleH>50</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>Rectangulo_1</renderAs>
+      </layer>
+      <layer id="kwkafr">
+        <name>kwkafr</name>
+        <scaleW>100</scaleW>
+        <scaleH>100</scaleH>
+        <rotate>0</rotate>
+        <randX>false</randX>
+        <randY>false</randY>
+        <render>true</render>
+        <jpg>false</jpg>
+        <jpgQuality>6</jpgQuality>
+        <renderAs>kwkafr</renderAs>
+      </layer>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>142</frameWidth>
+        <frameHeight>248</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkafr">
+        <name>kwkafr</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkafr</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/africana.png</file>
+        <frameWidth>159</frameWidth>
+        <frameHeight>229</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/africana/africana.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelU_Food2">
       <name>LevelU_Food2</name>
@@ -3270,6 +3337,54 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
+      <code id="code_564">
+        <name>code_564</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene56_food2.lua</extFile>
+      </code>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>142</frameWidth>
+        <frameHeight>248</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkafr">
+        <name>kwkafr</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkafr</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/africana.png</file>
+        <frameWidth>159</frameWidth>
+        <frameHeight>229</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/africana/africana.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelU_FoodEnd">
       <name>LevelU_FoodEnd</name>
@@ -3294,39 +3409,60 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
+      <code id="code_571">
+        <name>code_571</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene58_food3.lua</extFile>
+      </code>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>142</frameWidth>
+        <frameHeight>248</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkafr">
+        <name>kwkafr</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkafr</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/africana.png</file>
+        <frameWidth>157</frameWidth>
+        <frameHeight>229</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/africana/africana.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelU_IntroToys">
       <name>LevelU_IntroToys</name>
       <number>59</number>
       <file>/e/ProyectosKwik2/ProyectoFinal/LevelU_IntroToys.psd</file>
       <fileName>LevelU_IntroToys.psd</fileName>
-      <button id="butSample">
-        <name>butSample</name>
-        <layer>kwkrecty</layer>
-        <rollover>kwkrecty</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_542">
-          <name>var_542</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>5</value>
-        </action>
-        <action id="var_115">
-          <name>var_115</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>2</value>
-        </action>
-        <action id="goPage_443">
-          <name>goPage_443</name>
-          <type>Go to Page</type>
-          <page>matchingSample</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
@@ -3345,6 +3481,54 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
+      <code id="code_269">
+        <name>code_269</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene59_introToy.lua</extFile>
+      </code>
+      <replacement id="kwkafr">
+        <name>kwkafr</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkafr</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/africana.png</file>
+        <frameWidth>157</frameWidth>
+        <frameHeight>229</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/africana/africana.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>142</frameWidth>
+        <frameHeight>248</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelU_Toys2">
       <name>LevelU_Toys2</name>
@@ -3369,33 +3553,54 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
-      <button id="but_840">
-        <name>but_840</name>
-        <layer>kwkrg</layer>
-        <rollover>kwkrg</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="var_262">
-          <name>var_262</name>
-          <type>Edit Variable</type>
-          <variable>Phase</variable>
-          <value>2</value>
-        </action>
-        <action id="var_717">
-          <name>var_717</name>
-          <type>Edit Variable</type>
-          <variable>Level</variable>
-          <value>2</value>
-        </action>
-        <action id="goPage_730">
-          <name>goPage_730</name>
-          <type>Go to Page</type>
-          <page>DrawLetterU</page>
-          <transition>Fade</transition>
-          <wait>0</wait>
-        </action>
-      </button>
+      <code id="code_014">
+        <name>code_014</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene60_toys2.lua</extFile>
+      </code>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>142</frameWidth>
+        <frameHeight>248</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkafr">
+        <name>kwkafr</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkafr</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/africana.png</file>
+        <frameWidth>157</frameWidth>
+        <frameHeight>229</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/africana/africana.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="LevelU_ToysEnd">
       <name>LevelU_ToysEnd</name>
@@ -3420,6 +3625,54 @@
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
       </code>
+      <code id="code_555">
+        <name>code_555</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene61_toy3.lua</extFile>
+      </code>
+      <replacement id="kwkexp">
+        <name>kwkexp</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkexp</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/exploradorHabla.png</file>
+        <frameWidth>142</frameWidth>
+        <frameHeight>248</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/exploradorNormal/exploradorHabla.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
+      <replacement id="kwkafr">
+        <name>kwkafr</name>
+        <type>Sprite Sheet</type>
+        <layer>kwkafr</layer>
+        <file>/e/ProyectosKwik2/ProyectoFinal/africana.png</file>
+        <frameWidth>157</frameWidth>
+        <frameHeight>229</frameHeight>
+        <externalFile>/e/ProyectoFinCarrera/StoryBoard/Sprites/africana/africana.lua</externalFile>
+        <exporter>TexturePacker</exporter>
+        <frameStart>1</frameStart>
+        <frameCount>17</frameCount>
+        <frameLength>1</frameLength>
+        <loop>forever</loop>
+        <paused>false</paused>
+        <direction>false</direction>
+        <sheetWidth>512</sheetWidth>
+        <sheetHeight>512</sheetHeight>
+        <mainSeq>default</mainSeq>
+        <useSheet>None</useSheet>
+        <export2>true</export2>
+      </replacement>
     </page>
     <page id="DrawLetterA">
       <name>DrawLetterA</name>

@@ -67,9 +67,19 @@ function new()
       local color = 220
       local colorPoint = color - 20
       local radius = 24 
+      local imgBack
 
        -- (TOP) External code will render here 
-
+      if (_G.Phase == 1) then
+            imgBack = display.newImageRect( imgDir.."objeto331.png", 528, 497 )
+            imgBack.x = 250; imgBack.y = 300
+            imgBack:scale( 0.8, 0.8 )
+      else
+            imgBack = display.newImageRect( imgDir.."indio.png", 187, 184 )
+            imgBack.x = 300; imgBack.y = 350
+            imgBack:scale( 1.2, 1.2 )
+      end
+      imgBack.alpha = 0.75
       
       rectTop = display.newRoundedRect( display.contentCenterX-120, display.contentCenterY-275, 250, 55, 12 )
       rectTop:setFillColor( color, color, color )
@@ -130,7 +140,9 @@ function new()
 
       gp_totalLetter.anchorChildren = true
 
-      addExtra( menuGroup, gp_letter, gp_point, radius, arrow, gp_totalLetter )    
+      addExtra( menuGroup, gp_letter, gp_point, radius, arrow, gp_totalLetter )   
+
+      menuGroup:insert(imgBack)    
 
        -- do not swipe this page 
 

@@ -76,7 +76,8 @@ function new()
        inputName.placeholder = "Nombre"
        inputName.font = native.newFont( native.systemFontBold, 24 ) 
        inputName:addEventListener( "userInput", fieldHandler_inputName ) 
-       inputName.oriX = inputName.x; inputName.oriY = inputName.y 
+       inputName.oriX = inputName.x; inputName.oriY = inputName.y
+       --menuGroup:insert(inputName) 
 
        -- kwkbuttonConfir positioning 
        kwkbuttonConfir = display.newImageRect( imgDir.. "kwkbuttonconfir.png", 348, 86 ); 
@@ -117,29 +118,30 @@ function new()
 
           if (name==nil or name=="") then
             if (system.getInfo("environment")=="device") then
+              local myDialog
+              
               local function listenerC( event )
-              -- body
-                local myDialog
-                
-                local function functionC( event )
-                  -- body
-                  local object = event.target
+                -- body
+                local object = event.target
 
-                  if event.phase == "began" then
-                    display.getCurrentStage():setFocus(object)
-                    object.isFocus = true
-                  elseif object.isFocus then
-                    if event.phase == "ended" or event.phase == "cancelled" then
-                        display.getCurrentStage():setFocus( nil )
-                        object.isFocus = false
-
-                        deleteMyDialog( myDialog )
-                    end
+                if event.phase == "began" then
+                  display.getCurrentStage():setFocus(object)
+                  object.isFocus = true
+                elseif object.isFocus then
+                  if event.phase == "ended" or event.phase == "cancelled" then
+                      print( "SE borra todo....." )
+                      display.getCurrentStage():setFocus( nil )
+                      object.isFocus = false
+                      deleteMyDialog( myDialog )
+                      inputName.alpha = 1
+                      native.setKeyboardFocus( inputName )
                   end
-                  return true
                 end
+                return true
               end
-              myDialog = createMyDialog( "ADVERTENCIA", "Debes introducir tu nombre.", nil, "Vale", listenerC)  
+              native.setKeyboardFocus(nil)
+              inputName.alpha = 0
+              myDialog = createMyDialog( "ADVERTENCIA", " Debes introducir tu nombre.", nil, "Vale", listenerC)  
             else
               _G.NameUser = "Pedro"
               timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 

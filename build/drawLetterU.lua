@@ -11,6 +11,16 @@
       local n_div = 30
       local an
       local line
+      local imgBack
+
+      if (_G.Phase == 1) then
+            imgBack = display.newImageRect( imgDir.."universo.jpg", 1280, 600 )
+            imgBack.x = 640; imgBack.y = 300
+      else
+            imgBack = display.newImageRect( imgDir.."objeto552.png", 499, 350 )
+            imgBack.x = 200; imgBack.y = 350
+      end
+      imgBack.alpha = 0.75
       
       local rectLeft = display.newRoundedRect( display.contentCenterX - radius, display.contentCenterY-15, 55, 220, 12 )
       rectLeft:setFillColor( color, color, color )
@@ -79,6 +89,5 @@
       --gp_point.anchorChildren = true
       gp_totalLetter.anchorChildren = true
       
-      addExtra( menuGroup, gp_letter, gp_point, 5 , arrow, gp_totalLetter)  
-
-      menuGroup:insert( gp_totalLetter ) 
+      menuGroup:insert( imgBack )
+      addExtra( menuGroup, gp_letter, gp_point, 5 , arrow, gp_totalLetter)   

@@ -165,7 +165,7 @@ function loadSettingGame( )
     _G.LastPage = gameSettingsVars.lastPage
 		_G.IndexStat = gameSettingsVars.indexStat
     _G.TakePhoto = gameSettingsVars.takePhoto
-    _G.IsTakePhot = gameSettingsVars.isTakePhot
+    _G.IsTakePhoto = gameSettingsVars.isTakePhot
     _G.UploadImageTable = gameSettingsVars.uploadTable
     _G.UploadImageDraw = gameSettingsVars.uploadDraw
     _G.DrawLevel = gameSettingsVars.drawLevel
@@ -182,6 +182,10 @@ function loadSettingGame( )
     _G.goBackForExercise = gameSettingsVars.goBackForExercise
     _G.FirstVisitMap = gameSettingsVars.firstVisitMap
     _G.goBackEnd = gameSettingsVars.goBackEnd
+    _G.LetterInSyllable = gameSettingsVars.letterInSyllable
+    _G.firstDrawLetter = gameSettingsVars.firstDrawLetter
+    _G.firstSampleSel = gameSettingsVars.firstSampleSel
+    _G.firstRecAudio = gameSettingsVars.firstRecAudio
     --_G.MyCurrentSubtitle = gameSettingsVars.currentSubtitles
 	else
 		print( "--------JUEGO INICIAL--------" )
@@ -199,7 +203,7 @@ function loadSettingGame( )
         _G.GameStarted = false -- 
         _G.IndexStat = 0 
         _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
-        _G.IsTakePhot = false -- if true the screen shot been taken
+        _G.IsTakePhoto = false -- if true the screen shot been taken
         _G.UploadImageTable = false
         _G.UploadImageDraw = false
         _G.DrawLevel = 0
@@ -224,6 +228,9 @@ function loadSettingGame( )
         _G.FirstVisitMap = true
         _G.goBackEnd = false
         _G.firstSampleSel = true
+        _G.firstDrawLetter = true
+        _G.firstRecAudio = true
+        _G.LetterInSyllable = false
   end
 end
 
@@ -243,7 +250,7 @@ createTableSetting = function ()
 	gameSettingsVars.currentPage = _G.CurrentPage
 	gameSettingsVars.indexStat = _G.IndexStat
   gameSettingsVars.takePhoto = _G.TakePhoto
-  gameSettingsVars.isTakePhot = _G.IsTakePhot
+  gameSettingsVars.isTakePhot = _G.IsTakePhoto
   gameSettingsVars.uploadDraw = _G.UploadImageDraw
   gameSettingsVars.uploadTable = _G.UploadImageTable
   gameSettingsVars.drawLevel = _G.DrawLevel
@@ -261,6 +268,10 @@ createTableSetting = function ()
   gameSettingsVars.goBackForExercise =  _G.goBackForExercise
   gameSettingsVars.firstVisitMap = _G.FirstVisitMap
   gameSettingsVars.goBackEnd =  _G.goBackEnd
+  gameSettingsVars.letterInSyllable = _G.LetterInSyllable
+  gameSettingsVars.firstDrawLetter = _G.firstDrawLetter
+  gameSettingsVars.firstSampleSel = _G.firstSampleSel
+  gameSettingsVars.firstRecAudio = _G.firstRecAudio
 
 	--printTable(gameSettingsVars)
 	return gameSettingsVars
@@ -610,9 +621,7 @@ end
 onKeyEvent = function ( event )
 	-- body
     local keyName = event.keyName
-    local object = event.target
     
-    print( object.name )
     if ((system.getInfo("environment")=="device" and "back" == keyName and event.phase == "up") or system.getInfo("environment")=="simulator") then
             if (_G.CurrentPage ~= 1) then
                 local pageExercise = {15, 17, 18, 29, 38, 49, 57}
@@ -657,4 +666,7 @@ else
 	rectangle2:addEventListener( "tap", onKeyEvent )
 end
 
+loadSettingGame( ) 
+_G.EnterGame = true
+_G.MyCurrentSubtitle = nil
 --Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento

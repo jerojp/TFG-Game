@@ -96,21 +96,44 @@ function new()
        end
 
        local function playSoundToy( event )
-              -- body
-              --[[local audioHandle
-              local function onCompleteSound( event )
-                     -- body
-                     audio.dispose( audioHandle )
-                     audioHandle = nil
-              end
+              local object = event.target
+              if event.phase == "began" then
+                     display.getCurrentStage():setFocus(object)
+                     object.isFocus = true
+              elseif object.isFocus then
+                     if event.phase == "ended" or event.phase == "cancelled" then
+                            display.getCurrentStage():setFocus( nil )
+                            object.isFocus = false
+                            local audioHandle
+                            local rot = -1
+                            local function onCompleteSound( event )
+                                   -- body
+                                   audio.dispose( audioHandle )
+                                   audioHandle = nil
+                                   if (transitionStash["rot"]) then
+                                      transition.cancel(transitionStash["rot"])
+                                      transitionStash["rot"] = nil    
+                                   end
+                                   object.rotation = 0
+                            end
 
-              if ( audio.isChannelActive( ch ) ) then
-                     audio.stop( ch )
+                            if ( audio.isChannelActive( ch ) ) then
+                                   audio.stop( ch )
+                                   onCompleteSound()
+                            end
+
+                            local function onCompleteRot( obj )
+                                   -- body
+                                   rot = rot * -1
+                                   transitionStash["rot"] = transition.to( obj, {time = 1000, rotation = rot*25, transition=easing.inOutCubic, onComplete = onCompleteRot} )       
+                            end
+                            transitionStash["rot"] = transition.to( object, {time = 1000, rotation = rot*25, transition=easing.inOutCubic, onComplete = onCompleteRot} )
+                            audioHandle = audio.loadSound( audioDir..event.target.name..".mp3" )
+                            audio.play( audioHandle, {duration = 6000, channel = ch, onComplete = onCompleteSound} )
+                            print( "Reproducir sonido "..event.target.name )
+                     end
               end
-              
-              audioHandle = audio.loadSound( audioDir..event.target.name )
-              audio.play( audioHandle, {channel = ch, onComplete = onCompleteSound} )]]--
-              print( "Reproducir sonido "..event.target.name )
+              return true  
        end
 
        local function checkBuy( object )
@@ -246,7 +269,6 @@ function new()
                      table.insert( groupImgCoin, nil )
                end 
               
-              print( "N: "..menuGroup.numChildren )
               for i=1,maxLevel do
                      obj = menuGroup[i + 2 ]
                      obj.cost = prices[i]

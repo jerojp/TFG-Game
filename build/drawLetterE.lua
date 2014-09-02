@@ -9,9 +9,19 @@
       local color = 220
       local kwkbuttonconfir 
       local radius = 24 
+      local imgBack
 
        -- (TOP) External code will render here 
-
+      if (_G.Phase == 1) then
+            imgBack = display.newImageRect( imgDir.."enano.png", 474, 1177 )
+            imgBack.x = 250; imgBack.y = 300
+            imgBack:scale( 0.4, 0.4 )
+      else
+            imgBack = display.newImageRect( imgDir.."objeto241.png", 604, 594 )
+            imgBack.x = 200; imgBack.y = 350
+            imgBack:scale( 0.5, 0.5 )
+      end
+      imgBack.alpha = 0.75
       
       rectTop = display.newRoundedRect( display.contentCenterX-100, 127, 280, 55, 12 )
       rectTop:setFillColor( color, color, color )
@@ -82,3 +92,5 @@
       gp_totalLetter.anchorChildren = true
 
       addExtra( menuGroup, gp_letter, gp_point, radius, arrow, gp_totalLetter )   
+
+      menuGroup:insert(imgBack)   

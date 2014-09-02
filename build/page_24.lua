@@ -291,7 +291,7 @@ end
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_23", "fade" ) 
             end 
-            timerStash.newTimer_678 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_273 = timer.performWithDelay(0, myClosure_switch, 1) 
          end 
        end 
 

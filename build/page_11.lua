@@ -179,7 +179,7 @@ local function createHiddenPanel( )
     end
     -- body
     hiddenPanel = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
-    hiddenPanel.alpha = 0.1
+    hiddenPanel.alpha = 0.5
     menuGroup:insert(hiddenPanel)
     hiddenPanel:addEventListener( "touch", doNothing )
     hiddenPanel:addEventListener( "tap", doNothing )

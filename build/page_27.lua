@@ -113,8 +113,6 @@ function new()
 kwkexpf:pause( )
 
 --timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )
-_G.Subtitle = false
-_G.AutoNextPage = true
 
 _G.Level = 1
 _G.Phase = 1

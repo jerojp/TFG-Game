@@ -85,6 +85,7 @@ function new()
        local backColors = {red, blue, green, pink, yellow}
        local receivedMoney = false
        _G.TotalAddCoinEx = 0
+       local hiddenPanel
 
        -- (TOP) External code will render here 
 
@@ -173,9 +174,9 @@ function new()
               end
             elseif (_G.Level == 5) then
               if (_G.Phase == 1) then
-                number = 1  
+                number = 58  
               else
-                number = 1
+                number = 61
               end
             end
             cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
@@ -224,7 +225,7 @@ function new()
          playSoundExample = true
          --media.playSound( dataFile, { onComplete=onCompleteSoundExample })
          audioHandleExample = audio.loadSound( dataFile )
-         audio.play( audioHandleExample, {channel = 1, onComplete = onCompleteSoundExample} )
+         audio.play( audioHandleExample, {channel = audioChannel, onComplete = onCompleteSoundExample} )
        end
        letra:addEventListener( "tap", playSoundExampleFun )
 
@@ -301,10 +302,60 @@ function new()
         end   
        end 
 
-       play:addEventListener("tap", but_play )
-        
+       local function createHiddenPanel( )
+        if (not hiddenPanel) then
+          local function doNothing( event )
+            -- body
+            return true
+          end
+          -- body
+          hiddenPanel = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
+          hiddenPanel.alpha = 0.5
+          menuGroup:insert(hiddenPanel)
+          hiddenPanel:addEventListener( "touch", doNothing )
+          hiddenPanel:addEventListener( "tap", doNothing )
+        end
+      end
+
+      local function removeHiddenPanel( )
+        -- body
+        if (hiddenPanel) then
+          menuGroup:remove(hiddenPanel)
+          hiddenPanel:removeSelf( )
+          hiddenPanel = nil
+        end
+      end
+
+      local function playSoundExp( )
+        -- body
+        local audioHandle
+        local function onCompleteSound2()
+          -- body
+          audio.dispose( audioHandle )
+          audioHandle = nil
+          removeHiddenPanel()
+        end
+        local function onCompleteSound1()
+          -- body
+          audio.dispose( audioHandle )
+          audioHandle = audio.loadSound( audioDir.."geniusVOZ2.mp3" )
+          audio.play( audioHandle , {channel = audioChannel, onComplete = onCompleteSound2} )
+        end
+        audioHandle = audio.loadSound( audioDir.."geniusVOZ1.mp3" )
+        createHiddenPanel()
+        audio.play( audioHandle , {channel = audioChannel, onComplete = onCompleteSound1} )
+      end
+
+      if (_G.firstRecAudio) then
+        _G.firstRecAudio = false
+        playSoundExp( )
+      end
+
       local filePath = system.pathForFile( dataFileName, system.DocumentsDirectory )
       r = media.newRecording(filePath)
+      play:addEventListener("tap", but_play )
+
+
  
 
 

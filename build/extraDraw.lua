@@ -97,6 +97,7 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
        local ElegirTamPincel  
        local TxtPincel  
        local Pincel  
+       local hiddenPanel
 
        -- Added variables before layers render 
        local lineWidth = 25 -- brush with   
@@ -148,6 +149,52 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
           resetVar()
           transition.resume(arrow)
           return true
+      end
+
+      local function doNothing( event )
+        -- body
+        return true
+      end
+
+      local function createHiddenPanel( )
+        if (not hiddenPanel) then
+          -- body
+          hiddenPanel = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
+          hiddenPanel.alpha = 0.5
+          menuGroup:insert(hiddenPanel)
+          hiddenPanel:addEventListener( "touch", doNothing )
+          hiddenPanel:addEventListener( "tap", doNothing )
+        end
+      end
+
+      local function removeHiddenPanel( )
+        -- body
+        if (hiddenPanel) then
+          menuGroup:remove(hiddenPanel)
+          hiddenPanel:removeSelf( )
+          hiddenPanel = nil
+        end
+      end
+
+      local function playSoundExp( )
+        -- body
+        local ch = 1
+        local audioHandle
+        local function onCompleteSound2()
+          -- body
+          audio.dispose( audioHandle )
+          audioHandle = nil
+          removeHiddenPanel()
+        end
+        local function onCompleteSound1()
+          -- body
+          audio.dispose( audioHandle )
+          audioHandle = audio.loadSound( audioDir.."geniusGR2.mp3" )
+          audio.play( audioHandle , {channel = ch, onComplete = onCompleteSound2} )
+        end
+        audioHandle = audio.loadSound( audioDir.."geniusGR1.mp3" )
+        createHiddenPanel()
+        audio.play( audioHandle , {channel = ch, onComplete = onCompleteSound1} )
       end
 
       transitionStash["arrowOff"] = transition.to( arrow, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeOff} )
@@ -324,6 +371,12 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
       listener = sliderListener
       }
       menuGroup:insert(slider)
+
+      menuGroup:insert(gpTotal)
+      if (_G.firstDrawLetter) then
+        _G.firstDrawLetter = false
+        playSoundExp( )
+      end
 
       local function inicDraw( event )
         -- body
