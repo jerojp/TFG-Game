@@ -49,7 +49,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- FondoJapon positioning 
        FondoJapon = display.newImageRect( imgDir.. "p45_fondojapon.png", 1296, 800 ); 

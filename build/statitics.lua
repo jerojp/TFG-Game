@@ -165,11 +165,9 @@ local function fbListener( event )
 					
 		onLoginSuccess()
 	elseif ( "request" == event.type ) then
-		local response = json.encode( event.response )
 		print( event.response )
 		if ( not event.isError ) then
 			--Hay que resetear _G.UploadImageTable y _G.UploadImageDraw
-			native.showAlert( "EXITO", response, { "OK" } )
 			if (_G.UploadImageDraw) then
 				_G.UploadImageDraw = false
 				if (_G.UploadImageTable) then
@@ -178,6 +176,7 @@ local function fbListener( event )
 			elseif(_G.UploadImageTable) then
 				_G.UploadImageTable = false
 			end
+			native.showAlert( "EXITO", response, { "OK" } )
 		else
 			native.showAlert( "ERROR", "Ha ocurrido un error al subir la foto, intentelo más tarde", { "OK" } )
 			native.showAlert( "ERROR", response, { "OK" } )
@@ -367,7 +366,10 @@ local function updateFacebook( event )
     		style = "checkbox",
     		id = "checkCapture",
     		initialSwitchState = true,
-    		onPress = onSwitchPress
+    		onPress = onSwitchPress,
+    		sheet = checkboxSheet,
+    		frameOff = 1,
+    		frameOn = 2
 		}
 		updateImage = true
 		facebookGroup:insert( checkCapture )

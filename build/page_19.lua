@@ -49,7 +49,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- casaEnfermeraEx positioning 
        casaEnfermeraEx = display.newImageRect( imgDir.. "p19_casaenfermeraex.png", 1280, 800 ); 
@@ -104,7 +105,7 @@ function new()
            --External code 
            _G.Level = 2
 _G.Phase = 2
-local parameters = {nameToy="Elefante", pathToy="objeto241.png", costToy=_G.PriceToys.elephant, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_20", indexToy = 3}
+local parameters = {nameToy="Elefante", pathToy="objeto241.png", widthToy = 134 , heightToy = 107, nextPage = "page_20"}
 dispose(); director:changeScene( parameters, "viewNewToy", "fade" ) 
        end 
 

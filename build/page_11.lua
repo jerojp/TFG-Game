@@ -43,7 +43,8 @@ function new()
        local Capa_1  
 
        -- (TOP) External code will render here 
-       require("MyDialog")
+       require( "ControlScene" )
+require("MyDialog")
 local groupFlLetter = display.newGroup( )
 local groupTick = display.newGroup( )
 local continents  
@@ -153,17 +154,15 @@ local function goToLevelLetter( event )
             obj.isFocus = false
             _G.Level = obj.index
             print( "Nivel"..obj.index )
-            if (_G.LastPageLevel[obj.index] <= limitPages[obj.index*2 - 1]) then
-              _G.Phase = 1
-            else
-              _G.Phase = 2
-            end
-             
-            if (_G.LastPageLevel[obj.index] == limitPages[obj.index*2]) then
+            print("Ultima pagina del nivel ".._G.LastPageLevel[obj.index].page)
+            print( "Limite de la pagina "..limitPages[obj.index*2 - 1] )
+            _G.Phase = _G.LastPageLevel[_G.Level].phase
+         
+            if (_G.LastPageLevel[obj.index].page == limitPages[obj.index*2]) then
               myDialog = createMyDialog( "ADVERTENCIA", "Ya has completado este nivel, si inicias de nuevo este nivel perderÃ¡s todos los resultados obtenidos en Ã©l.", nil, "Confirmar", listenerC, "Cancelar", listenerD)
               page = inicPages[obj.index]
             else
-              goToPage(_G.LastPageLevel[obj.index])    
+              goToPage(_G.LastPageLevel[obj.index].page)    
             end
         end
        end
@@ -186,7 +185,7 @@ local function createHiddenPanel( )
   end
 end
 
-local function removeHiddenPanel( )
+_G.FunctionDelHiddenPanel = function ( )
   -- body
   if (hiddenPanel) then
     print( "BORRANDO PANEL OCULTO....." )
@@ -196,69 +195,108 @@ local function removeHiddenPanel( )
   end
 end
 
-local function playSoundPushArrow( )
+local function goBackMenu( )
   -- body
-  local function onCompletePushArrow( event )
-    -- body
-    audio.dispose( handlePushArrow )
-    handlePushArrow = nil
-    removeHiddenPanel( )
+  _G.GameStarted = false
+  dispose(); director:changeScene( "page_1", "fade") 
+end
+
+local function viewUnicorn( fun )
+  -- body
+  local groupUnicorn = display.newGroup()
+  local background = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
+  background:setFillColor( 85,159,191 )
+  groupUnicorn:insert(background)
+  local toy = display.newImageRect( imgDir.."goldenUnicorn.png", 381, 196 ); 
+  toy.x = display.contentCenterX; toy.y = display.contentCenterY ; 
+  groupUnicorn:insert(toy);
+  _G.UnlockToys[#_G.UnlockToys+1] = { nameToy = "Unicornio", path = "goldenUnicorn.png", widthToy = 135, heightToy = 81}
+  _G.Toys[#_G.UnlockToys].block = false
+  local textToy = display.newText( "Unicornio", display.contentCenterX, toy.y + 80, native.systemFontBold, 40 )
+  textToy.x = textToy.x - textToy.contentWidth/2
+  textToy:setFillColor( 0 )
+  groupUnicorn:insert(textToy)
+  local audioHandle
+  local groupStars = display.newGroup()
+
+  local function onCompleteTransition( event )
+                    -- body
+    local function onCompleteTimerEndUnicorn()
+      display.remove( groupUnicorn )
+      groupUnicorn = nil
+      fun(300)
+    end
+
+    if ( audio.isChannelActive( 1 ) ) then
+        audio.stop()
+    end
+    audio.dispose( audioHandle )
+    audioHandle = nil
+    groupStars.alpha = 0
+    
+    timerStash.timer_stars2 = timer.performWithDelay( 1000, onCompleteTimerEndUnicorn )
   end
-  handlePushArrow = audio.loadSound( audioDir.."geniusGL2.mp3" )
-  audio.play( handlePushArrow, {channel = ch, onComplete = onCompletePushArrow} )
-  --createHiddenPanel( )
-end
 
-local function onCompleteFirstVisit( event )
-  -- body
-  audio.dispose( handleFirstVisit )
-  handleFirstVisit = nil
-  _G.FirstVisitMap = false
-  removeHiddenPanel( )
-end
+  local an
+  local n_div = 15
+  local radius = 150
+  local star
+  for i=0,n_div do
+  an = (2*math.pi/n_div)*i;
+    star = display.newImageRect( imgDir.."star.png", 55, 55 ); 
+    star.x = radius*math.cos(an); star.y = radius*math.sin(an); 
+    groupStars:insert(star);
+  end
+  groupUnicorn:insert(groupStars)
+  groupStars.x = display.contentCenterX
+  groupStars.y = display.contentCenterY
+  groupStars:scale( 0, 0 )
 
-local function onCompleteGoBackEx( event )
-  -- body
-  audio.dispose( handleGoBackEx )
-  handleGoBackEx = nil
-  _G.goBackForExercise = false
-  playSoundPushArrow()
-end
+  audioHandle = audio.loadSound( audioDir.."stars.mp3" )
 
-local function onCompleteGoBackExComplete( event )
-  -- body
-  audio.dispose( handleGoBackExComplete )
-  handleGoBackExComplete = nil
-  playSoundPushArrow()
-end
-
-local function onCompleteGoBackEnd( event )
-  -- body
-  audio.dispose( handleGoBackEnd )
-  handleGoBackEnd = nil
-  _G.goBackEnd = false
-  removeHiddenPanel( )
+  local function onCompleteTimer( event )
+    -- body
+    transitionStash.groupStars2 = transition.to( groupStars, {  time=2000, xScale=1.5, yScale=1.5, alpha = 0.2, rotation = 340, onComplete=onCompleteTransition} )
+    audio.play( audioHandle, {channel = 1, duration = 3000, fadein = 2000} )
+  end
+  timerStash.timer_stars2 = timer.performWithDelay( 600, onCompleteTimer, 1 )
 end
 
 local function playAnySound( )
   -- body
+  local aud 
+  local sub 
+  local sec
+  _G.Toys[10].block = true
   if(_G.goBackForExercise) then
-    handleGoBackEx = audio.loadSound( audioDir.."geniusGBNC.mp3" )
-    audio.play( handleGoBackEx, {channel = ch, onComplete = onCompleteGoBackEx} )
-    createHiddenPanel( )
+    _G.goBackForExercise = false
+    aud = {"genius_GBNC.mp3", "genius_GL2.mp3"}
+    sub = {"Has vuelto al mapa, no te preocupes puedes intentar continuar la aventura de ese paÃ­s por donde los has dejado en cualquier momento.",
+          "Pulsa la flecha del paÃ­s al que deseas viajar."}
+    sec = {1, 1}
   elseif (_G.FirstVisitMap) then
-    handleFirstVisit = audio.loadSound( audioDir.."geniusFVM.mp3" )
-    audio.play( handleFirstVisit, {channel = ch, onComplete = onCompleteFirstVisit} )
-    createHiddenPanel( )
+    _G.FirstVisitMap = false
+    aud = {"genius_FVM.mp3"}
+    sub = {"Para viajar a un pais, pulsa sobre la flecha azÃºl que hay encima de Ã©l. En cada paÃ­s aprenderÃ¡s una nueva vocal."}
+    sec = {1}
   elseif(_G.goBackEnd) then
-    handleGoBackEnd = audio.loadSound( audioDir.."geniusFinal.mp3" )
-    audio.play( handleGoBackEnd, {channel = ch, onComplete = onCompleteGoBackEnd} )
-    createHiddenPanel( )
+    _G.goBackEnd = false
+    aud = {"genius_final1.mp3", "genius_final2.mp3"}
+    sub = {"!Muy bien! Ya has completado todos los paÃ­ses con Ã©xito. AquÃ­ tienes el cofre misterioso que te prometÃ­. Con la llave que conseguiste en Suiza has conseguido que pueda abrir el cofre, veamos que contiene.",
+          "Felicidades has conseguido un tesoro jamÃ¡s encontrado y te has convertido en el mejor explorador del mundo !Enhorabuena!. AquÃ­ finaliza tu aventura, ha sido muy divertido espero que nos podamos ver pronto."}
+    sec = {1, 1}
+    local events = { {mytype = "effects", value = {1, viewUnicorn} }, {mytype = "effects", value = {1, goBackMenu} } }
+    setEventsControlScene(events)
   else
-    handleGoBackExComplete = audio.loadSound( audioDir.."geniusGBEC.mp3" )
-    audio.play( handleGoBackExComplete, {channel = ch, onComplete = onCompleteGoBackExComplete} )
-    createHiddenPanel( )
-  end
+    aud = {"genius_GBEC.mp3", "genius_GL2.mp3"}
+    sub = {"Muy bien has completado con exito la aventura de ese paÃ­s. !Enhorabuena!",
+          "Pulsa la flecha del paÃ­s al que deseas viajar."}
+    sec = {1, 1}
+  end 
+  createHiddenPanel( )
+  addCharacter(nil, aud, sub)
+  setSecuence( sec )
+  playScene( -1 )
 end
 
 -- (TOP) External code will render here 
@@ -332,17 +370,17 @@ menuGroup:insert(groupTick)
 local contLetter = 1
 for i=1,groupTick.numChildren, 2 do
         print( "Nivel "..contLetter )
-        print( "Pagina ".._G.LastPageLevel[contLetter] )
+        print( "Pagina ".._G.LastPageLevel[contLetter].page )
         print( "Limit "..limitPages[i] )
-       if (_G.LastPageLevel[contLetter] > limitPages[i]) then
+        print( "Limit2 "..limitPages[i+1] )
+       if (_G.LastPageLevel[contLetter].phase == 2) then
               groupTick[i].alpha = 1
-              if (_G.LastPageLevel[contLetter] >= limitPages[i+1]) then -- _G.lastPageLevel[1] can never be largue than 34  
+              if (_G.LastPageLevel[contLetter].page == limitPages[i+1]) then -- _G.lastPageLevel[1] can never be largue than 34  
                      groupTick[i+1].alpha = 1
               end
        end
        contLetter = contLetter + 1
 end
-
 timerStash.soundSelLevel = timer.performWithDelay( 800, playAnySound ) 
 
        -- Capa_1 positioning 

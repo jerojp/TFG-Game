@@ -132,7 +132,7 @@ function new()
               end
               native.setKeyboardFocus(nil)
               inputName.alpha = 0
-              myDialog = createMyDialog( "ADVERTENCIA", "Debes introducir tu edad.", nil, "Vale", listenerC)  
+              myDialog = createMyDialog( "ADVERTENCIA", " Debes introducir tu edad.", nil, "Vale", listenerC)  
             else
               _G.Age = "3"
               timerStash.newTimer_391 = timer.performWithDelay(0, myClosure_switch, 1) 

@@ -19,6 +19,7 @@ function createPanelOptions( )
     local varAdvance = _G.AutoNextPage
     local varLetter = _G.LetterInSyllable
     local inicAlphaSubtitle
+    local hiddenPanelAuto
     if (_G.MyCurrentSubtitle) then
         inicAlphaSubtitle = _G.MyCurrentSubtitle.alpha
     end
@@ -61,6 +62,11 @@ function createPanelOptions( )
                     else
                         _G.MyCurrentSubtitle.alpha = 0
                     end
+                end
+                if (varSubtitles) then
+                    hiddenPanelAuto.alpha = 0.6
+                else
+                    hiddenPanelAuto.alpha = 0
                 end
                 print( varSubtitles )
                 --display.getCurrentStage():setFocus( nil )
@@ -168,8 +174,8 @@ function createPanelOptions( )
         width = display.contentWidth,
         height = display.contentHeight,
         scrollWidth = display.contentWidth,
-        scrollHeight = 1000,
-        bottomPadding = 50,
+        scrollHeight = 1300,
+        bottomPadding = 30,
         horizontalScrollDisabled = true,
         verticalScrollDisabled = false,
         backgroundColor = {203,245,231}
@@ -180,135 +186,150 @@ function createPanelOptions( )
     		text = "Dificultad",     
     		x = 100,
     		y = 70,
-    		fontSize = 32,
+    		fontSize = 38,
 		}	
     local textDif = display.newText( options )
     textDif:setFillColor( 0 )
     myGroup:insert( textDif )
 
-    local rectDif = display.newRoundedRect( 120, textDif.y+50, 700, 60, 25 )
+    local rectDif = display.newRoundedRect( 120, textDif.y+50, 900, 100, 25 )
     rectDif:setFillColor( colorRect.R, colorRect.G, colorRect.B )
     myGroup:insert( rectDif )
 
-    selDif = display.newRoundedRect( 655, textDif.y+60, 110, 38, 7 )
+    selDif = display.newRoundedRect( 655, textDif.y+75, 160, 50, 20 )
     selDif:setFillColor(  colorSelec.R, colorSelec.G, colorSelec.B  )
     myGroup:insert( selDif )
-    if (_G.DifficultLevel == 1) then
-    	selDif.x = 225
-    elseif (_G.DifficultLevel == 2) then
-    	selDif.x = 480
-    elseif (_G.DifficultLevel == 3) then
-    	selDif.x = 710
-    end
 
-    local easyBut = display.newText( "Fácil", 200, textDif.y+65, native.systemFont, 25 )
+    local easyBut = display.newText( "Fácil", 200, textDif.y+80, native.systemFont, 30 )
     easyBut:setFillColor( 100 )
     easyBut.difficulty = 1
     easyBut:addEventListener( "touch", changeDifficult )
     myGroup:insert( easyBut )
 
-    local normalBut = display.newText( "Normal", 440, textDif.y+65, native.systemFont, 25 )
+    local normalBut = display.newText( "Normal", 520, textDif.y+80, native.systemFont, 30 )
     normalBut:setFillColor( 100 )
     normalBut.difficulty = 2
     normalBut:addEventListener( "touch", changeDifficult )
     myGroup:insert( normalBut )
 
-    local hardBut = display.newText( "Dificil", 680, textDif.y+65, native.systemFont, 25 )
+    local hardBut = display.newText( "Dificil", 860, textDif.y+80, native.systemFont, 30 )
     hardBut:setFillColor( 100 )
     hardBut.difficulty = 3
     hardBut:addEventListener( "touch", changeDifficult )
     myGroup:insert( hardBut )
 
-    local textSubt = display.newText( "Subtítulos", 100, 260, native.systemFont, 32 )
+    if (_G.DifficultLevel == 1) then
+        selDif.x = easyBut.x
+    elseif (_G.DifficultLevel == 2) then
+        selDif.x = normalBut.x
+    elseif (_G.DifficultLevel == 3) then
+        selDif.x = hardBut.x
+    end
+
+    local textSubt = display.newText( "Subtítulos", 100, selDif.y + selDif.contentWidth/2 + 30 , native.systemFont, 38 )
     textSubt:setFillColor( 0 )
     myGroup:insert( textSubt )
 
-    local rectSub = display.newRoundedRect( 120, textSubt.y+50, 700, 60, 25 )
+    local rectSub = display.newRoundedRect( 120, textSubt.y+50, 750, 100, 25 )
     rectSub:setFillColor( colorRect.R, colorRect.G, colorRect.B)
     myGroup:insert( rectSub )
 
-    selSubt = display.newRoundedRect( 680, textSubt.y+60, 65, 38, 7 )
+    selSubt = display.newRoundedRect( 680, textSubt.y+75, 100, 50, 10 )
     selSubt:setFillColor( colorSelec.R, colorSelec.G, colorSelec.B )
     myGroup:insert( selSubt )
-    if ( _G.Subtitle ) then
-    	selSubt.x = 323
-    else
-    	selSubt.x = 605
-    end
 
-    local yesSub = display.newText( "Si", 310, textSubt.y+65, native.systemFont, 25 )
+    local yesSub = display.newText( "Si", 280, textSubt.y+80, native.systemFont, 30 )
     yesSub:setFillColor( 100 )
     yesSub.subtitle = true
     yesSub:addEventListener( "touch", changeStateSubtitles )
     myGroup:insert( yesSub )
 
-    local noSub = display.newText( "No", 590, textSubt.y+65, native.systemFont, 25 )
+    local noSub = display.newText( "No", 680, textSubt.y+80, native.systemFont, 30 )
     noSub:setFillColor( 100 )
     noSub.subtitle = false
     noSub:addEventListener( "touch", changeStateSubtitles )
     myGroup:insert( noSub )
 
-    local textAuto = display.newText( "Avance Automático", 100, 470, native.systemFont, 32 )
+    if ( _G.Subtitle ) then
+        selSubt.x = yesSub.x
+    else
+        selSubt.x = noSub.x
+    end
+
+    local textAuto = display.newText( "Avance Automático", 100, selSubt.y + selSubt.contentWidth/2 + 80, native.systemFont, 38 )
     textAuto:setFillColor( 0 )
     myGroup:insert( textAuto )
 
-    local rectAuto = display.newRoundedRect( 120, textAuto.y+50, 700, 60, 25 )
+    local rectAuto = display.newRoundedRect( 120, textAuto.y+50, 750, 100, 25 )
     rectAuto:setFillColor( colorRect.R, colorRect.G, colorRect.B)
     myGroup:insert( rectAuto )
 
-    selAuto = display.newRoundedRect( 290, textAuto.y+60, 65, 38, 7 )
+    selAuto = display.newRoundedRect( 290, textAuto.y+75, 100, 50, 10 )
     selAuto:setFillColor(  colorSelec.R, colorSelec.G, colorSelec.B  )
     myGroup:insert( selAuto )
-    if ( _G.AutoNextPage ) then
-    	selAuto.x = 323
-    else
-    	selAuto.x = 605
-    end
 
-    local yesAuto = display.newText( "Si", 310, textAuto.y+65, native.systemFont, 25 )
+    local yesAuto = display.newText( "Si", 280, textAuto.y+80, native.systemFont, 30 )
     yesAuto:setFillColor( 100 )
     yesAuto.auto = true
     yesAuto:addEventListener( "touch", changeAdvance )
     myGroup:insert( yesAuto )
 
-    local noAuto = display.newText( "No", 590, textAuto.y+65, native.systemFont, 25 )
+    local noAuto = display.newText( "No", 590, textAuto.y+80, native.systemFont, 30 )
     noAuto:setFillColor( 100 )
     noAuto.auto = false
     noAuto:addEventListener( "touch", changeAdvance )
     myGroup:insert( noAuto )
 
-    local textLetter = display.newText( "Visualizar sílabas", 100, 680, native.systemFont, 32 )
+    if ( _G.AutoNextPage ) then
+        selAuto.x = yesAuto.x
+    else
+        selAuto.x = noAuto.x
+    end
+
+    hiddenPanelAuto = display.newRoundedRect( 120, textAuto.y+50, 750, 100, 25 )
+    --display.newRoundedRect( textAuto.x - textAuto.contentWidth/2 - 15 , textAuto.y - textAuto.contentHeight/2 - 15 , rectAuto.contentWidth+55, rectAuto.contentHeight+textAuto.contentHeight+75, 10 )
+    hiddenPanelAuto:setFillColor( 190 )
+    hiddenPanelAuto:addEventListener( "touch", doNothing )
+    myGroup:insert( hiddenPanelAuto )
+    if (not _G.Subtitle) then
+        hiddenPanelAuto.alpha = 0
+    else
+        hiddenPanelAuto.alpha = 0.6
+    end
+
+    local textLetter = display.newText( "Visualizar sílabas", 100, selAuto.y + selAuto.contentWidth/2 + 80, native.systemFont, 38 )
     textLetter:setFillColor( 0 )
     myGroup:insert( textLetter )
 
-    local rectLetter = display.newRoundedRect( 120, textLetter.y+50, 700, 60, 25 )
+    local rectLetter = display.newRoundedRect( 120, textLetter.y+50, 750, 100, 25 )
     rectLetter:setFillColor( colorRect.R, colorRect.G, colorRect.B)
     myGroup:insert( rectLetter )
 
-    selLetter = display.newRoundedRect( 290, textLetter.y+60, 65, 38, 7 )
+    selLetter = display.newRoundedRect( 290, textLetter.y+75, 100, 50, 10 )
     selLetter:setFillColor(  colorSelec.R, colorSelec.G, colorSelec.B  )
     myGroup:insert( selLetter )
-    if ( _G.LetterInSyllable ) then
-        selLetter.x = 323
-    else
-        selLetter.x = 605
-    end
 
-    local yesLetter = display.newText( "Si", 310, textLetter.y+65, native.systemFont, 25 )
+    local yesLetter = display.newText( "Si", 280, textLetter.y+80, native.systemFont, 30 )
     yesLetter:setFillColor( 100 )
     yesLetter.auto = true
     yesLetter:addEventListener( "touch", changeLetters )
     myGroup:insert( yesLetter )
 
-    local noLetter = display.newText( "No", 590, textLetter.y+65, native.systemFont, 25 )
+    local noLetter = display.newText( "No", 590, textLetter.y+80, native.systemFont, 30 )
     noLetter:setFillColor( 100 )
     noLetter.auto = false
     noLetter:addEventListener( "touch", changeLetters )
     myGroup:insert( noLetter )
 
+    if ( _G.LetterInSyllable ) then
+        selLetter.x = yesLetter.x
+    else
+        selLetter.x = yesLetter.x
+    end
+
     local btnConfim = widget.newButton{
-        width = 140,
-        height = 50,
+        width = 220,
+        height = 80,
         defaultFile = imgDir.."button.png",
         --overFile = imgDir.. "button.png",
         label = "Confimar",
@@ -317,13 +338,13 @@ function createPanelOptions( )
         onEvent = confirmOptions
     }
     btnConfim.x = display.contentCenterX-250
-    btnConfim.y = rectLetter.y + 140
-    btnConfim:setFillColor( colorRect.R, colorRect.G, colorRect.B )
+    btnConfim.y = rectLetter.y + 190
+    --btnConfim:setFillColor( colorRect.R, colorRect.G, colorRect.B )
     myGroup:insert( btnConfim )
 
     local btnCancel = widget.newButton{
-        width = 140,
-        height = 50,
+        width = 220,
+        height = 80,
         defaultFile = imgDir.."button.png",
         --overFile = imgDir.. "button.png",
         label = "Cancelar",
@@ -332,10 +353,10 @@ function createPanelOptions( )
         onEvent = cancelOptions
     }
     btnCancel.x = display.contentCenterX+250
-    btnCancel.y = rectLetter.y + 140
-    btnCancel:setFillColor( colorRect.R, colorRect.G, colorRect.B )
+    btnCancel.y = btnConfim.y
+    --btnCancel:setFillColor( colorRect.R, colorRect.G, colorRect.B )
     myGroup:insert( btnCancel )
 
     scrollView:insert( myGroup )
-    scrollView:setScrollHeight( 940 )
+    scrollView:setScrollHeight( 1200 )
 end

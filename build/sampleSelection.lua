@@ -290,7 +290,11 @@
 
        end --closes function linearInf
 
- 
+      function disposeAudioGenius( event )
+        -- body
+        print( "Liberando Sonido Refuerzo positivo" )
+        audio.dispose( event.handle ) 
+      end
        -- Actions (functions) 
        function act_pause(event)
          timerApplause = false 
@@ -316,9 +320,9 @@
          explHappy.alpha = 0
          if (audio.isChannelPlaying(ch)) then 
            audio.stop( ch ) 
+           audio.dispose( handleAplausos )
+           handleAplausos = nil
          end
-         audio.dispose( handleAplausos )
-         handleAplausos = nil
             
        end 
 
@@ -363,7 +367,7 @@
             timerStash.timer_249 = timer.performWithDelay( 2000, cancel_timer_Applause, 1 )
             timerApplause = true
             handleAplausos = audio.loadSound( audioDir.."geniusIM5.mp3" ) 
-            audio.play( handleAplausos, {channel=ch} )  
+            audio.play( handleAplausos, {channel=ch, onComplete = disposeAudioGenius } )  
        end 
 
 
@@ -404,7 +408,7 @@
                 display.getCurrentStage():setFocus( nil )
                 object.isFocus = false
                 deleteMyDialog( myDialog )
-                cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+                cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions()
                 director:changeScene( "page_15", "fade" ) 
             end
            end
@@ -458,6 +462,7 @@
           if isTimerNegacion then
               cancel_timer_Negacion(  )
           end
+          --_G.Coin = _G.Coin - _G.TotalAddCoinEx 
           --transitionStash.newTransition_577 = transition.to( TextoFinalIncor, {alpha=TextoFinalIncor.oldAlpha, time=1000, delay=0}) 
           myDialog = createMyDialog( "Ejercicio no superado", "¿ Deseas repetir el ejercicio ?", nil, "Si", listenerC, "No", listenerD)
         end
@@ -608,8 +613,9 @@
         end
       end
 
-      local function onCompleteSoundExp( event )
+      function onCompleteSoundExp( event )
           -- body
+        print( "Liberando Sonido Explicativo" )
         audio.dispose( handle )
         handle = nil
         nextSoundExp()
@@ -618,6 +624,9 @@
       local function playSoundExp( name )
         -- body
         handle = audio.loadSound( audioDir..name..".mp3" )
+        if ( audio.isChannelActive( ch ) ) then
+          print( "Canal Activo: "..ch )
+        end
         audio.play( handle, {channel = ch, onComplete = onCompleteSoundExp} )
       end
 

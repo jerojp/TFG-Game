@@ -6,9 +6,28 @@ kwksamin:pause()
 --timerStash.timer_PRUEBA = timer.performWithDelay( 5000, act_pr, 1 )
 --_G.Subtitle = false
 --_G.AutoNextPage = true
+local groupMachine = display.newGroup( )
+local machine = display.newImageRect( imgDir.. "machine.png", 330, 175 ); 
+machine.x = 1043 ; machine.y = 278;
+groupMachine:insert(machine)
+
+-- ruedas positioning 
+local ruedasL = display.newImageRect( imgDir.. "rueda.png", 103, 91 ); 
+ruedasL.x = 1011; ruedasL.y = 354;
+groupMachine:insert(ruedasL);
+
+local ruedasR = display.newImageRect( imgDir.. "rueda.png", 103, 91 ); 
+ruedasR.x = 1180; ruedasR.y = 354;
+groupMachine:insert(ruedasR);
+
+groupMachine.anchorChildren =true
+groupMachine.x = display.contentWidth
+menuGroup:insert( groupMachine )
 
 _G.Level = 1
 _G.Phase = 2
+local ch = 1
+local audioHandle
 
 local function inicDialog( )
 	-- body
@@ -30,28 +49,42 @@ local function inicDialog( )
 	playScene( "page_15" )
 end
 
+local function removeSound()
+	-- body
+	if ( audio.isChannelPlaying( ch ) ) then
+      audio.stop( ch )
+    end
+    audio.dispose( audioHandle )
+    audioHandle = nil
+end
+
 local function onCompleteTransition( event )
         -- body
-        --[[if ( audio.isChannelPlaying( 2 ) ) then
-          audio.stop( 2 )
-        end
-        audio.dispose( audioHandle )
-        audioHandle = nil
-        ]]--
+        removeSound()
+        
         inicDialog()
 end
 
 local function inicTransArbol( event )
 	-- body
-	--audioHandle = audio.loadSound( audioDir.."samba.mp3" )
-	--audio.play( audioHandle, {channel = 2} )
+	removeSound()
+	audioHandle = audio.loadSound( audioDir.."tree.mp3" )
+	audio.play( audioHandle, {channel = ch} )
 
-	transitionStash.tree = transition.to( ArbolCaido, {  time=2000, x= 713 , y=340, rotation = -90, onComplete=onCompleteTransition} )
+	transition.cancel( transitionStash.rdr )
+	transition.cancel( transitionStash.rdl )
+	transitionStash.tree = transition.to( ArbolCaido, {  time=6200, x= 713 , y=340, rotation = -80, transition=easing.inQuart, onComplete=onCompleteTransition} )
 end
 
 local function inicTransition( event )
 	-- body
-	transitionStash.machine = transition.to( machine, {  time=4000, x= 950 , y= machine.y, onComplete=inicTransArbol} )	
+	audio.setVolume( 0.3, { channel=ch } )
+	audioHandle = audio.loadSound( audioDir.."excavadora.mp3" )
+	audio.play( audioHandle, {channel = ch, fadein=5000} )
+
+	transitionStash.rdr = transition.to( ruedasR, {  time=2000, rotation = -360, iterations = 0} )
+	transitionStash.rdl = transition.to( ruedasL, {  time=2000, rotation = -360, iterations = 0} )
+	transitionStash.machine = transition.to( groupMachine, {  time=5000, x= -50 , y= groupMachine.y, onComplete=inicTransArbol} )	
 end
 
-timerStash.timer_arbol = timer.performWithDelay( 500, inicTransition, 1 )
+timerStash.timer_arbol = timer.performWithDelay( 200, inicTransition, 1 )

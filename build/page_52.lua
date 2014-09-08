@@ -47,7 +47,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- FodoChina positioning 
        FodoChina = display.newImageRect( imgDir.. "p52_fodochina.png", 1280, 808 ); 
@@ -126,7 +127,7 @@ _G.Level = 4
 _G.Phase = 2
 
 local aud = {"exp_ja19.mp3"}
-local sub = {"Voy a tomar una foto antes de irnos a los osos panda."}
+local sub = {"Estoy muy agusto aquí, pero es hora de irse. Voy a tomar una foto antes de irnos a los osos panda."}
 
 addCharacter(kwkexp, aud, sub)
 

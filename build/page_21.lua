@@ -44,11 +44,13 @@ function new()
        local explorer  
        local nurse  
        local table  
+       local cajaSecreta  
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- background positioning 
        background = display.newImageRect( imgDir.. "p21_background.png", 1280, 798 ); 
@@ -140,6 +142,13 @@ function new()
        table.oriX = table.x; table.oriY = table.y 
        table.name = "table" 
        menuGroup:insert(table); menuGroup.table = table 
+
+       -- cajaSecreta positioning 
+       cajaSecreta = display.newImageRect( imgDir.. "p21_cajasecreta.png", 116, 98 ); 
+       cajaSecreta.x = 761; cajaSecreta.y = 609; cajaSecreta.alpha = 1; cajaSecreta.oldAlpha = 1 
+       cajaSecreta.oriX = cajaSecreta.x; cajaSecreta.oriY = cajaSecreta.y 
+       cajaSecreta.name = "cajaSecreta" 
+       menuGroup:insert(cajaSecreta); menuGroup.cajaSecreta = cajaSecreta 
  
        -- Group(s) creation 
 

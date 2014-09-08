@@ -49,7 +49,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- kwkentradaMuseo positioning 
        kwkentradaMuseo = display.newImageRect( imgDir.. "kwkentradamuseo.png", 1280, 800 ); 
@@ -96,14 +97,14 @@ function new()
  
        -- Actions (functions) 
        function act_079(event) 
-           _G.Level = 2
+           Level = 2
           saveKwikVars({"Level",2}) 
-           _G.Phase = 1
+           Phase = 1
           saveKwikVars({"Phase",1}) 
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_13", "fade" ) 
             end 
-            timerStash.newTimer_655 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_932 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  

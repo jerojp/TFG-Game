@@ -45,7 +45,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p49_capa_1.png", 0, 0 ); 
@@ -69,15 +70,23 @@ function new()
       local line
       local radiusPoint = 24
       local imgBack
+      local textImg
 
       if (_G.Phase == 1) then
-            imgBack = display.newImageRect( imgDir.."osopeluche.png", 500, 490 )
-            imgBack.x = 250; imgBack.y = 300
+            imgBack = display.newImageRect( imgDir.."osopeluche.png", 300, 290 )
+            imgBack.x = 200; imgBack.y = 300
+            imgBack.name = "Osito"
       else
-            imgBack = display.newImageRect( imgDir.."oveja.png", 233, 133 )
-            imgBack.x = 300; imgBack.y = 350
+            imgBack = display.newImageRect( imgDir.."oveja.png", 263, 163 )
+            imgBack.x = 200; imgBack.y = 350
+            imgBack.name = "Oveja"
       end
       imgBack.alpha = 0.75
+      textImg = display.newText( imgBack.name, imgBack.x, imgBack.y, native.systemFontBold, 55)
+      textImg.x = imgBack.x
+      textImg.y = imgBack.y + imgBack.contentHeight/2 + 50
+      textImg:setFillColor( 80 )
+      textImg.alpha = imgBack.alpha
   
       for i=0,n_div do
             an = (2*math.pi/n_div)*i;
@@ -95,6 +104,9 @@ function new()
             an = (2*math.pi/n_div)*i - math.pi/2;
             line = display.newCircle( radius*math.cos(an), radius*math.sin(an), radiusPoint )
             line:setFillColor( color-20, color-20, color-20 )
+            if ( math.fmod( i, 2 ) ~= 0 ) then
+                line.alpha = 0.1  
+            end
             gp_point:insert(line)
       end
 

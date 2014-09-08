@@ -26,6 +26,6 @@ addCharacter(gpGenius.genius, aud, sub, gpGenius)
 local sec = {2, 1}
 setSecuence( sec )
 
-local parameters = {nameToy="Oveja", pathToy="oveja.png", costToy=_G.PriceToys.sheep, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_51", indexToy = 7}
+local parameters = {nameToy="Oveja", pathToy="oveja.png", widthToy = 145, heightToy = 88, nextPage = "page_51"}
 
 playScene( "viewNewToy", parameters )

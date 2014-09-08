@@ -239,16 +239,16 @@ local num_cloud = 3
 local afterX = -100
 
 for i=1,num_cloud do
-cloud= display.newImageRect( imgDir.. "cloud.png", 192, 63 ); 
-cloud.x = math.random(0,1280)
-if (cloud.x >= afterX-cloud.contentWidth/2 and cloud.x <= afterX+cloud.contentWidth/2) then
-    cloud.x = cloud.x + cloud.contentWidth + 100
-end
-afterX = cloud.x
-cloud.y = math.random(cloud.contentHeight ,230)
-cloud.alpha = math.random(60,80) / 100 
-cloud.oldAlpha = 1
-gp_cloud:insert(cloud) 
+    cloud= display.newImageRect( imgDir.. "cloud.png", 192, 63 ); 
+    cloud.x = math.random(0,1280)
+    if (cloud.x >= afterX-cloud.contentWidth/2 and cloud.x <= afterX+cloud.contentWidth/2) then
+        cloud.x = cloud.x + cloud.contentWidth + 100
+    end
+    afterX = cloud.x
+    cloud.y = math.random(cloud.contentHeight ,230)
+    cloud.alpha = math.random(60,80) / 100 
+    cloud.oldAlpha = 1
+    gp_cloud:insert(cloud) 
 end 
 menuGroup:insert(gp_cloud) 
 
@@ -258,22 +258,21 @@ local cont = 0
 
 onCompleteTransitionBackWard = function( obj )
 -- body
-    print( "Hacia delante otra vez" )
-    transitionStash["cloud1"] = transition.to( obj, {  time=obj.timeSpeed, x = obj.x+150, onComplete=onCompleteTransitionForward}  )
+    transitionStash[obj.name] = transition.to( obj, {  time=obj.timeSpeed, x = obj.x+150, onComplete=onCompleteTransitionForward}  )
     cont = cont + 1
 end
 
 
 onCompleteTransitionForward = function( obj )
 -- body
-    obj.timeSpeed = math.random(3000,12000)
-    transitionStash["cloud2"] = transition.to( obj, {  time=obj.timeSpeed, x = obj.x-150, onComplete=onCompleteTransitionBackWard}  )
+    transitionStash[obj.name] = transition.to( obj, {  time=obj.timeSpeed, x = obj.x-150, onComplete=onCompleteTransitionBackWard}  )
     cont = cont + 1
 end
 
 for i=1,gp_cloud.numChildren do
-    gp_cloud[i].timeSpeed = math.random(3000,12000)
-    transitionStash["cloud1"] = transition.to( gp_cloud[i], {  time=gp_cloud[i].timeSpeed, x = gp_cloud[i].x+100, onComplete=onCompleteTransitionForward}  )
+    gp_cloud[i].timeSpeed = math.random(3000,18000)
+    gp_cloud[i].name = "cloud"..i
+    transitionStash[gp_cloud[i].name] = transition.to( gp_cloud[i], {  time=gp_cloud[i].timeSpeed, x = gp_cloud[i].x+100, onComplete=onCompleteTransitionForward}  )
 end
 
 if (_G.EnterGame) then
@@ -303,7 +302,7 @@ if (_G.EnterGame) then
     --groupPlane:translate( -display.contentCenterX, 0 )
     --[[audioHandle = audio.loadSound( audioDir.."airplane.mp3")
     audio.play( audioHandle , {channel = ch, duration = 3000 , onComplete = onCompleteSoundPlane})--]]
-    transition.to( groupPlane, {time = 3000, x = -display.contentCenterX - groupPlane.contentWidth/2 - 100, transition=easing.outQuad, onComplete = onCompleteTran1} )
+    transitionStash.groupPlane = transition.to( groupPlane, {time = 3000, delay = 2000, x = -display.contentCenterX - groupPlane.contentWidth/2 - 100, transition=easing.outQuad, onComplete = onCompleteTran1} )
 else
     createButtons( )
 end

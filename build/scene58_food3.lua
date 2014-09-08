@@ -20,6 +20,6 @@ local sec = {1, 2, 1}
 
 setSecuence( sec )
 
-local parameters = {nameToy="Guitarra", pathToy="objeto352.png", costToy=_G.PriceToys.guitar, widthToy = 254*1.5 , heightToy = 131*1.5, nextPage = "page_59", indexToy = 9}
+local parameters = {nameToy="Guitarra", pathToy="objeto352.png", widthToy = 122, heightToy = 62, nextPage = "page_59"}
 
 playScene( "viewNewToy", parameters )

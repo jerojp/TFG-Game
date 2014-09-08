@@ -45,7 +45,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p38_capa_1.png", 0, 0 ); 
@@ -68,18 +69,26 @@ function new()
       local colorPoint = color - 20
       local radius = 24 
       local imgBack
+      local textImg
 
        -- (TOP) External code will render here 
       if (_G.Phase == 1) then
             imgBack = display.newImageRect( imgDir.."objeto331.png", 528, 497 )
             imgBack.x = 250; imgBack.y = 300
+            imgBack.name = "Iglú"
             imgBack:scale( 0.8, 0.8 )
       else
             imgBack = display.newImageRect( imgDir.."indio.png", 187, 184 )
             imgBack.x = 300; imgBack.y = 350
+            imgBack.name = "Indio"
             imgBack:scale( 1.2, 1.2 )
       end
       imgBack.alpha = 0.75
+      textImg = display.newText( imgBack.name, imgBack.x, imgBack.y, native.systemFontBold, 55)
+      textImg.x = imgBack.x
+      textImg.y = imgBack.y + imgBack.contentHeight/2 + 50
+      textImg:setFillColor( 80 )
+      textImg.alpha = imgBack.alpha
       
       rectTop = display.newRoundedRect( display.contentCenterX-120, display.contentCenterY-275, 250, 55, 12 )
       rectTop:setFillColor( color, color, color )
@@ -110,10 +119,12 @@ function new()
 
       local pointVertMidTop = display.newCircle( display.contentCenterX+8, display.contentCenterY-175, radius )
       pointVertMidTop:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointVertMidTop.alpha = 0.1
       gp_point:insert( pointVertMidTop )
 
       local pointVertMidBelow = display.newCircle( display.contentCenterX+8, display.contentCenterY-20, radius )
       pointVertMidBelow:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointVertMidBelow.alpha = 0.1
       gp_point:insert( pointVertMidBelow )
 
       local pointBelowLeft = display.newCircle( display.contentCenterX-90, display.contentCenterY+53, radius )

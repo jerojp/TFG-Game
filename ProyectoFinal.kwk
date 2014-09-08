@@ -32,7 +32,7 @@
     <codes>
       <code id="code_487">
         <name>code_487</name>
-        <code></code>
+        <code/>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/saveStateGame.lua</extFile>
       </code>
     </codes>
@@ -103,26 +103,6 @@
           <save>false</save>
           <type>global</type>
           <content>Formula</content>
-          <where>before</where>
-        </variable>
-        <variable id="Phase">
-          <name>Phase</name>
-          <value>1</value>
-          <comment/>
-          <table>false</table>
-          <save>false</save>
-          <type>global</type>
-          <content>Number</content>
-          <where>before</where>
-        </variable>
-        <variable id="Level">
-          <name>Level</name>
-          <value>2</value>
-          <comment/>
-          <table>false</table>
-          <save>false</save>
-          <type>global</type>
-          <content>Number</content>
           <where>before</where>
         </variable>
       </variables>
@@ -2472,7 +2452,7 @@
         <frameLength>1</frameLength>
         <loop>forever</loop>
         <paused>false</paused>
-        <direction>true</direction>
+        <direction>false</direction>
         <sheetWidth>512</sheetWidth>
         <sheetHeight>512</sheetHeight>
         <mainSeq>default</mainSeq>
@@ -2493,7 +2473,7 @@
         <frameLength>1</frameLength>
         <loop>forever</loop>
         <paused>false</paused>
-        <direction>true</direction>
+        <direction>false</direction>
         <sheetWidth>512</sheetWidth>
         <sheetHeight>512</sheetHeight>
         <mainSeq>default</mainSeq>

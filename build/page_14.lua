@@ -46,7 +46,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- kwksnowyLandsca positioning 
        kwksnowyLandsca = display.newImageRect( imgDir.. "kwksnowylandsca.png", 1280, 799 ); 

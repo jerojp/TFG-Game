@@ -10,18 +10,26 @@
       local kwkbuttonconfir 
       local radius = 24 
       local imgBack
+      local textImg
 
        -- (TOP) External code will render here 
       if (_G.Phase == 1) then
             imgBack = display.newImageRect( imgDir.."enano.png", 474, 1177 )
             imgBack.x = 250; imgBack.y = 300
+            imgBack.name = "Enano"
             imgBack:scale( 0.4, 0.4 )
       else
             imgBack = display.newImageRect( imgDir.."objeto241.png", 604, 594 )
             imgBack.x = 200; imgBack.y = 350
+            imgBack.name = "Elefante"
             imgBack:scale( 0.5, 0.5 )
       end
       imgBack.alpha = 0.75
+      textImg = display.newText( imgBack.name, imgBack.x, imgBack.y, native.systemFontBold, 55)
+      textImg.x = imgBack.x
+      textImg.y = imgBack.y + imgBack.contentHeight/2 + 40
+      textImg:setFillColor( 80 )
+      textImg.alpha = imgBack.alpha
       
       rectTop = display.newRoundedRect( display.contentCenterX-100, 127, 280, 55, 12 )
       rectTop:setFillColor( color, color, color )

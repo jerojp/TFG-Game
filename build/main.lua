@@ -2,7 +2,7 @@
 -- Copyright (C) 2012 kwiksher.com. All Rights Reserved. 
 -- uses Director class, by Ricardo Rauber 
 -- uses DMC classes, by David McCuskey 
--- Exported on Tue Sep 02 2014 20:38:02 GMT+0200 
+-- Exported on Mon Sep 08 2014 21:50:32 GMT+0200 
 -- uses gTween class, by Josh Tynjala (modified by Kwiksher) 
 
 _G.kwk_readMe = 0 
@@ -190,12 +190,12 @@ function resumeMyTimers(  )
     end
 end
 
-function unlockToy( level, phase )
+--[[function unlockToy( level, phase )
     -- body
     local index = (level*2 - 1)+(phase-1)
     _G.Toys[index].block = true
 end
-
+]]--
 function savedTable(filename )
 	-- body
 	local t = createTableSetting()
@@ -258,6 +258,7 @@ function loadSettingGame( )
     _G.AutoNextPage = gameSettingsVars.autoNextPage
     _G.UpLevelSample = gameSettingsVars.upLevelSample
     _G.Toys = gameSettingsVars.toys
+    _G.UnlockToys = gameSettingsVars.unlockToys
     _G.PriceToys = gameSettingsVars.priceToys
     _G.LastPageLevel = gameSettingsVars.lastPageLevel
     _G.StoreToysUnlocked = gameSettingsVars.storeToysUnlocked
@@ -301,10 +302,11 @@ function loadSettingGame( )
         _G.UpLevelSample = {}
         _G.Toys = {}
         for i=1,10 do
-            _G.Toys[i] = {block = true, sold = false}    
+            _G.Toys[i] = {sold = false, block = true}    
         end
-        _G.PriceToys = {mask = 289, bee = 324, elephant = 361, bicycle = 400, indian = 441, dolphin = 484, sheep = 529, donkey = 576, guitar = 625, unicorn = 676}
-        _G.LastPageLevel = {25, 12, 35, 44, 54}
+        _G.UnlockToys = {} -- _G.UnlockToys[n] = { nameToy = "", path = "", widthToy, heightToy}
+        _G.PriceToys = {289, 324, 361, 400, 441, 484, 529, 576, 625, 0}
+        _G.LastPageLevel = {{page = 25, phase = 1}, {page = 12, phase = 1}, {page = 35, phase = 1}, {page = 44, phase = 1}, {page = 54, phase = 1}}
         _G.StoreToysUnlocked = false
         _G.goBackForExercise = false
         _G.FirstVisitMap = true
@@ -344,6 +346,7 @@ createTableSetting = function ()
   gameSettingsVars.upLevelSample = _G.UpLevelSample
   gameSettingsVars.lastPage = _G.LastPage
   gameSettingsVars.toys = _G.Toys
+  gameSettingsVars.unlockToys = _G.UnlockToys
   gameSettingsVars.priceToys = _G.PriceToys
   gameSettingsVars.lastPageLevel = _G.LastPageLevel
   gameSettingsVars.storeToysUnlocked = _G.StoreToysUnlocked
@@ -376,7 +379,7 @@ continueGame = function ( event )
                 createPanelAutoAdvance( )
               elseif ( not _G.Subtitle and _G.AutoNextPage and isCreatedPanelAutoAdvance( ) ) then
                 print( "Se elimina panel de AVANCE AUTO PAGINA " )
-                removePanelAutoAdvance( )
+                removePanelAutoAdvance( true )
               end
           end
           resumeAllSprites()
@@ -420,13 +423,13 @@ backMainMenu = function( event )
     elseif object.isFocus then
         if event.phase == "ended" or event.phase == "cancelled" then
         	--guardad y cambiar escena
-            finalizeScene( true )
-			savedTable("saveGame.json")
-			removePauseMenu()
-			display.getCurrentStage():setFocus( nil )
-			object.isFocus = false
-			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
-			director:changeScene( "page_1", "fade" ) 
+          finalizeScene( true )
+    			savedTable("saveGame.json")
+    			removePauseMenu()
+    			display.getCurrentStage():setFocus( nil )
+    			object.isFocus = false
+    			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+    			director:changeScene( "page_1", "fade" ) 
       end
     end
 	return true
@@ -469,15 +472,17 @@ local function backMainMenuExer( event )
     	elseif object.isFocus then
         	if event.phase == "ended" or event.phase == "cancelled" then
         		--guardad y cambiar escena
-                _G.Coin = _G.Coin - _G.TotalAddCoinEx
-                print( "-------------------Nuevo COIN : ".._G.Coin )
-				savedTable("saveGame.json")
-				deleteMyDialog( myDialog )
-				removePauseMenuExer()
-				display.getCurrentStage():setFocus( nil )
-				object.isFocus = false
-				cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
-				director:changeScene( "page_1", "fade" ) 
+              _G.Coin = _G.Coin - _G.TotalAddCoinEx
+              print( "----Nuevo COIN : ".._G.Coin )
+              audio.stop( 1 )
+              audio.stop( 2 )
+      				savedTable("saveGame.json")
+      				deleteMyDialog( myDialog )
+      				removePauseMenuExer()
+      				display.getCurrentStage():setFocus( nil )
+      				object.isFocus = false
+      				cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+      				director:changeScene( "page_1", "fade" ) 
         	end
     	end
 		return true 	
@@ -751,6 +756,7 @@ end
 loadSettingGame( ) 
 _G.EnterGame = true
 _G.MyCurrentSubtitle = nil
+_G.FunctionDelHiddenPanel = nil
 --Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento 
 
    director:changeScene("page_"..goPage)

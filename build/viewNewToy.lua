@@ -11,8 +11,6 @@ function new(parameters)
     local pathToy = parameters.pathToy
     local widthToy = parameters.widthToy
     local heightToy = parameters.heightToy
-    local costToy = parameters.costToy
-    local indexToy = parameters.indexToy 
 
     local drawScreen = function() 
 
@@ -53,26 +51,27 @@ function new(parameters)
             local groupStars = display.newGroup( )
             local audioHandle
         
-                local background = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
-                background:setFillColor( 85,159,191 )
-                menuGroup:insert(background)
+            local background = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
+            background:setFillColor( 85,159,191 )
+            menuGroup:insert(background)
 
             local backPanel = display.newRoundedRect( 0, 0, 500, 600, 40 )
-                backPanel.x = display.contentCenterX; backPanel.y = display.contentCenterY - 50
-                backPanel:setFillColor( 0 )
-                menuGroup:insert( backPanel )
+            backPanel.x = display.contentCenterX; backPanel.y = display.contentCenterY - 50
+            backPanel:setFillColor( 0 )
+            menuGroup:insert( backPanel )
 
-                local frontPanel = display.newRoundedRect( 0, 0, 480, 580, 40 )
-                frontPanel.x = display.contentCenterX; frontPanel.y = display.contentCenterY - 50
-                frontPanel:setFillColor( 255 )
-                menuGroup:insert(frontPanel)
+            local frontPanel = display.newRoundedRect( 0, 0, 480, 580, 40 )
+            frontPanel.x = display.contentCenterX; frontPanel.y = display.contentCenterY - 50
+            frontPanel:setFillColor( 255 )
+            menuGroup:insert(frontPanel)
 
-                local toy = display.newImageRect( imgDir..pathToy, widthToy, heightToy ); 
+            local toy = display.newImageRect( imgDir..pathToy, 233*1.5, 168*1.5 ); 
             toy.x = display.contentCenterX; toy.y = frontPanel.y - frontPanel.contentHeight/2 + toy.contentHeight/2 + 80 ; 
             menuGroup:insert(toy);
-            _G.Toys[indexToy].block = false
+            _G.UnlockToys[#_G.UnlockToys+1] = { nameToy = nameToy, path = pathToy, widthToy = widthToy, heightToy = heightToy}
+            _G.Toys[#_G.UnlockToys].block = false
 
-            local textCost = display.newText( costToy, 0, 0, native.systemFontBold, 45 )
+            local textCost = display.newText( _G.PriceToys[#_G.UnlockToys], 0, 0, native.systemFontBold, 45 )
             textCost:setTextColor (229, 185, 89)
             groupCost:insert( textCost )
 
@@ -106,37 +105,37 @@ function new(parameters)
             end
 
             local btnConfirm = widget.newButton{
-                   width = 180,
-                   height = 60,
-                   defaultFile = imgDir.. "button.png",
-                    --overFile = imgDir.. "button.png",
-                   label = "Continuar",
-                   labelColor = { default={ 255, 255, 255 }, over={ 0, 0, 210 } },
-                   fontSize = 25,
-                   onEvent = goNextPage
-                }
+               width = 180,
+               height = 60,
+               defaultFile = imgDir.. "button.png",
+                --overFile = imgDir.. "button.png",
+               label = "Continuar",
+               labelColor = { default={ 255, 255, 255 }, over={ 0, 0, 210 } },
+               fontSize = 25,
+               onEvent = goNextPage
+            }
 
-                btnConfirm.x = display.contentCenterX
-                btnConfirm.y = backPanel.y + backPanel.contentHeight/2 + 80
-                btnConfirm:setFillColor(228,89,145)
-                btnConfirm.alpha = 0
+            btnConfirm.x = display.contentCenterX
+            btnConfirm.y = backPanel.y + backPanel.contentHeight/2 + 80
+            btnConfirm:setFillColor(228,89,145)
+            btnConfirm.alpha = 0
 
-                local function onCompleteTransition( event )
-                    -- body
-                    if ( audio.isChannelActive( 1 ) ) then
-                        audio.stop()
-                    end
-                    audio.dispose( audioHandle )
-              audioHandle = nil
-                    groupStars.alpha = 0
-                    btnConfirm.alpha = 1
+            local function onCompleteTransition( event )
+                -- body
+                if ( audio.isChannelActive( 1 ) ) then
+                    audio.stop()
                 end
+                audio.dispose( audioHandle )
+                audioHandle = nil
+                groupStars.alpha = 0
+                btnConfirm.alpha = 1
+            end
 
-                local an
-                local n_div = 15
-                local radius = 150
-                local star
-                for i=0,n_div do
+            local an
+            local n_div = 15
+            local radius = 150
+            local star
+            for i=0,n_div do
                 an = (2*math.pi/n_div)*i;
                 star = display.newImageRect( imgDir.."star.png", 55, 55 ); 
                 star.x = radius*math.cos(an); star.y = radius*math.sin(an); 
@@ -162,7 +161,7 @@ function new(parameters)
 
         
        -- Timers 
-       if (_G.Toys[indexToy].block) then
+       if ((#_G.UnlockToys+1) < 10 and _G.Toys[#_G.UnlockToys+1].block) then
             createViewToy()
        else
             timerStash.newTimer_vieToy1 = timer.performWithDelay(0,finalizeViewToy ) 

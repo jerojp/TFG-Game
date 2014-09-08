@@ -43,11 +43,13 @@ function new()
        local fondoBrasilBosq  
        local kwkexplora  
        local kwksamin  
+       local kwkmachine  
 
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- fondoBrasilBosq positioning 
        fondoBrasilBosq = display.newImageRect( imgDir.. "p33_fondobrasilbosq.png", 1298, 800 ); 
@@ -99,6 +101,13 @@ function new()
        kwksamin.oriX = kwksamin.x; kwksamin.oriY = kwksamin.y 
        kwksamin.name = "kwksamin" 
        menuGroup:insert(kwksamin); menuGroup.kwksamin = kwksamin 
+
+       -- kwkmachine positioning 
+       kwkmachine = display.newImageRect( imgDir.. "kwkmachine.png", 330, 198 ); 
+       kwkmachine.x = 1018; kwkmachine.y = 239; kwkmachine.alpha = 1; kwkmachine.oldAlpha = 1 
+       kwkmachine.oriX = kwkmachine.x; kwkmachine.oriY = kwkmachine.y 
+       kwkmachine.name = "kwkmachine" 
+       menuGroup:insert(kwkmachine); menuGroup.kwkmachine = kwkmachine 
  
        -- Group(s) creation 
 

@@ -45,7 +45,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p57_capa_1.png", 0, 0 ); 
@@ -71,15 +72,23 @@ function new()
       local an
       local line
       local imgBack
+      local textImg
 
       if (_G.Phase == 1) then
-            imgBack = display.newImageRect( imgDir.."universo.jpg", 1280, 600 )
-            imgBack.x = 640; imgBack.y = 300
+            imgBack = display.newImageRect( imgDir.."universo.jpg", 350, 250 )
+            imgBack.x = 250; imgBack.y = 350
+            imgBack.name = "Universo"
       else
-            imgBack = display.newImageRect( imgDir.."objeto552.png", 499, 350 )
-            imgBack.x = 200; imgBack.y = 350
+            imgBack = display.newImageRect( imgDir.."objeto552.png", 400, 300 )
+            imgBack.x = 250; imgBack.y = 350
+            imgBack.name = "Unicornio"
       end
       imgBack.alpha = 0.75
+      textImg = display.newText( imgBack.name, imgBack.x, imgBack.y, native.systemFontBold, 55)
+      textImg.x = imgBack.x
+      textImg.y = imgBack.y + imgBack.contentHeight/2 + 50
+      textImg:setFillColor( 80 )
+      textImg.alpha = imgBack.alpha
       
       local rectLeft = display.newRoundedRect( display.contentCenterX - radius, display.contentCenterY-15, 55, 220, 12 )
       rectLeft:setFillColor( color, color, color )
@@ -113,25 +122,32 @@ function new()
 
       local pointMiddleLeft = display.newCircle( -radius+1, -125, radiusPoint )
       pointMiddleLeft:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointMiddleLeft.alpha = 0.1
       gp_point:insert( pointMiddleLeft )
       
       local pointMiddleRight = display.newCircle( radius+1, -125, radiusPoint )
       pointMiddleRight:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointMiddleRight.alpha = 0.1
       gp_point:insert( pointMiddleRight )
       
       local pointBelowLeft = display.newCircle( -radius+1, -65, radiusPoint )
       pointBelowLeft:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointBelowLeft.alpha = 0.1
       gp_point:insert( pointBelowLeft )
       
       local pointBelowRight = display.newCircle( radius+1, -65, radiusPoint )
       pointBelowRight:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointBelowRight.alpha = 0.1
       gp_point:insert( pointBelowRight )
 
-      n_div = 5
+      n_div = 4
       for i=0,n_div do
             an = (math.pi/n_div)*i;
             line = display.newCircle( radius*math.cos(an), radius*math.sin(an), radiusPoint )
             line:setFillColor(color-20, color-20, color-20)
+            if ( i ~= 0 and i ~= n_div/2 and i ~= n_div ) then
+                line.alpha = 0.1  
+            end
             gp_point:insert(line)
       end
       gp_point.x = display.contentCenterX + 18
@@ -148,8 +164,8 @@ function new()
       --gp_point.anchorChildren = true
       gp_totalLetter.anchorChildren = true
       
-      menuGroup:insert( imgBack )
-      addExtra( menuGroup, gp_letter, gp_point, 5 , arrow, gp_totalLetter)    
+      addExtra( menuGroup, gp_letter, gp_point, 5 , arrow, gp_totalLetter)   
+      menuGroup:insert( imgBack ) 
 
        -- do not swipe this page 
 

@@ -21,7 +21,7 @@ cam.alpha = 0
 local function onFinalizeScene( event )
 	-- body
 	local aud = {"exp_ja20.mp3"}
-	local sub = {"Estoy muy agusto aquí, pero es hora de irse. Aunque..., Ali, el jefe se va a enfadar porque no hemos encontrado ningún tesoro."}
+	local sub = {"Aunque..., Ali, el jefe se va a enfadar porque no hemos encontrado ningún tesoro.."}
 
 	addCharacter(kwkexp, aud, sub)
 
@@ -33,7 +33,7 @@ local function onFinalizeScene( event )
 	local sec = {1, 2}
 	setSecuence( sec )
 
-	local parameters = {nameToy="Burro", pathToy="objeto541.png", costToy=_G.PriceToys.donkey, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_11", indexToy = 8}
+	local parameters = {nameToy="Burro", pathToy="objeto541.png", widthToy = 131 , heightToy = 111, nextPage = "page_11"}
 
 	playScene( "viewNewToy", parameters )
 

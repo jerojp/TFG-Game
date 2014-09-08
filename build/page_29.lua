@@ -45,7 +45,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- Capa_1 positioning 
        Capa_1 = display.newImageRect( imgDir.. "p29_capa_1.png", 0, 0 ); 
@@ -69,16 +70,24 @@ function new()
       local angle = 23
       local radius = 24 
       local imgBack
+      local textImg
        -- (TOP) External code will render here 
       if (_G.Phase == 1) then
             imgBack = display.newImageRect( imgDir.."p1_plane.png", 271, 165 )
             imgBack.x = 260; imgBack.y = 200
+            imgBack.name ="Avión"
             imgBack:rotate( 15 )
       else
             imgBack = display.newImageRect( imgDir.."objeto141.png", 226, 138 )
             imgBack.x = 300; imgBack.y = 200
+            imgBack.name ="Abeja"
       end
       imgBack.alpha = 0.75
+      textImg = display.newText( imgBack.name, imgBack.x, imgBack.y, native.systemFontBold, 55)
+      textImg.x = imgBack.x
+      textImg.y = imgBack.y + imgBack.contentHeight/2 + 50
+      textImg:setFillColor( 80 )
+      textImg.alpha = imgBack.alpha
       
       rectRight = display.newRoundedRect( display.contentCenterX-90, display.contentCenterY-200, 55, 350, 12)
       rectRight:setFillColor( color, color, color )
@@ -122,18 +131,22 @@ function new()
       --Point Middle
       local pointMiddleRightTop = display.newCircle( display.contentCenterX+85, display.contentCenterY-165, radius )
       pointMiddleRightTop:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointMiddleRightTop.alpha = 0.1
       gp_point:insert( pointMiddleRightTop )
       
       local pointMiddleLeftTop= display.newCircle( display.contentCenterX-30, display.contentCenterY-165, radius )
       pointMiddleLeftTop:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointMiddleLeftTop.alpha = 0.1
       gp_point:insert( pointMiddleLeftTop )
       
       local pointMiddleRightBelow = display.newCircle( display.contentCenterX+150, display.contentCenterY-13, radius )
       pointMiddleRightBelow:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointMiddleRightBelow.alpha = 0.1
       gp_point:insert( pointMiddleRightBelow )
       
       local pointMiddleLeftBelow= display.newCircle( display.contentCenterX-95, display.contentCenterY-13, radius )
       pointMiddleLeftBelow:setFillColor( colorPoint, colorPoint, colorPoint )
+      pointMiddleLeftBelow.alpha = 0.1
       gp_point:insert( pointMiddleLeftBelow )
 
       local arrow = display.newImageRect( imgDir.."flechaRoja.png", 40, 60 )

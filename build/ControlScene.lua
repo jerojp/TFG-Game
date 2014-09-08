@@ -14,6 +14,11 @@ local moveRight = false
 local isMoveGenio = false
 local parameters
 local inEvent
+local arrow
+local completeArrowOff
+local completeArrowOn
+local arrowCreated = false
+local removeArrow
 
 local function onCompleteGenioMove( )
 	-- body
@@ -26,26 +31,28 @@ local function moveGenio( event )
 		print( "EXISTEEEEEE" )
 		--gtStash.gt_mypathGenMove:play()
 	else
-		local objGenio = allCharacter[secuence[cont]].sprite
-		local radius = 30
-    	local n_div = 100
-    	local an
-		local pos = {}
-		local time = 8
+		if (allCharacter[secuence[cont]].sprite) then
+			local objGenio = allCharacter[secuence[cont]].sprite
+			local radius = 30
+	    	local n_div = 100
+	    	local an
+			local pos = {}
+			local time = 8
 
-		allCharacter[secuence[cont]]:setAlphaGroup(1)
+			allCharacter[secuence[cont]]:setAlphaGroup(1)
 
-		for i=0,n_div do
-        	an = (2*math.pi/n_div)*i;
-        	an = an - math.pi/2
-        	posx = objGenio.x + radius*math.cos(an)
-        	posy = objGenio.y + radius*math.sin(an) + 30
-			table.insert( pos, { x = posx, y = posy} )
-    	end
-    	pos.angle = 0 
+			for i=0,n_div do
+	        	an = (2*math.pi/n_div)*i;
+	        	an = an - math.pi/2
+	        	posx = objGenio.x + radius*math.cos(an)
+	        	posy = objGenio.y + radius*math.sin(an) + 30
+				table.insert( pos, { x = posx, y = posy} )
+	    	end
+	    	pos.angle = 0 
 
-    	isMoveGenio = true
-    	gtStash.gt_mypathGenMove = btween.new( objGenio, time, pos, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0, onComplete=onCompleteGenioMove}, {  x=objGenio.x, y=objGenio.y,  alpha=1, xScale=1, yScale=1, newAngle=0}) 
+	    	isMoveGenio = true
+	    	gtStash.gt_mypathGenMove = btween.new( objGenio, time, pos, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = false,  delay=0, onComplete=onCompleteGenioMove}, {  x=objGenio.x, y=objGenio.y,  alpha=1, xScale=1, yScale=1, newAngle=0}) 	
+		end
 	end
 end
 
@@ -99,6 +106,7 @@ end
 function createPanelAutoAdvance( )
 	-- body
 	if (not panelNext) then
+		
 		print( "Creando panel auto avance...." )
 		panelNext = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
 		panelNext.alpha = 0.01
@@ -115,11 +123,50 @@ function isCreatedPanelAutoAdvance( )
 	end
 end
 
-function removePanelAutoAdvance( )
+function removePanelAutoAdvance( sceneNotComplete )
 	-- body
 	panelNext:removeSelf( )
 	panelNext = nil
 	moveRight = false
+	removeArrow( )
+	if (not audio.isChannelActive( 1 ) and sceneNotComplete ) then
+		checkEvents("autoAdvance")
+	end
+end
+
+completeArrowOn = function ( obj )
+	transitionStash.arrow = transition.to( obj, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeArrowOff} )
+end
+
+completeArrowOff = function ( obj )
+	transitionStash.arrow = transition.to( obj, {time = 1000, xScale = 1.1, yScale =1.1, alpha = 1.0, onComplete = completeArrowOn} )
+end
+
+local function createArrow( )
+	-- body
+	if (not arrowCreated) then
+		arrowCreated = true
+		arrow = display.newImageRect( imgDir.."arrowAdv.png", 220, 200 )
+		arrow.x = display.contentWidth - arrow.contentWidth/2 - 50
+		arrow.y = display.contentHeight - arrow.contentHeight/2 - 20
+
+		transitionStash.arrow = transition.to( arrow, {time = 1000, xScale = 0.8, yScale =0.8, alpha = 0.8, onComplete = completeArrowOff} )
+	end
+end
+
+removeArrow = function( )
+	-- body
+	if (arrowCreated) then
+		if (transitionStash.arrow) then
+			transition.cancel( transitionStash.arrow )
+			transitionStash.arrow = nil
+		end
+		if (arrow) then
+			arrow:removeSelf( )
+			arrow = nil
+		end
+		arrowCreated = false
+	end
 end
 
 local function checkTimer(time)
@@ -144,6 +191,7 @@ checkEvents = function( origin )
 	-- body
 	if ((_G.Subtitle or not _G.AutoNextPage) and origin=="panelAdvance" and not inEvent ) or ((not _G.Subtitle and _G.AutoNextPage) and origin=="autoAdvance") then
 		print( "Entra checkEvents "..origin )
+		removeArrow( )
 		if (events and events[cont]) then
 			inEvent = true
 			if (events[cont].mytype == "effects") then
@@ -163,6 +211,9 @@ end
 
 function onCompleteCharacter(event)
 	if (event.completed) then
+		if (_G.Subtitle or not _G.AutoNextPage) then
+			createArrow( )
+		end
 		if (allCharacter[secuence[cont]]) then
 			allCharacter[secuence[cont]]:finalize()			
 		end
@@ -189,21 +240,25 @@ function finalizeScene( notGoNextPage )
 	end
 	table.remove( allCharacter )
 	allCharacter = nil
+	_G.gSprites = nil
 	allCharacter = {}
 
 	events = nil
 	secuence = nil
-
-	if (not notGoNextPage) then
-		print("*******CAMBIAR ESCENA*********")
-		if (_G.CurrentPage == 26) then
-			director:changeScene( page)
-		else
-			cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions()
-			if (parameters) then
-				director:changeScene(parameters, page, "fade" ) 	
+	if (page == -1) then
+		_G.FunctionDelHiddenPanel()
+	else
+		if (not notGoNextPage) then
+			print("*******CAMBIAR ESCENA*********")
+			if (_G.CurrentPage == 26) then
+				director:changeScene( page)
 			else
-				director:changeScene(page, "fade" )
+				cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions()
+				if (parameters) then
+					director:changeScene(parameters, page, "fade" ) 	
+				else
+					director:changeScene(page, "fade" )
+				end
 			end
 		end
 	end

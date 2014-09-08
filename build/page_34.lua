@@ -42,7 +42,7 @@ function new()
        -- Layer names 
        local forestUp  
        local HoleUp  
-       local machine  
+       local kwkmachine  
        local holeD  
        local forestDown  
        local kwkexp  
@@ -51,7 +51,8 @@ function new()
        -- (TOP) External code will render here 
        _G.CurrentPage = curPage 
        _G.LastPage = curPage  
-       _G.LastPageLevel[_G.Level] = curPage 
+       _G.LastPageLevel[_G.Level].page = curPage
+_G.LastPageLevel[_G.Level].phase = _G.Phase 
 
        -- forestUp positioning 
        forestUp = display.newImageRect( imgDir.. "p34_forestup.png", 1299, 341 ); 
@@ -67,12 +68,12 @@ function new()
        HoleUp.name = "HoleUp" 
        menuGroup:insert(HoleUp); menuGroup.HoleUp = HoleUp 
 
-       -- machine positioning 
-       machine = display.newImageRect( imgDir.. "p34_machine.png", 330, 198 ); 
-       machine.x = 1018; machine.y = 239; machine.alpha = 1; machine.oldAlpha = 1 
-       machine.oriX = machine.x; machine.oriY = machine.y 
-       machine.name = "machine" 
-       menuGroup:insert(machine); menuGroup.machine = machine 
+       -- kwkmachine positioning 
+       kwkmachine = display.newImageRect( imgDir.. "kwkmachine.png", 330, 198 ); 
+       kwkmachine.x = 1018; kwkmachine.y = 239; kwkmachine.alpha = 1; kwkmachine.oldAlpha = 1 
+       kwkmachine.oriX = kwkmachine.x; kwkmachine.oriY = kwkmachine.y 
+       kwkmachine.name = "kwkmachine" 
+       menuGroup:insert(kwkmachine); menuGroup.kwkmachine = kwkmachine 
 
        -- holeD positioning 
        holeD = display.newImageRect( imgDir.. "p34_holed.png", 398, 6 ); 
@@ -117,7 +118,7 @@ function new()
  
        } 
        kwkexp_sheet = graphics.newImageSheet( spriteDir.. "exploradorhabla.png", kwkexp_options ) 
-       kwkexp_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       kwkexp_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "forward" }; 
        kwkexp = display.newSprite(kwkexp_sheet, kwkexp_seq ) 
        kwkexp:play(); 
        kwkexp.x = 126; kwkexp.y = 572; kwkexp.alpha = 1; kwkexp.oldAlpha = 1 
@@ -154,7 +155,7 @@ function new()
  
        } 
        kwksamin_sheet = graphics.newImageSheet( spriteDir.. "inca.png", kwksamin_options ) 
-       kwksamin_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "bounce" }; 
+       kwksamin_seq = { name = "default", start = 1, count = 17, time = 1000, loopCount = 0, loopDirection = "forward" }; 
        kwksamin = display.newSprite(kwksamin_sheet, kwksamin_seq ) 
        kwksamin:play(); 
        kwksamin.x = 362; kwksamin.y = 514; kwksamin.alpha = 1; kwksamin.oldAlpha = 1 
@@ -190,10 +191,34 @@ _G.Phase = 2
 --_G.Subtitle = false
 --_G.AutoNextPage = true
 
+local audioHandle
 local gpGenius = createGenius( )
 gpGenius:scale( 0.3, 0.3 )
 gpGenius:translate( display.contentWidth - (gpGenius.Tablet.contentWidth*1.85) , display.contentHeight - (gpGenius.Tablet.contentHeight *1.10) )
 gpGenius.alpha = 0
+
+local function viewImg( fun )
+	-- body
+	local img
+	local function removeElements( event )
+		-- body
+		img:removeSelf( )
+		img = nil
+		fun(300)
+	end
+
+	img = display.newImageRect( imgDir.."jarronInca.png", 391, 532 )
+	img.x = display.contentCenterX; img.y = display.contentCenterY
+	img.alpha = 0
+	img:scale( 0, 0 )
+
+	audioHandle = audio.loadSound( audioDir.."stars.mp3" )
+	transitionStash.jarron = transition.to( img, {time = 2000, xScale = 1.0, yScale = 1.0, alpha = 1.0} )
+	audio.play( audioHandle, {channel = 1, duration = 2000, fadein = 2000, onComplete = function()
+																						audio.dispose( audioHandle ); audioHandle = nil
+																						end} )
+	timerStash.jarron = timer.performWithDelay( 3000, removeElements )
+end
 
 local function inicDialog( )
 	-- body
@@ -217,7 +242,10 @@ local function inicDialog( )
 	local sec = {2, 1, 2, 1, 3}
 	setSecuence( sec )
 
-	local parameters = {nameToy="Abeja", pathToy="objeto141.png", costToy=_G.PriceToys.bee, widthToy = 233*1.5 , heightToy = 168*1.5, nextPage = "page_11", indexToy = 2}
+	local events = {nil, nil, {mytype = "effects", value = {1, viewImg } }, nil, nil}
+	setEventsControlScene(events)
+
+	local parameters = {nameToy="Abeja", pathToy="objeto141.png", widthToy = 137 , heightToy = 98, nextPage = "page_11"}
 
 	playScene( "viewNewToy", parameters )
 end
@@ -237,7 +265,7 @@ local function inicTransition( event )
 	-- body
 	--audioHandle = audio.loadSound( audioDir.."samba.mp3" )
 	--audio.play( audioHandle, {channel = 2} )
-	transitionStash.machine = transition.to( machine, {  time=1000, x= machine.x , y=machine.y + 200, onComplete=onCompleteTransition} )
+	transitionStash.machine = transition.to( kwkmachine, {  time=1000, x= kwkmachine.x , y=kwkmachine.y + 200, onComplete=onCompleteTransition} )
 end
 
 HoleUp.alpha = 1
