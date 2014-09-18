@@ -24,7 +24,7 @@ local sub = {"Al fin hemos encontrado el tesoro. Muchas gracias Anori.",
 
 addCharacter(kwkexp, aud, sub)
 
-aud = {"esquimal_7.mp3"}
+aud = {"anori_7.mp3"}
 sub = {"De nada. Vuelve siempre que quieras."}
 
 addCharacter(kwkesq, aud, sub)

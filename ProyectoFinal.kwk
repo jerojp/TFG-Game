@@ -12,8 +12,8 @@
     <bookmark>false</bookmark>
     <swipe>false</swipe>
     <pinch>false</pinch>
-    <thumbs>true</thumbs>
-    <navigation>true</navigation>
+    <thumbs>false</thumbs>
+    <navigation>false</navigation>
     <swipeSpacer>120</swipeSpacer>
     <thumbW>200</thumbW>
     <navDirection>Top</navDirection>
@@ -106,18 +106,6 @@
           <where>before</where>
         </variable>
       </variables>
-      <button id="but_371">
-        <name>but_371</name>
-        <layer>meadow</layer>
-        <rollover>meadow</rollover>
-        <target>Layer</target>
-        <type>Tap</type>
-        <tap>1</tap>
-        <action id="nav_116">
-          <name>nav_116</name>
-          <type>Show/Hide Navigation</type>
-        </action>
-      </button>
       <code id="code_CurPage">
         <name>code_CurPage</name>
         <code/>
@@ -2719,6 +2707,12 @@
         <code/>
         <position>top</position>
         <extFile>/e/ProyectosKwik2/ProyectoFinal/build/LastPageLevel.lua</extFile>
+      </code>
+      <code id="code_790">
+        <name>code_790</name>
+        <code/>
+        <position>bottom</position>
+        <extFile>/e/ProyectosKwik2/ProyectoFinal/build/scene39_igluEnd.lua</extFile>
       </code>
       <replacement id="kwkexp">
         <name>kwkexp</name>

@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 8 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -154,8 +150,8 @@ kwkboss:pause( )
 
 local aud = {"jefe_3.mp3", "jefe_4.mp3", "jefe_5.mp3"}
 local sub = {"Encantado de conocerte y desde este momento ya trabajas para nosotros, te acabas de convertir en un explorador profesional y como tal te recompensaré con monedas cada vez que descubras un nuevo tesoro.",
-			"Bueno es hora de ponerse en marcha y quién sabe quizá te puedas convertir en el explorador más importante del mundo.",
-			"Antes de que te marches déjame que te de una ultima cosa, toma esta Tablet como regalo de bienvenida, puede que te sea útil en tus viajes."}
+			"Bueno es hora de ponerse en marcha y quién sabe quizá, te puedas convertir en el explorador más importante del mundo.",
+			"Antes de que te marches déjame que te dé una ultima cosa, toma esta Tablet como regalo de bienvenida, puede que te sea útil en tus viajes."}
 local sec = {1, 1, 1}
 
 addCharacter(kwkboss, aud, sub)

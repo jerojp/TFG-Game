@@ -13,7 +13,10 @@ local gpGenius = createGenius( )
 gpGenius:scale( 0.3, 0.3 )
 gpGenius:translate( display.contentWidth - (gpGenius.Tablet.contentWidth*1.85) , display.contentHeight - (gpGenius.Tablet.contentHeight *1.10) )
 gpGenius.alpha = 0
+menuGroup:insert( gpGenius )
+gpGenius.genius:pause( )
 
+local audioHandle
 local cam = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
 cam:setFillColor( 250 )
 cam.alpha = 0
@@ -39,6 +42,12 @@ local function onFinalizeScene( event )
 
 end
 
+function onCompleteSoundCamara(event)
+	-- body
+	audio.dispose( audioHandle )
+	audioHandle = nil
+end
+
 local function onCompletePhoto( event )
 		-- body
 	transitionStash.takePhoto2 = transition.to( cam, {time = 300, alpha = 0, onComplete=onFinalizeScene} )	
@@ -46,6 +55,8 @@ end
 
 local function takePhoto( event )
 	-- body
+	audioHandle = audio.loadSound( audioDir.."camara.mp3" )
+	audio.play( audioHandle, {channel = 1, onComplete = onCompleteSoundCamara} )
 	transitionStash.takePhoto1 = transition.to( cam, {time = 300, alpha = 1, onComplete=onCompletePhoto} )
 end
 

@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 4 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -61,10 +57,10 @@ function new()
        -- (MIDDLE) External code will render here 
 
        --Animations
-       local onEnd_linearEntry_249 = function() 
+       local onEnd_linearEntry_290 = function() 
           actNextPage(); 
        end --ends reStart for linearEntry 
-       gtStash.gt_linearEntry = gtween.new( kwkentradaMuseo, 5, {  x=830, y=1340,  alpha=1, rotation=0, xScale=3.6, yScale=3.6,}, {ease = gtween.easing.linear, repeatCount = 1, reflect = false,  delay=1, onComplete=onEnd_linearEntry_249}) 
+       gtStash.gt_linearEntry = gtween.new( kwkentradaMuseo, 5, {  x=830, y=1340,  alpha=1, rotation=0, xScale=3.6, yScale=3.6,}, {ease = gtween.easing.linear, repeatCount = 1, reflect = false,  delay=1, onComplete=onEnd_linearEntry_290}) 
 
  
        -- Actions (functions) 
@@ -72,7 +68,7 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_5", "fade" ) 
             end 
-            timerStash.newTimer_268 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_309 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
  

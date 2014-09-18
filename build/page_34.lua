@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 34 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -235,7 +231,7 @@ local function inicDialog( )
 	addCharacter(kwksamin, aud, sub)
 
 	aud = {"genio_br1.mp3"}
-	sub = {"Vaya, así que has conseguido el tesoro. Se lo llevaré volando ahora mismo al jefe. Aquí tienes las monedas como recompensa por haber completado esta aventura."}
+	sub = {"Vaya, así que has conseguido el tesoro. Se lo entregaré ahora mismo al jefe."}
 
 	addCharacter(gpGenius.genius, aud, sub, gpGenius)
 

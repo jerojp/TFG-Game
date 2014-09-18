@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 26 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -230,8 +226,8 @@ menuGroup:insert( danceGroup )
 danceGroup:translate( -danceGroup[3].contentWidth , 0 )
 
 local aud = {"exp_br2.mp3", "exp_br3.mp3"}
-local sub = {"!Vaya! QuÃ© ciudad mÃ¡s bonita. Pero Â¿quÃ© es esa mÃºsica que se oye?",
-			"!QuÃ© pasada de fiesta! Yo quiero participar, pero el jefe me ha pedido que busque el tesoro. Bueno, creo que tengo tiempo de disfrutar un poco de la fiesta"}
+local sub = {"!Vaya! Qué ciudad más bonita. Pero ¿qué es esa música que se oye?",
+			"!Qué pasada de fiesta! Yo quiero participar, pero el jefe me ha pedido que busque el tesoro. Bueno, creo que tengo tiempo de disfrutar un poco de la fiesta"}
 
 addCharacter(kwkexp, aud, sub)
 

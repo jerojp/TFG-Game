@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 28 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -123,7 +119,7 @@ img.x = 485; img.y = 297
 menuGroup:insert( img )
 
 local aud = {"exp_br5.mp3"}
-local sub = {"!AH! Eso era un antifaz. Bueno pues ya solo tengo que entrar a la tienda a comprarlo. Pero, un momento, para pagar con mi tarejta necesito recordar mi firma. Creo que me firma era como la letra A. Creo que la letra A tiene una forma parecida al tejado de una casa."}
+local sub = {"!AH! Eso era un antifaz. Bueno pues ya solo tengo que entrar a la tienda a comprarlo. Pero, un momento, para pagar con mi tarjeta necesito recordar mi firma. Creo que me firma era como la letra A."}
 
 addCharacter(kwkexpf, aud, sub)
 

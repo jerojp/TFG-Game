@@ -11,7 +11,6 @@ local function changeDif( event )
             display.getCurrentStage():setFocus( nil )
             object.isFocus = false
             _G.DifficultLevel = object.dif
-            print( "Dificultad Seleccionada ".._G.DifficultLevel )
             dispose(); director:changeScene( "page_3", "fade" )
         end
     end
@@ -33,7 +32,7 @@ local btnEasy = widget.newButton{
     height = 120,
     defaultFile = imgDir.. "button.png",
     --overFile = imgDir.. "button.png",
-    label = "Facil",
+    label = "Fácil",
     labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
     fontSize = myFontSize,
     onEvent = changeDif
@@ -65,7 +64,7 @@ local btnHard = widget.newButton{
     height = 120,
     defaultFile = imgDir.. "button.png",
     --overFile = imgDir.. "button.png",
-    label = "Dificil",
+    label = "Difícil",
     labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
     fontSize = myFontSize,
     onEvent = changeDif

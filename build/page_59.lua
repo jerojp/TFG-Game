@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 59 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -166,19 +162,36 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
 
+function onCompleteSoundCamion(event)
+	-- body
+	audio.dispose( audioHandle )
+	audioHandle = nil
+end
+
 local function translateTruck( fun )
 	-- body
 	local oldX = kwktruckf.x
 	local function onCompleteTruckT( )
 		-- body
+		if ( audio.isChannelActive( 1 ) ) then
+			audio.stop( 1 )
+			onCompleteSoundCamion()
+		end
 		fun(300)
 	end
 	local function onCompleteTruckF( )
 		-- body
-		transition.to( kwktruckt, {time = 2000, x = oldX, onComplete = onCompleteTruckT } )		
+		if ( audio.isChannelActive( 1 ) ) then
+			audio.stop( 1 )
+		end
+		audioHandle = audio.loadSound( audioDir.."camion.mp3" )
+		audio.play( audioHandle, { channel = 1, fadein = 2000, onComplete = onCompleteSoundCamion} )
+		transitionStash.cam = transition.to( kwktruckt, {time = 4000, x = oldX, onComplete = onCompleteTruckT } )		
 	end
-
-	transition.to( kwktruckf, {time = 2000, x = -kwktruckf.contentWidth, onComplete = onCompleteTruckF } )
+	audioHandle = audio.loadSound( audioDir.."camion.mp3" )
+	audio.play( audioHandle, { channel = 1, onComplete = onCompleteSoundCamion} )
+	audio.fade( { channel=1, time=3000, volume=0.5 } )
+	transitionStash.cam = transition.to( kwktruckf, {time = 3000, x = -kwktruckf.contentWidth, onComplete = onCompleteTruckF } )
 end
 
 kwkexp:pause( )

@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 2 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -58,7 +54,6 @@ local function changeDif( event )
             display.getCurrentStage():setFocus( nil )
             object.isFocus = false
             _G.DifficultLevel = object.dif
-            print( "Dificultad Seleccionada ".._G.DifficultLevel )
             dispose(); director:changeScene( "page_3", "fade" )
         end
     end
@@ -80,7 +75,7 @@ local btnEasy = widget.newButton{
     height = 120,
     defaultFile = imgDir.. "button.png",
     --overFile = imgDir.. "button.png",
-    label = "Facil",
+    label = "Fácil",
     labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
     fontSize = myFontSize,
     onEvent = changeDif
@@ -112,7 +107,7 @@ local btnHard = widget.newButton{
     height = 120,
     defaultFile = imgDir.. "button.png",
     --overFile = imgDir.. "button.png",
-    label = "Dificil",
+    label = "Difícil",
     labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 210 } },
     fontSize = myFontSize,
     onEvent = changeDif

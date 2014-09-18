@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 7 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -105,14 +101,14 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_6", "moveFromLeft" ) 
             end 
-            timerStash.newTimer_412 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_517 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
        function butConfirm(self) 
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_64", "fade" ) 
             end 
-            timerStash.newTimer_416 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_521 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
 

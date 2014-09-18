@@ -16,7 +16,7 @@ local sub = {"Hola, te he llamado porque me acaban de dar un mapa de un tesoro y
 addCharacter(kwkboss, aud, sub)
 
 aud = {"exp_br1.mp3"}
-sub = {"Vale jefe, pongo rumbo a brasil ahora mismo."}
+sub = {"Vale jefe, pongo rumbo a brasil ahora mismo. !Brasil, sol y playa qué divertido!"}
 
 addCharacter(nil, aud, sub)
 

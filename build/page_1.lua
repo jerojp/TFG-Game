@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 1 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -39,9 +35,6 @@ function new()
        end 
 
  
-       -- Button names 
-       local but_371
-
        -- Layer names 
        local meadow  
        local sun  
@@ -58,7 +51,7 @@ function new()
        meadow.x = 640; meadow.y = 400; meadow.alpha = 1; meadow.oldAlpha = 1 
        meadow.oriX = meadow.x; meadow.oriY = meadow.y 
        meadow.name = "meadow" 
-       menuGroup:insert(meadow); menuGroup.meadow = meadow 
+       menuGroup:insert(1,meadow); menuGroup.meadow = meadow 
 
        -- sun positioning 
        sun = display.newImageRect( imgDir.. "p1_sun.png", 152, 139 ); 
@@ -73,23 +66,6 @@ function new()
 
        --Animations
        gtStash.gt_animSun = gtween.new( sun, 3, {  x=192, y=194,  alpha=1, rotation=0, xScale=1, yScale=1,}, {ease = gtween.easing.linear, repeatCount = math.huge, reflect = true,  delay=0.1, ""}) 
-
-
-       -- Button event listeners 
-       local function onmeadowEvent(event) 
-          but_371(meadow) 
-          return true 
-       end 
-       meadow:addEventListener("tap", onmeadowEvent ) 
-
-       -- Button functions 
-       function but_371(self) 
-           if (kNavig.alpha == 0) then 
-              Navigation.show() 
-           else  
-              Navigation.hide() 
-           end 
-       end 
 
  
        -- Page properties 
@@ -117,19 +93,32 @@ local text2
 local ch = 1
 local audioHandle
 
+local function removeStatitics(  )
+  -- body
+  local results
+  local reason
+  --Exercise Draw
+  for i=1,5 do
+    results, reason = os.remove( system.pathForFile( "screen"..i.."1.jpg", system.DocumentsDirectory  ) )
+      results, reason = os.remove( system.pathForFile( "screen"..i.."2.jpg", system.DocumentsDirectory  ) )     
+  end
+  
+  for i=1,5 do
+      results, reason = os.remove( system.pathForFile( "audioExLet"..i.."1.wav", system.DocumentsDirectory  ) )
+      
+      results, reason = os.remove( system.pathForFile( "audioExLet"..i.."2.wav", system.DocumentsDirectory  ) )
+  end
+end
+
 local function butIntro(event) 
     if (event.phase == "ended" or event.phase == "cancelled") then
-        print( "Boton DE INICIO" )
         local destDir = system.DocumentsDirectory  -- where the file is stored
         local results, reason = os.remove( system.pathForFile( "saveGame.json", destDir  ) )
-        if results then
-            print( "file removed" )
-        else
-            print( "file does not exist", reason )
-        end
+        
         display.remove( gp_cloud )
         gp_cloud = nil
         loadSettingGame( )
+        removeStatitics(  )
         _G.CurrentPage = 2 
         _G.GameStarted = true
         dispose(); director:changeScene( "page_2", "fade" )
@@ -152,6 +141,8 @@ end
 local function btnEtadistics( event )
     -- body
     if (event.phase == "ended" or event.phase == "cancelled") then
+        display.remove( gp_cloud )
+        gp_cloud = nil
        _G.CurrentPage = 21
         dispose(); director:changeScene( "page_23", "fade" )  
     end
@@ -167,6 +158,8 @@ end
 local function btnStoreToys( event )
 -- body
     if (event.phase == "ended" or event.phase == "cancelled") then
+        display.remove( gp_cloud )
+        gp_cloud = nil
         dispose(); director:changeScene( "page_65", "fade" ) 
        --[[local parameters = {nameToy="Elefante", pathToy="objeto241.png", costToy="300", widthToy = 233*1.5 , heightToy = 168*1.5}
         dispose(); director:changeScene( parameters, "viewNewToy", "fade" ) ]]--
@@ -271,7 +264,7 @@ local function createButtons( )
             height = 100,
             defaultFile = imgDir.. "button.png",
             --overFile = imgDir.. "button.png",
-            label = "Estadisticas",
+            label = "Estadísticas",
             labelColor = { default={ 255, 255, 255 }, over={ 0, 0, 210 } },
             fontSize = 30,
             onEvent = btnEtadistics

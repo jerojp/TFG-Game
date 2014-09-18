@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 15 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -46,6 +42,7 @@ function new()
 
        -- (TOP) External code will render here 
               require( "textCoin" )
+       require( "createMyObjects" )
        --functions
        local ongp_letrasIncorrEvent
        local ongp_letrasCorrectasEvent
@@ -135,22 +132,23 @@ function new()
        local hiddenPanel = nil
        local handle 
        local ch = 1
-       local nextSoundExp
        local mySoundsExp
        local contExp = 1
        local handleAplausos
+       local hollowRect
+       local posXLetraLevel
+       local posYLetraLevel
 
        menuGroup:insert( createTextCoin( ) )
 
        if(_G.Level==1) then
         l = "A"
-        soundExp = ""
        elseif(_G.Level==2) then
         l = "E"
        elseif(_G.Level==3) then
         l = "I"
        elseif(_G.Level==4) then
-        l = "A"
+        l = "O"
        else
         l = "U"
        end
@@ -178,33 +176,6 @@ function new()
        backgroundLower.oriX = backgroundLower.x; backgroundLower.oriY = backgroundLower.y 
        backgroundLower.name = "backgroundLower" 
        menuGroup:insert(1,backgroundLower); menuGroup.backgroundLower = backgroundLower 
-
-       -- TextoFinal positioning 
-       TextoFinal = display.newImageRect( imgDir.. "textofinal.png", 515, 21 ); 
-       TextoFinal.x = 669; TextoFinal.y = 39; TextoFinal.alpha = 1; TextoFinal.oldAlpha = 1 
-       TextoFinal.oriX = TextoFinal.x; TextoFinal.oriY = TextoFinal.y 
-       TextoFinal.name = "TextoFinal" 
-       menuGroup:insert(TextoFinal); menuGroup.TextoFinal = TextoFinal 
-
-       -- ExplicacionFall positioning 
-       ExplicacionFall = display.newImageRect( imgDir.. "explicacionfall.png", 137, 28 ); 
-       ExplicacionFall.x = 675; ExplicacionFall.y = 117; ExplicacionFall.alpha = 1; ExplicacionFall.oldAlpha = 1 
-       ExplicacionFall.oriX = ExplicacionFall.x; ExplicacionFall.oriY = ExplicacionFall.y 
-       ExplicacionFall.name = "ExplicacionFall" 
-       menuGroup:insert(ExplicacionFall); menuGroup.ExplicacionFall = ExplicacionFall 
-
-       -- TextoFinalIncor positioning 
-       TextoFinalIncor = display.newImageRect( imgDir.. "textofinalincor.png", 543, 21 ); 
-       TextoFinalIncor.x = 657; TextoFinalIncor.y = 76; TextoFinalIncor.alpha = 1; TextoFinalIncor.oldAlpha = 1 
-       TextoFinalIncor.oriX = TextoFinalIncor.x; TextoFinalIncor.oriY = TextoFinalIncor.y 
-       TextoFinalIncor.name = "TextoFinalIncor" 
-       menuGroup:insert(TextoFinalIncor); menuGroup.TextoFinalIncor = TextoFinalIncor
-
-
-       -- Hiding elements 
-       TextoFinal.alpha = 0; 
-       ExplicacionFall.alpha = 0; 
-       TextoFinalIncor.alpha = 0; 
 
        -- kwkvida positioning 
        kwkvida = {} 
@@ -339,7 +310,6 @@ function new()
 
       function disposeAudioGenius( event )
         -- body
-        print( "Liberando Sonido Refuerzo positivo" )
         audio.dispose( event.handle ) 
       end
        -- Actions (functions) 
@@ -370,7 +340,7 @@ function new()
            audio.dispose( handleAplausos )
            handleAplausos = nil
          end
-            
+          removeHiddenPanel( )
        end 
 
        function cancel_timer_Applause(  )
@@ -413,7 +383,8 @@ function new()
 
             timerStash.timer_249 = timer.performWithDelay( 2000, cancel_timer_Applause, 1 )
             timerApplause = true
-            handleAplausos = audio.loadSound( audioDir.."geniusIM5.mp3" ) 
+            createHiddenPanel( )
+            handleAplausos = audio.loadStream( audioDir.."geniusIM5.mp3" ) 
             audio.play( handleAplausos, {channel=ch, onComplete = disposeAudioGenius } )  
        end 
 
@@ -436,8 +407,7 @@ function new()
            objetos[i].alpha = levelAlpha
            objetos[i+1].alpha = 1 - levelAlpha  
         end
-        print( "Alpha : "..levelAlpha )
- 
+
       end 
 
        function act_eliminarVid(event) 
@@ -511,7 +481,7 @@ function new()
           end
           --_G.Coin = _G.Coin - _G.TotalAddCoinEx 
           --transitionStash.newTransition_577 = transition.to( TextoFinalIncor, {alpha=TextoFinalIncor.oldAlpha, time=1000, delay=0}) 
-          myDialog = createMyDialog( "Ejercicio no superado", "Â¿ Deseas repetir el ejercicio ?", nil, "Si", listenerC, "No", listenerD)
+          myDialog = createMyDialog( "EJERCICIO NO SUPERADO", "¿ Deseas repetir el ejercicio ?", nil, "Si", listenerC, "No", listenerD)
         end
       end 
 
@@ -556,10 +526,15 @@ function new()
               t2[i].y = 679
             end
   
-          t2[i+1].y = t2[i].y
-          contador = contador + 1
+            t2[i+1].y = t2[i].y
+            contador = contador + 1
+            local letterLevel = tonumber( string.sub( t2[i].name, string.find( t2[i].name, "_" )+1, string.len( t2[i].name ) ) ) 
+            if (letterLevel == _G.Level) then
+              posXLetraLevel = t2[i].x
+              posYLetraLevel = t2[i].y
+            end
           end
-               
+            
        end 
 
        function generateLetter()
@@ -622,7 +597,7 @@ function new()
             letraN.alpha = 0.01
           end
           letraN.oldAlpha = letraN.alpha
-          letraN.name = "letra"..nuevaLetra..contador ; contador = contador + 1
+          letraN.name = "letra_"..nuevaLetra ; contador = contador + 1
 
           if(nuevaLetra == _G.Level) then
             letrasCorGroup:insert(letraN)
@@ -662,24 +637,37 @@ function new()
 
       function onCompleteSoundExp( event )
           -- body
-        print( "Liberando Sonido Explicativo" )
         audio.dispose( handle )
         handle = nil
-        nextSoundExp()
+        if (hollowRect) then
+          menuGroup:remove(hollowRect)
+          hollowRect:removeSelf( )
+          hollowRect = nil
+        end
+        if (event.completed) then
+           nextSoundExp() 
+        end
       end
 
       local function playSoundExp( name )
         -- body
         handle = audio.loadSound( audioDir..name..".mp3" )
-        if ( audio.isChannelActive( ch ) ) then
-          print( "Canal Activo: "..ch )
-        end
         audio.play( handle, {channel = ch, onComplete = onCompleteSoundExp} )
       end
 
       function nextSoundExp( )
           -- body
           if (contExp <= #mySoundsExp) then
+            if (mySoundsExp[contExp] == soundExp) then
+              hollowRect = createHollowRectangle( 0, backgroundLower.y - backgroundLower.contentHeight/2 , 1280, 660 )
+              menuGroup:insert(hollowRect)
+            elseif (mySoundsExp[contExp] == "geniusIM2") then
+              hollowRect = createHollowRectangle( 0 , 0, 1280, 160 )
+              menuGroup:insert(hollowRect)
+            elseif (mySoundsExp[contExp] == soundExp4 and vidas == math.floor(TotalVidas/2) ) then
+              hollowRect = createHollowCircle( posXLetraLevel, posYLetraLevel, 110 )
+              menuGroup:insert(hollowRect)
+            end
             playSoundExp( mySoundsExp[contExp] )
             contExp = contExp + 1
           else
@@ -736,7 +724,6 @@ function new()
 
           _G.UpLevelSample[_G.Level*2 - (math.fmod(_G.Phase, 2))] = {_G.DifficultLevel}
 
-          print( "Maximo Nivel "..maxNivel )
           for i=nivelActual,maxNivel,1 do
             table.insert( resultsTest, -1 )
             table.insert( timerTest, -1 )
@@ -765,16 +752,10 @@ function new()
         local number
         local index = (_G.Level*2 - 1)+(_G.Phase-1)
 
-        transitionStash.newTransition_975 = transition.to( TextoFinal, {alpha=TextoFinal.oldAlpha, time=1000, delay=0})
-
         --!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Hay que hacer esto independiente del numero de letras: guardar letras en una tabla y quitar el 5
-        
-        if (_G.Results[index]) then
-          _G.Results[index] = nil
-          _G.TimerResults[index] = nil
-        end
-        table.insert( _G.Results, index, resultsTest )
-        table.insert( _G.TimerResults, index, timerTest )
+      
+        _G.Results[index] = resultsTest
+        _G.TimerResults[index] = timerTest
         
         letrasCorGroup:removeEventListener("tap", ongp_letrasCorrectasEvent ) 
         gp_letrasIncorr:removeEventListener("tap", ongp_letrasIncorrEvent )
@@ -820,7 +801,7 @@ function new()
           if (_G.Phase == 2) then
             auxLevel = auxLevel + 1
           end
-          print( "Statitics LEVEL : "..auxLevel )
+
           if (resultsTest[auxLevel] > 0) then
               resultsTest[auxLevel] = resultsTest[auxLevel] + n_fallosNivel
           else

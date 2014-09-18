@@ -11,7 +11,7 @@
        local age
 
        -- textInputName positioning
-       textInputName = display.newText( "Introduce tu edad:", 676, 133, native.systemFontBold, 68 )
+       textInputName = display.newText( "Introduce tu edad:", 676, 133, native.systemFontBold, 60 )
        textInputName.x = display.contentCenterX; textInputName.y = 133;
        menuGroup:insert(textInputName); menuGroup.textInputName = textInputName 
 

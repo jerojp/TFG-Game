@@ -1,5 +1,6 @@
 module(..., package.seeall) 
 local widget = require( "widget" )
+require( "ControlScene" )
 function new(parameters) 
     local numPages = 66 
     local menuGroup = display.newGroup() 
@@ -14,9 +15,34 @@ function new(parameters)
 
     local drawScreen = function() 
 
+        local function isToyUnlocked( )
+            -- body
+            for i=1,#_G.UnlockToys do
+                if (_G.UnlockToys[i].nameToy == nameToy) then
+                    return true
+                end
+            end
+            return false
+        end
+
+        local function isEndGame(  )
+            -- body
+            for i=1,5 do
+                if (not _G.LevelCompleted[i]) then
+                    return false
+                end
+            end
+            return true
+        end
+
        local function finalizeViewToy( )
            -- body
             local myClosure_switch = function() 
+                if (_G.Phase == 2) then
+                    _G.LevelCompleted[_G.Level] = true 
+                   _G.goBackEndLevel = true 
+                end
+                _G.goBackEnd = isEndGame(  )
                 dispose(); director:changeScene( nextScene, "fade")                 
             end
             
@@ -50,7 +76,69 @@ function new(parameters)
             local groupCost = display.newGroup( )
             local groupStars = display.newGroup( )
             local audioHandle
-        
+            local hiddenPanel
+            local handle
+            local ch = 1
+            local contExp
+            local mySoundsExp
+            local btnConfirm
+
+            local function viewButton( fun )
+                -- body
+                btnConfirm.alpha = 1
+                fun(0)
+            end
+
+            local function createHiddenPanel( )
+              if (not hiddenPanel) then
+                local function doNothing( event )
+                  -- body
+                  return true
+                end
+                -- body
+                hiddenPanel = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
+                hiddenPanel.alpha = 0.5
+                menuGroup:insert(hiddenPanel)
+                hiddenPanel:addEventListener( "touch", doNothing )
+                hiddenPanel:addEventListener( "tap", doNothing )
+              end
+            end
+
+            _G.FunctionDelHiddenPanel = function ( )
+              -- body
+              if (hiddenPanel) then
+                menuGroup:remove(hiddenPanel)
+                hiddenPanel:removeSelf( )
+                hiddenPanel = nil
+              end
+            end
+
+            function playSoundExpInic( )
+            -- body 
+                local aud
+                local sub
+                local sec
+                local events
+                if (_G.firstViewToy) then
+                  _G.firstViewToy = false
+                  aud = {"genius_nuevoJug.mp3", "genius_nuevoJug2.mp3"}
+                  sub = {"!Enhorabuena! te he conseguido un nuevo juguete.",
+                      "Puedes comprar este juguete en el armario de juguetes mágicos. Cuando vuelvas al menú principal podrás acceder a esta sección de juguetes."}
+                  sec = {1, 1}
+                  events = { nil, {mytype = "effects", value = {1, viewButton} } }
+                else
+                  aud = {"genius_nuevoJug.mp3"}
+                  sub = {"!Enhorabuena! te he conseguido un nuevo juguete."}
+                  sec = {1}
+                  events = { {mytype = "effects", value = {1, viewButton} } }
+                end
+                createHiddenPanel( )
+                setEventsControlScene(events)
+                addCharacter(nil, aud, sub)
+                setSecuence( sec )
+                playScene( -1 )
+            end
+
             local background = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
             background:setFillColor( 85,159,191 )
             menuGroup:insert(background)
@@ -104,7 +192,7 @@ function new(parameters)
                     return true
             end
 
-            local btnConfirm = widget.newButton{
+            btnConfirm = widget.newButton{
                width = 180,
                height = 60,
                defaultFile = imgDir.. "button.png",
@@ -120,15 +208,20 @@ function new(parameters)
             btnConfirm:setFillColor(228,89,145)
             btnConfirm.alpha = 0
 
+            function removeAudioNewToy( event )
+                -- body
+                audio.dispose( audioHandle )
+                audioHandle = nil
+            end
+
             local function onCompleteTransition( event )
                 -- body
                 if ( audio.isChannelActive( 1 ) ) then
                     audio.stop()
                 end
-                audio.dispose( audioHandle )
-                audioHandle = nil
+                removeAudioNewToy(  )
                 groupStars.alpha = 0
-                btnConfirm.alpha = 1
+                playSoundExpInic( )
             end
 
             local an
@@ -151,7 +244,7 @@ function new(parameters)
             local function onCompleteTimer( event )
                 -- body
                 transitionStash.groupStars = transition.to( groupStars, {  time=2000, xScale=1.5, yScale=1.5, alpha = 0.2, rotation = 340, onComplete=onCompleteTransition} )
-                audio.play( audioHandle, {channel = 1, duration = 3000, fadein = 2000} )
+                audio.play( audioHandle, {channel = 1, duration = 3000, fadein = 2000, onComplete = removeAudioNewToy} )
             end
             timerStash.timer_stars = timer.performWithDelay( 600, onCompleteTimer, 1 )
        end
@@ -161,7 +254,7 @@ function new(parameters)
 
         
        -- Timers 
-       if ((#_G.UnlockToys+1) < 10 and _G.Toys[#_G.UnlockToys+1].block) then
+       if ((#_G.UnlockToys+1) < 10 and not isToyUnlocked()) then
             createViewToy()
        else
             timerStash.newTimer_vieToy1 = timer.performWithDelay(0,finalizeViewToy ) 

@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 32 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -220,8 +216,8 @@ local function inicDialog( )
 	addCharacter(kwkexp, aud, sub)
 
 	local aud = {"samin_br1.mp3", "samin_br2.mp3"}
-	local sub = {"Hola joven, siento interrumpirte soy el protector de este bosque y necesito su ayuda. Esas máquina de hierro estan destruyendo la selva derribando sus árboles.",
-			"He instalado una serie de trampas por la zona, solo tienes que pulsar una de esas rocas de color. Pulsa la roca de color Amarillo."}
+	local sub = {"Hola joven, siento interrumpirte. Soy el protector de este bosque y necesito tu ayuda. Esas máquina de hierro están destruyendo la selva derribando sus árboles.",
+			"He instalado una serie de trampas por la zona, para parar la tala de árboles. Solo tienes que pulsar una de esas rocas de color. Pulsa la roca de color Amarillo para hacer desparecer las máquinas."}
 
 	addCharacter(kwksamin, aud, sub)
 

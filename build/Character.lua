@@ -26,7 +26,6 @@ function Character:playCharacter(onCompleteSound)
 			imgFinal = true
 		end
 	end]]--
-	print( self.audio[self.cont] )
 	self.audioHandle = audio.loadSound( audioDir..self.audio[self.cont] )
 	local options = 
 	{
@@ -51,7 +50,6 @@ end
 
 function Character:clearObject( )
 	-- body
-	print( "------CLEAR SCENE------" )
 	
 	if (audio.isChannelActive( 1 )) then
 		audio.stop( 1 )
@@ -73,7 +71,6 @@ function Character:finalize()
 		self.sprite:pause( )
 		self.sprite:setFrame( 1 )
 	end
-	print( "-----FINALIZE SCENE------" )
 		--[[local function onCompleteTimerImg( )
 			-- body
 			imgFinal = false
@@ -98,14 +95,16 @@ function Character:addImage( options )
 	end
 	local img = display.newImageRect( options.path, w, h)
 	img.x = display.contentCenterX; img.y = display.contentCenterY
+	img.alpha = 0
+	img:scale( 0, 0 )
 	self.gpMyDisplays:insert( 1, img )
+
+	transitionStash.imgCharacter = transition.to( img, {time = 800, xScale = 1.0, yScale = 1.0, alpha = 1.0} )
 end
 
 function Character:getName( )
 	-- body
-	print( string.find( self.audio[1] , "_" ) )
 	local name = string.sub( self.audio[1], 1, string.find( self.audio[1] , "_" ) - 1 )
-	print( name )
 	return name
 end
 

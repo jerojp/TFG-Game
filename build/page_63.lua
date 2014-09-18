@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 63 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -45,7 +41,6 @@ function new()
 
        -- Layer names 
        local kwkrectangle  
-       local textConfirmAge  
        local buttoncancel  
        local kwkbuttonConfir  
 
@@ -59,13 +54,6 @@ function new()
        kwkrectangle.oriX = kwkrectangle.x; kwkrectangle.oriY = kwkrectangle.y 
        kwkrectangle.name = "kwkrectangle" 
        menuGroup:insert(1,kwkrectangle); menuGroup.kwkrectangle = kwkrectangle 
-
-       -- textConfirmAge positioning 
-       textConfirmAge = display.newImageRect( imgDir.. "p63_textconfirmage.png", 286, 43 ); 
-       textConfirmAge.x = 700; textConfirmAge.y = 189; textConfirmAge.alpha = 1; textConfirmAge.oldAlpha = 1 
-       textConfirmAge.oriX = textConfirmAge.x; textConfirmAge.oriY = textConfirmAge.y 
-       textConfirmAge.name = "textConfirmAge" 
-       menuGroup:insert(textConfirmAge); menuGroup.textConfirmAge = textConfirmAge 
 
        -- buttoncancel positioning 
        buttoncancel = display.newImageRect( imgDir.. "p63_buttoncancel.png", 254, 61 ); 
@@ -84,8 +72,13 @@ function new()
        -- Group(s) creation 
 
        -- (MIDDLE) External code will render here 
-        local ageIntro = display.newText( _G.Age.." años", 648, 248, native.systemFont, 48 ) 
- ageIntro.x = display.contentCenterX
+        local ageText = display.newText( "Así que tienes :", 648, 190, native.systemFont, 60 ) 
+ ageText.x = display.contentCenterX
+ ageText:setTextColor (255, 255, 255)  
+ menuGroup:insert(ageText);
+
+ local ageIntro = display.newText( _G.Age.." años", 648, 248, native.systemFont, 48 ) 
+ ageIntro.x = ageText.x; ageIntro.y = ageText.y + ageText.contentHeight/2 + 45
  ageIntro:setTextColor (255, 255, 255)  
  menuGroup:insert(ageIntro); 
 
@@ -106,14 +99,14 @@ function new()
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_8", "fade" ) 
             end 
-            timerStash.newTimer_250 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_376 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
        function butCancel(self) 
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_62", "fade" ) 
             end 
-            timerStash.newTimer_253 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_385 = timer.performWithDelay(0, myClosure_switch, 1) 
        end 
 
 

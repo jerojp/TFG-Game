@@ -1,14 +1,17 @@
 local widget = require( "widget" )
+require("MyDialog")
 local scrollView
 
 function removePanelOptions( )
     -- body
+    _G.InPanelOptions = false
     display.remove( scrollView )
     scrollView = nil
 end
 
 function createPanelOptions( )
     -- body
+    _G.InPanelOptions = true
     local myGroup = display.newGroup( )
 
     local selDif
@@ -26,6 +29,28 @@ function createPanelOptions( )
 
 --_G.DifficultLevel = event.target.id
           --print( object.id )
+
+    local function butHelp( event )
+        -- body
+        local obj = event.target
+        local myDialog
+        local function onCompleteCon( event )
+              -- body
+          local object = event.target
+          if event.phase == "began" then
+                 display.getCurrentStage():setFocus(object)
+                 object.isFocus = true
+          elseif object.isFocus then
+                 if event.phase == "ended" or event.phase == "cancelled" then
+                        display.getCurrentStage():setFocus( nil )
+                        object.isFocus = false
+                        deleteMyDialog(myDialog)
+                 end
+          end
+          return true
+        end
+        myDialog = createMyDialog("INFORMACIÓN", obj.textHelp, nil, "Confirmar", onCompleteCon)
+    end
     local function changeDifficult( event )
 	-- body
 	   local object = event.target
@@ -37,7 +62,6 @@ function createPanelOptions( )
             if event.phase == "ended" or event.phase == "cancelled" then
         	   selDif.x = object.x - 3
         	   varDifficulty = object.difficulty
-                print( varDifficulty )
 			 --display.getCurrentStage():setFocus( nil )
 			 object.isFocus = false
             end
@@ -68,7 +92,6 @@ function createPanelOptions( )
                 else
                     hiddenPanelAuto.alpha = 0
                 end
-                print( varSubtitles )
                 --display.getCurrentStage():setFocus( nil )
                 object.isFocus = false
             end
@@ -87,7 +110,6 @@ function createPanelOptions( )
             if event.phase == "ended" or event.phase == "cancelled" then
                 selAuto.x = object.x - 3
                 varAdvance = object.auto
-                print( varAdvance )
                 --display.getCurrentStage():setFocus( nil )
                 object.isFocus = false
             end
@@ -106,7 +128,6 @@ function createPanelOptions( )
             if event.phase == "ended" or event.phase == "cancelled" then
                 selLetter.x = object.x - 3
                 varLetter = object.auto
-                print( varLetter )
                 --display.getCurrentStage():setFocus( nil )
                 object.isFocus = false
             end
@@ -200,6 +221,18 @@ function createPanelOptions( )
     selDif:setFillColor(  colorSelec.R, colorSelec.G, colorSelec.B  )
     myGroup:insert( selDif )
 
+    local imgHelp = widget.newButton{
+            width = 80,
+            height = 80,
+            defaultFile = imgDir.. "help.png",
+            --overFile = imgDir.. "button.png",
+            onPress = butHelp
+    }
+    imgHelp.x = rectDif.x + rectDif.contentWidth/2 + 50
+    imgHelp.y = rectDif.y - rectDif.contentHeight/2 - 30
+    imgHelp.textHelp = "Cambia la dificultad de los ejercicios:\n- Igualacion-muestra: mayor dificultad, mayor número y degradación de la visibilidad de los objetos\n- Grafía: mayor dificultad, menor tamaño de la letra\n- Grabación de fonema: no afecta"
+    myGroup:insert( imgHelp )
+
     local easyBut = display.newText( "Fácil", 200, textDif.y+80, native.systemFont, 30 )
     easyBut:setFillColor( 100 )
     easyBut.difficulty = 1
@@ -238,6 +271,18 @@ function createPanelOptions( )
     selSubt:setFillColor( colorSelec.R, colorSelec.G, colorSelec.B )
     myGroup:insert( selSubt )
 
+    imgHelp = widget.newButton{
+            width = 80,
+            height = 80,
+            defaultFile = imgDir.. "help.png",
+            --overFile = imgDir.. "button.png",
+            onPress = butHelp
+    }
+    imgHelp.x = rectSub.x + rectSub.contentWidth/2 + 50
+    imgHelp.y = rectSub.y - rectSub.contentHeight/2 - 30
+    imgHelp.textHelp = "Activa los subtítulos del juego solo durante las escenas animadas. Para avanzar en los diálogos arrastra de izquierda a derecha el dedo sobre la pantalla."
+    myGroup:insert( imgHelp )
+
     local yesSub = display.newText( "Si", 280, textSubt.y+80, native.systemFont, 30 )
     yesSub:setFillColor( 100 )
     yesSub.subtitle = true
@@ -267,6 +312,18 @@ function createPanelOptions( )
     selAuto = display.newRoundedRect( 290, textAuto.y+75, 100, 50, 10 )
     selAuto:setFillColor(  colorSelec.R, colorSelec.G, colorSelec.B  )
     myGroup:insert( selAuto )
+
+    imgHelp = widget.newButton{
+            width = 80,
+            height = 80,
+            defaultFile = imgDir.. "help.png",
+            --overFile = imgDir.. "button.png",
+            onPress = butHelp
+    }
+    imgHelp.x = rectAuto.x + rectAuto.contentWidth/2 + 50
+    imgHelp.y = rectAuto.y - rectAuto.contentHeight/2 - 30
+    imgHelp.textHelp = "Activa o desactiva el avance automático en los diálogos. Si esta desactivada esta opción, arrastra de izquierda a derecha el dedo sobre la pantalla para avanzar en los diálogos."
+    myGroup:insert( imgHelp )
 
     local yesAuto = display.newText( "Si", 280, textAuto.y+80, native.systemFont, 30 )
     yesAuto:setFillColor( 100 )
@@ -309,6 +366,18 @@ function createPanelOptions( )
     selLetter:setFillColor(  colorSelec.R, colorSelec.G, colorSelec.B  )
     myGroup:insert( selLetter )
 
+    imgHelp = widget.newButton{
+            width = 80,
+            height = 80,
+            defaultFile = imgDir.. "help.png",
+            --overFile = imgDir.. "button.png",
+            onPress = butHelp
+    }
+    imgHelp.x = rectLetter.x + rectLetter.contentWidth/2 + 50
+    imgHelp.y = rectLetter.y - rectLetter.contentHeight/2 - 30
+    imgHelp.textHelp = "Para el ejercicio de igualación-muestra activa o desactiva la visualización de la sílaba en la que se encuentra la vocal, si el objeto no comienze por dicha vocal. Esto te ayudará a asociar de forma más rápida la vocal con el objeto que representa."
+    myGroup:insert( imgHelp )
+
     local yesLetter = display.newText( "Si", 280, textLetter.y+80, native.systemFont, 30 )
     yesLetter:setFillColor( 100 )
     yesLetter.auto = true
@@ -324,7 +393,7 @@ function createPanelOptions( )
     if ( _G.LetterInSyllable ) then
         selLetter.x = yesLetter.x
     else
-        selLetter.x = yesLetter.x
+        selLetter.x = noLetter.x
     end
 
     local btnConfim = widget.newButton{

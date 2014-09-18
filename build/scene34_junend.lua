@@ -53,7 +53,7 @@ local function inicDialog( )
 	addCharacter(kwksamin, aud, sub)
 
 	aud = {"genio_br1.mp3"}
-	sub = {"Vaya, así que has conseguido el tesoro. Se lo llevaré volando ahora mismo al jefe. Aquí tienes las monedas como recompensa por haber completado esta aventura."}
+	sub = {"Vaya, así que has conseguido el tesoro. Se lo entregaré ahora mismo al jefe."}
 
 	addCharacter(gpGenius.genius, aud, sub, gpGenius)
 

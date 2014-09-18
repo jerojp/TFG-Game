@@ -12,7 +12,7 @@ gpGenius.alpha = 1
 _G.Level = 3
 _G.Phase = 1
 
-local aud = {"esquimal_3.mp3"}
+local aud = {"anori_3.mp3"}
 local sub = {"Si ahí es donde vivimos los esquimales. Bueno acompañarme a mi casa y mañana iremos al barco hundido."}
 
 addCharacter(kwkesq, aud, sub)

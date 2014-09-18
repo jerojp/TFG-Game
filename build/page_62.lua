@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 62 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -57,7 +53,7 @@ function new()
        local age
 
        -- textInputName positioning
-       textInputName = display.newText( "Introduce tu edad:", 676, 133, native.systemFontBold, 68 )
+       textInputName = display.newText( "Introduce tu edad:", 676, 133, native.systemFontBold, 60 )
        textInputName.x = display.contentCenterX; textInputName.y = 133;
        menuGroup:insert(textInputName); menuGroup.textInputName = textInputName 
 

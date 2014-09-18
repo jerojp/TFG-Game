@@ -24,7 +24,7 @@ local sub = {"!Qué lastima!, un oso panda ha sido secuestrado para venderlo. No
 addCharacter(kwkexp, aud, sub)
 
 local aud2 = {"exp_ja2.mp3"}
-local sub2 = {"!No! La tablet se ha roto. Espero que el Ali esté bien. Debe viajar rápido a Japón para poder arreglarla."}
+local sub2 = {"!No! La tablet se ha roto. Espero que el Ali esté bien. Debo viajar rápido a Japón para poder arreglarla."}
 
 addCharacter(kwkexphumo, aud2, sub2)
 

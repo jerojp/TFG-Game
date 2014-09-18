@@ -10,7 +10,7 @@ _G.Level = 1
 _G.Phase = 2
 
 local aud = {"exp_br6.mp3"}
-local sub = {"Vaya que tarde se me ha hecho. Debo ponerme rumbo al Amazonas. Espero no perderme en la selva más grande del mundo."}
+local sub = {"Vaya que tarde se me ha hecho. Debo ponerme ya rumbo al Amazonas. Espero no perderme en la selva más grande del mundo."}
 
 addCharacter(kwkexp, aud, sub)
 

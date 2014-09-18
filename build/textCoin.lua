@@ -69,7 +69,6 @@ function textCoinUpdate( incCoin, operation )
             newTextCoin:removeSelf( )
             newTextCoin = nil    
         end
-        print( "Completada transicion" )
         return true        
     end
 

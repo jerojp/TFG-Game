@@ -8,7 +8,7 @@ _G.Level = 1
 _G.Phase = 1
 
 local aud = {"exp_br4.mp3"}
-local sub = {"!Ya estoy! Me he disfrazado de flamenco. Pero creo que me falta algo, la mujer de la tienda me dijo que cogiera un antifaz pero no he sabido qué es. A ver si consigo recordar que es un antifaz."}
+local sub = {"!Ya estoy! Me he disfrazado de flamenco. Pero creo que me falta algo, la mujer de la tienda me dijo que cogiera un antifaz pero no he sabido qué es. A ver si consigo recordar qué es un antifaz."}
 
 addCharacter(kwkexpf, aud, sub)
 

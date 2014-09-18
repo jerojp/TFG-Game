@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 51 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -225,7 +221,7 @@ end
 --_G.Subtitle = false
 --_G.AutoNextPage = true
 
-local aud = {"exp_ja10.mp3", "exp_ja11.mp3", "exp_ja12.mp3", "exp_ja13.mp3", "exp_ja14.mp3", "exp_ja15.mp3", "exp_ja16.mp3", "exp_ja17.mp3"}
+local aud = {"exp_ja10.mp3", "exp_ja11.mp3", "exp_ja12.mp3", "exp_ja13.mp3", "exp_ja14.mp3", "exp_ja15.mp3", "exp_ja16.mp3", "exp_ja17.mp3", "exp_jaocho.mp3"}
 local sub = {"!Cuántos osos!, son muchísimos. Voy a contarlos:",
 			"Uno",
 			"Dos",
@@ -233,7 +229,8 @@ local sub = {"!Cuántos osos!, son muchísimos. Voy a contarlos:",
 			"Cuatro",
 			"Cinco",
 			"Seis",
-			"Siete",}
+			"Siete",
+			"¿Qué número va después del 7? Creo que empieza por la letra O."}
 
 addCharacter(kwkexp, aud, sub)
 
@@ -242,16 +239,17 @@ local sub2 = {"Bueno, pequeño, ya estás en casa; corre con tu mama."}
 
 addCharacter(kwkjap, aud2, sub2)
 
-local sec = {2, 1, 1, 1, 1, 1, 1, 1, 1}
+local sec = {2, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 setSecuence( sec )
 
-local events = { nil, nil, {mytype = "effects", value = {1, viewNumber} },
+local events = { nil, {mytype = "effects", value = {1, viewNumber} },
 						   {mytype = "effects", value = {1, viewNumber} },
 						   {mytype = "effects", value = {1, viewNumber} },
 						   {mytype = "effects", value = {1, viewNumber} },
 						   {mytype = "effects", value = {1, viewNumber} },
 						   {mytype = "effects", value = {1, viewNumber} },
-						   {mytype = "effects", value = {1, viewNumber} }}
+						   {mytype = "effects", value = {1, viewNumber} },
+							nil}
 setEventsControlScene(events)
 
 playScene( "page_15" ) 

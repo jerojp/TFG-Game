@@ -30,6 +30,10 @@
        local groupImgCoin = {}
        local ch = 1
        local contDoor = 0
+       local hiddenPanel
+       local handle
+       local contExp
+       local mySoundsExp
 
        local function playSoundToy( event )
               local object = event.target
@@ -63,10 +67,14 @@
                                    rot = rot * -1
                                    transitionStash["rot"] = transition.to( obj, {time = 1000, rotation = rot*25, transition=easing.inOutCubic, onComplete = onCompleteRot} )       
                             end
+                            if (transitionStash["rot"]) then
+                               transition.cancel(transitionStash["rot"])
+                               transitionStash["rot"] = nil    
+                            end
                             transitionStash["rot"] = transition.to( object, {time = 1000, rotation = rot*25, transition=easing.inOutCubic, onComplete = onCompleteRot} )
                             audioHandle = audio.loadSound( audioDir..event.target.name..".mp3" )
                             audio.play( audioHandle, {duration = 6000, channel = ch, onComplete = onCompleteSound} )
-                            print( "Reproducir sonido "..event.target.name )
+                            --print( "Reproducir sonido "..event.target.name )
                      end
               end
               return true  
@@ -111,7 +119,7 @@
 
                      object:removeEventListener( "touch", buyToy )
                      object:addEventListener( "touch", playSoundToy )
-                     print( "Eliminado evento buyToy de "..object.name )
+                     --print( "Eliminado evento buyToy de "..object.name )
               end
               return true
        end
@@ -137,7 +145,7 @@
               local posBaseX = 280.66
               local posBaseY = 198.66
               local contToy = 0
-              print( "TOTAL: "..menuGroup.numChildren )
+              --print( "TOTAL: "..menuGroup.numChildren )
               
               for i=1,#_G.UnlockToys do
                      table.insert( groupTextCoin, nil )
@@ -196,7 +204,7 @@
               end
               textCost = nil
               kwkcoin = nil
-              print( "N: "..menuGroup.numChildren )
+              --print( "N: "..menuGroup.numChildren )
        end
        
        local function completeDoor( obj )
@@ -204,15 +212,15 @@
               obj.alpha = 0
        end
 
-       local function createCloset( )
-              -- body
-              local audioHandle
-
-              local function onCompleteSoundDoor( event )
+       function onCompleteSoundDoor( event )
                      -- body
                      audio.dispose( audioHandle )
                      audioHandle = nil
-              end
+       end
+
+       local function createCloset( )
+              -- body
+              local audioHandle
 
               audioHandle = audio.loadSound( audioDir.."stars.mp3" )
               audio.play( audioHandle, {duration = 3000, fadein = 2000, channel = ch, onComplete = onCompleteSoundDoor} )
@@ -222,9 +230,71 @@
               menuGroup:insert(right)
        end
 
+       function createHiddenPanel( )
+              local function doNothing( event )
+                     -- body
+                     return true
+              end
+              -- body
+              hiddenPanel = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
+              hiddenPanel.alpha = 0.5
+              menuGroup:insert(hiddenPanel)
+              hiddenPanel:addEventListener( "touch", doNothing )
+              hiddenPanel:addEventListener( "tap", doNothing )
+       end
+
+       function removeHiddenPanel( )
+         -- body
+              if (hiddenPanel) then
+                     menuGroup:remove(hiddenPanel)
+                     hiddenPanel:removeSelf( )
+                     hiddenPanel = nil
+              end
+       end
+
+       function onCompleteSoundExp( event )
+              -- body
+              --print( "Liberando Sonido Explicativo" )
+              audio.dispose( handle )
+              handle = nil
+              if (event.completed) then
+                 nextSoundExp()    
+              end
+       end
+
+       local function playSoundExp( name )
+              -- body
+              handle = audio.loadSound( audioDir..name..".mp3" )
+              audio.play( handle, {channel = ch, onComplete = onCompleteSoundExp} )
+       end
+
+       function nextSoundExp( )
+              -- body
+              if (contExp <= #mySoundsExp) then
+                playSoundExp( mySoundsExp[contExp] )
+                contExp = contExp + 1
+              else
+                removeHiddenPanel()
+                timerStash.createToys = timer.performWithDelay( 2000, createCloset )
+              end
+       end
+
+       function playSoundExpInic( )
+              -- body 
+               mySoundsExp = {"genius_armarioJug1", "genius_armarioJug2"}
+              if (_G.firstStoreToy) then
+                     _G.firstStoreToy = false
+                     contExp = 1       
+              else
+                     contExp = 100
+              end
+              createHiddenPanel( )
+              nextSoundExp()
+       end
+
        _G.CurrentPage = curPage 
 
-       print( "TOTOAL: "..menuGroup.numChildren )
+       --print( "TOTOAL: "..menuGroup.numChildren )
        back = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
        back:setFillColor( 255, 249, 231 )
        menuGroup:insert(back)
@@ -244,14 +314,14 @@
               text = "Arm\nd\n",     
               x = display.contentCenterX,
               y = display.contentCenterY,
-              width = 180,     --required for multi-line and alignment
+              width = 250,     --required for multi-line and alignment
               font = native.systemFontBold,   
               fontSize = 75,
               align = "right"  --new alignment parameter
        }
        textDoorLeft = display.newText(options)
-       textDoorLeft.x = display.contentCenterX - textDoorLeft.contentWidth/2 + 38
-       textDoorLeft.y = doorLeft.y - 62
+       textDoorLeft.x = display.contentCenterX - textDoorLeft.contentWidth/2
+       textDoorLeft.y = doorLeft.y - 17
        textDoorLeft:setFillColor( 194, 146, 84 )
        left:insert(textDoorLeft)
 
@@ -259,17 +329,25 @@
               text = "Jugu",     
               x = display.contentCenterX,
               y = display.contentCenterY,
-              width = 180,     --required for multi-line and alignment
+              width = 250,     --required for multi-line and alignment
               font = native.systemFontBold,   
               fontSize = 75,
               align = "right"  --new alignment parameter
        }
+
        textDoorLeft2 = display.newText(options)
        textDoorLeft2.x = display.contentCenterX - textDoorLeft2.contentWidth/2 - 3
-       textDoorLeft2.y = doorLeft.y + 75
+       textDoorLeft2.y = doorLeft.y + 64
        textDoorLeft2:setFillColor( 194, 146, 84 )
        left:insert(textDoorLeft2)
 
+       if (system.getInfo("environment")=="simulator") then
+              textDoorLeft.x = display.contentCenterX - textDoorLeft.contentWidth/2 + 38
+              textDoorLeft.y = doorLeft.y - 62
+              textDoorLeft2.x = display.contentCenterX - textDoorLeft2.contentWidth/2 - 3
+              textDoorLeft2.y = doorLeft.y + 75
+       end
+       
        right = display.newGroup( )
        doorRight = display.newImageRect( imgDir.. "puertaEst.jpg", 420.284  , 596.293  ); 
        doorRight.x = display.contentCenterX + doorRight.contentWidth/2 ; doorRight.y = display.contentCenterY+42;
@@ -279,7 +357,7 @@
               text = "ario\ne\netes",     
               x = display.contentCenterX,
               y = display.contentCenterY,
-              width = 150,     --required for multi-line and alignment
+              width = 250,     --required for multi-line and alignment
               font = native.systemFontBold,   
               fontSize = 75,
               align = "left"  --new alignment parameter
@@ -292,7 +370,7 @@
 
        if (_G.StoreToysUnlocked) then
               createToys() 
-              timerStash.createToys = timer.performWithDelay( 2000, createCloset )   
+              playSoundExpInic( )
        else
               local myDialog
               local function onCompleteC( event )
@@ -313,7 +391,7 @@
               end
               menuGroup:insert(left)
               menuGroup:insert(right)
-              myDialog  = createMyDialog("Armario cerrado", "Lo siento, el genio todavia no ha desbloqueado este armario magico", nil, "Confirmar", onCompleteC)
+              myDialog  = createMyDialog("ARMARIO CERRADO", "Lo siento, el genio todavía no ha desbloqueado este armario mágico", nil, "Confirmar", onCompleteC)
               menuGroup:insert(myDialog)
        end
        menuGroup:insert( createTextCoin( ) )

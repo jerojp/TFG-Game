@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 52 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -120,8 +116,16 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
 
        -- (BOTTOM) External code will render here 
        require( "ControlScene" )
+require("viewGenius")
 
 kwkexp:pause( )
+
+local gpGenius = createGenius( )
+gpGenius:scale( 0.3, 0.3 )
+gpGenius:translate( display.contentWidth - (gpGenius.Tablet.contentWidth*1.85) , display.contentHeight - (gpGenius.Tablet.contentHeight *1.10) )
+gpGenius.alpha = 0
+menuGroup:insert( gpGenius )
+gpGenius.genius:pause( )
 
 _G.Level = 4
 _G.Phase = 2
@@ -131,7 +135,12 @@ local sub = {"Estoy muy agusto aquí, pero es hora de irse. Voy a tomar una foto
 
 addCharacter(kwkexp, aud, sub)
 
-local sec = {1}
+local aud = {"genio_oFoto.mp3"}
+local sub = {"Escribe la letra O para poder tomar la foto."}
+
+addCharacter(gpGenius.genius, aud, sub)
+
+local sec = {1, 2}
 setSecuence( sec )
 
 playScene( "page_49" ) 

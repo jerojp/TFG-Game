@@ -10,19 +10,32 @@ local text2
 local ch = 1
 local audioHandle
 
+local function removeStatitics(  )
+  -- body
+  local results
+  local reason
+  --Exercise Draw
+  for i=1,5 do
+    results, reason = os.remove( system.pathForFile( "screen"..i.."1.jpg", system.DocumentsDirectory  ) )
+      results, reason = os.remove( system.pathForFile( "screen"..i.."2.jpg", system.DocumentsDirectory  ) )     
+  end
+  
+  for i=1,5 do
+      results, reason = os.remove( system.pathForFile( "audioExLet"..i.."1.wav", system.DocumentsDirectory  ) )
+      
+      results, reason = os.remove( system.pathForFile( "audioExLet"..i.."2.wav", system.DocumentsDirectory  ) )
+  end
+end
+
 local function butIntro(event) 
     if (event.phase == "ended" or event.phase == "cancelled") then
-        print( "Boton DE INICIO" )
         local destDir = system.DocumentsDirectory  -- where the file is stored
         local results, reason = os.remove( system.pathForFile( "saveGame.json", destDir  ) )
-        if results then
-            print( "file removed" )
-        else
-            print( "file does not exist", reason )
-        end
+        
         display.remove( gp_cloud )
         gp_cloud = nil
         loadSettingGame( )
+        removeStatitics(  )
         _G.CurrentPage = 2 
         _G.GameStarted = true
         dispose(); director:changeScene( "page_2", "fade" )
@@ -45,6 +58,8 @@ end
 local function btnEtadistics( event )
     -- body
     if (event.phase == "ended" or event.phase == "cancelled") then
+        display.remove( gp_cloud )
+        gp_cloud = nil
        _G.CurrentPage = 21
         dispose(); director:changeScene( "page_23", "fade" )  
     end
@@ -60,6 +75,8 @@ end
 local function btnStoreToys( event )
 -- body
     if (event.phase == "ended" or event.phase == "cancelled") then
+        display.remove( gp_cloud )
+        gp_cloud = nil
         dispose(); director:changeScene( "page_65", "fade" ) 
        --[[local parameters = {nameToy="Elefante", pathToy="objeto241.png", costToy="300", widthToy = 233*1.5 , heightToy = 168*1.5}
         dispose(); director:changeScene( parameters, "viewNewToy", "fade" ) ]]--
@@ -164,7 +181,7 @@ local function createButtons( )
             height = 100,
             defaultFile = imgDir.. "button.png",
             --overFile = imgDir.. "button.png",
-            label = "Estadisticas",
+            label = "Estadísticas",
             labelColor = { default={ 255, 255, 255 }, over={ 0, 0, 210 } },
             fontSize = 30,
             onEvent = btnEtadistics

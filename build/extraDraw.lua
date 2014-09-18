@@ -1,4 +1,5 @@
 require( "textCoin" )
+require( "createMyObjects" )
 local lineTable
 local linePoints
 local numPointPressed
@@ -11,16 +12,10 @@ local function finalizeLevel( )
   -- body
   local function nextScene( event )
     -- body
+    _G.LastDifDraw = _G.DifficultLevel
     local screenCap = display.captureScreen( false )
     display.save( screenCap, { filename="screen".._G.Level.._G.Phase..".jpg", baseDir=system.DocumentsDirectory, isFullResolution=true } )
     director:changeScene( "page_"..18, "fade" ) 
-  end
-  print( "FINALIZADO" )
-
-  if (_G.Phase == 1) then
-    _G.SecondFaseDraw[_G.Level] = true  
-  else
-    _G.SecondFaseDraw[_G.Level] = false
   end
   
   textCoinUpdate( 150, "add" )
@@ -48,7 +43,6 @@ local function checkPoint( groupPoint, x, y, radiusPincel, maxChildren )
 
       if ( distance < objectSize ) then
         if (not pressedPointLeft and i~=1) then
-          print( "--------BORRA Y REINICIAR---------" )
             --Reproducir audio para correccion
           isErase = true
           numPointPressed = 0
@@ -56,7 +50,6 @@ local function checkPoint( groupPoint, x, y, radiusPincel, maxChildren )
           if ( i == 1) then
             pressedPointLeft = true
           end
-          print( "--------ENTRAA "..i.."---------" )
           groupPoint[i] = nil
           numPointPressed = numPointPressed + 1
   
@@ -109,6 +102,8 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
       _G.TotalAddCoinEx = 0
       local completeOff
       local completeOn
+      local sc
+      local limitLetter = 580
 
       completeOn = function ( obj )
             -- body
@@ -180,18 +175,37 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
         -- body
         local ch = 1
         local audioHandle
-        local function onCompleteSound2()
+        local hollowRect
+
+        local function removeHollowRect()
+          menuGroup:remove(hollowRect)
+          hollowRect:removeSelf( )
+          hollowRect = nil
+        end
+
+        function onCompleteSound2()
           -- body
+          removeHollowRect()
           audio.dispose( audioHandle )
           audioHandle = nil
           removeHiddenPanel()
         end
-        local function onCompleteSound1()
+        function onCompleteSound1(event)
           -- body
-          audio.dispose( audioHandle )
-          audioHandle = audio.loadSound( audioDir.."geniusGR2.mp3" )
-          audio.play( audioHandle , {channel = ch, onComplete = onCompleteSound2} )
+          --removeHollowRect()
+          if (event.completed) then
+            audio.dispose( audioHandle )
+            hollowRect = createHollowRectangle( Paleta.x - Paleta.contentWidth/2, Paleta.y - Paleta.contentHeight/2, Paleta.contentWidth , Paleta.contentHeight )
+            audioHandle = audio.loadSound( audioDir.."geniusGR2.mp3" )
+            audio.play( audioHandle , {channel = ch, onComplete = onCompleteSound2} )
+          else
+            audio.dispose( audioHandle )
+            audioHandle = nil
+            removeHiddenPanel()
+          end
         end
+        --hollowRect = createHollowRectangle( display.contentCenterX - gpTotal.contentWidth/2, display.contentCenterY - gpTotal.contentHeight/2 - 100 , gpTotal.contentWidth+50 , gpTotal.contentHeight+50 )
+        --menuGroup:insert(hollowRect)
         audioHandle = audio.loadSound( audioDir.."geniusGR1.mp3" )
         createHiddenPanel()
         audio.play( audioHandle , {channel = ch, onComplete = onCompleteSound1} )
@@ -207,21 +221,31 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
       faultCounter = 1 -- Misses out of the drawing area 
       MAX_FAULT = 2
 
-      if(_G.DifficultLevel == 1) then  -- Easy
-        gpTotal:scale( 1.5, 1.5 )
-        radius = radius * 1.5
-      elseif (_G.DifficultLevel == 3) then  -- Hard
-        gpTotal:scale( 0.7, 0.7 )      
-        radius = radius * 0.7
+      if ((_G.LastDifDraw~=_G.DifficultLevel and _G.Phase == 2) or _G.Phase==1) then
+        if(_G.DifficultLevel == 1 and Letra.contentHeight*1.5 < limitLetter) then  -- Easy
+          gpTotal:scale( 1.5, 1.5 )
+          sc = 1.5
+          radius = radius * 1.5
+        elseif (_G.DifficultLevel == 3) then  -- Hard
+          gpTotal:scale( 0.7, 0.7 )      
+          sc = 0.7
+          radius = radius * 0.7
+        else
+          sc = 1.0
+        end  
+      end    
+
+      if (_G.Phase == 1) then
+        _G.ScaleDraw = sc
+      else
+        if (Letra.contentHeight*_G.ScaleDraw * 0.85 < limitLetter) then
+          _G.ScaleDraw = _G.ScaleDraw * 0.85
+          gpTotal:scale( _G.ScaleDraw, _G.ScaleDraw )
+          radius = radius * _G.ScaleDraw
+        end
       end
 
-      if (_G.SecondFaseDraw[_G.Level]) then
-        print( "Segunda Fase" )
-        gpTotal:scale( 0.85, 0.85 )
-        radius = radius * 0.85
-      end
-
-      copyToTable()
+      erase()
 
        -- (TOP) External code will render here 
 
@@ -432,13 +456,11 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
                         checkPoint(groupPoint, pt.x, pt.y, lineWidth/2, groupPointOrigin.numChildren)
                 end                
               else
-                print( "INICIOOOOOOOOOOOOOOOO" )
                 --inicDraw(event)
               end
         
         elseif event.phase=="cancelled" or "ended" then
                 --display.getCurrentStage():setFocus(nil)
-                print( "FINALIZADO POR : "..event.target.name )
                 if(numPointPressed == groupPointOrigin.numChildren) then
                   -- Mostrar audio de ejercicio acabado correctamente y cambiar pagina
                   finalizeLevel()    
@@ -497,14 +519,12 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
             enterPaleta = true
        	    if (faultCounter < MAX_FAULT) then 
               --Reproducir audio de ayuda
-              print( "Cuenta FALTAAAAAAA" )
-              print( enterPaleta )
               faultCounter = faultCounter + 1  
             else 
-              if (Letra.contentHeight*1.05 < 600) then
-                print( "ESCALAAAAAAA" )
+              if (Letra.contentHeight*1.05 < limitLetter) then
                 gpTotal:scale( 1.05, 1.05 )
                 radius = radius * 1.05
+                _G.ScaleDraw = _G.ScaleDraw * 1.05
               end
               faultCounter = 1
               --Reproducir audio explicativo de subida de nivel 
@@ -513,7 +533,6 @@ function addExtra( menuGroup, Letra, groupPointOrigin, radius, arrow, gpTotal )
             finalizeDraw()
           end
         elseif (event.phase=="cancelled" or "ended") then
-          print( "REINICIAR FALTAAAAAAA" )
           enterPaleta = false
         end 
         return true 

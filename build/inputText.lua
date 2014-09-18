@@ -84,7 +84,6 @@
                   object.isFocus = true
                 elseif object.isFocus then
                   if event.phase == "ended" or event.phase == "cancelled" then
-                      print( "SE borra todo....." )
                       display.getCurrentStage():setFocus( nil )
                       object.isFocus = false
                       deleteMyDialog( myDialog )

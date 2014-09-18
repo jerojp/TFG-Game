@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 25 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -158,7 +154,7 @@ local sub = {"Hola, te he llamado porque me acaban de dar un mapa de un tesoro y
 addCharacter(kwkboss, aud, sub)
 
 aud = {"exp_br1.mp3"}
-sub = {"Vale jefe, pongo rumbo a brasil ahora mismo."}
+sub = {"Vale jefe, pongo rumbo a brasil ahora mismo. !Brasil, sol y playa qué divertido!"}
 
 addCharacter(nil, aud, sub)
 

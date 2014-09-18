@@ -33,7 +33,7 @@ local function playScene22( )
 	-- body
 
 	local aud = {"eli_6.mp3"}
-	local sub = {"La encontré cuando caminaba por la montaña, un viejo sabio del pueblo me ha dicho que tiene un poder grandioso."}
+	local sub = {"La encontré cuando caminaba por la montaña, un viejo sabio del pueblo me ha dicho que tiene un poder misterioso."}
 
 	addCharacter(nurse, aud, sub)
 
@@ -44,7 +44,7 @@ local function playScene22( )
 	addCharacter(explorer, aud, sub)
 
 	aud = {"genio_sz1.mp3"}
-	sub = {"Parece que no miente, esta llave está ligada a la caja que prometí darte si superabas todas tus aventura. Cuando consigas finalizar todas las aventuras te daré la caja misteriosa y al fin podremos ver que contiene."}
+	sub = {"Parece que no miente, esta llave está ligada a la caja que te prometí darte si superabas todas tus aventura. Cuando consigas finalizar todas las aventuras te daré la caja misteriosa y al fin podremos ver que contiene."}
 
 	addCharacter(gpGenius.genius, aud, sub, gpGenius)
 

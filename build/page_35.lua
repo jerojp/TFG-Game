@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 35 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -116,7 +112,7 @@ kwkexp:pause( )
 _G.Level = 3
 _G.Phase = 1
 
-local aud = {"exp_ps1"}
+local aud = {"exp_ps1.mp3"}
 local sub = {"A ver que ponen en las noticias hoy. !Vaya! Han hallado un barco hundido en el Polo Sur. Es la oportunidad perfecta para viajar al Polo Sur en busca de algún tesoro. Genio nos ponemos en marcha."}
 
 addCharacter(kwkexp, aud, sub)

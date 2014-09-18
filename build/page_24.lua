@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 24 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -92,7 +88,7 @@ elseif(level==2) then
 elseif(level==3) then
     l = "I"
 elseif(level==4) then
-    l = "A"
+    l = "O"
 else
     l = "U"
 end
@@ -103,10 +99,6 @@ else
 	phase = 1
 end
 
-print( _G.Level )
-print( _G.Phase )
-print( _G.Level + (_G.Phase-1) )
-print(_G.IndexStat )
 if (_G.UpLevelSample[_G.IndexStat][1] == 1) then
 	difText = "Fácil"
 elseif (_G.UpLevelSample[_G.IndexStat][1] == 2) then
@@ -119,8 +111,8 @@ end
 
 if (#_G.UpLevelSample[_G.IndexStat] > 1) then
 	finalDifText = "+"	
-	print( "Entra Subida Dif: "..#_G.UpLevelSample[_G.IndexStat] )
-	print( _G.UpLevelSample[_G.IndexStat][2] )
+	--print( "Entra Subida Dif: "..#_G.UpLevelSample[_G.IndexStat] )
+	--print( _G.UpLevelSample[_G.IndexStat][2] )
 end
 
 background = display.newRect( 0, 0, display.contentWidth, display.contentHeight)
@@ -131,7 +123,7 @@ tableEst = display.newImageRect( imgDir.. "tablaEstadisticaNivel.png", 879, 403 
 tableEst.x = 640; tableEst.y = 400;
 myGroup:insert(tableEst) 
 
-textIntroLevel = display.newText( "Estadisticas Nivel :  "..l, 300, 50, native.systemFont, 25 )
+textIntroLevel = display.newText( "Estadísticas Nivel :  "..l, 300, 50, native.systemFont, 25 )
 textIntroLevel:setFillColor( 117, 76, 36 )
 myGroup:insert(textIntroLevel)
 
@@ -177,7 +169,7 @@ for i=2, #_G.UpLevelSample[_G.IndexStat] do
 	else
 		fl.y = 240 + 38*(_G.UpLevelSample[_G.IndexStat][i] - 1) + 1/(_G.UpLevelSample[_G.IndexStat][i]*0.035)
 	end
-	print("Y: "..fl.y)
+	--print("Y: "..fl.y)
 	myGroup:insert( fl )
 end
 
@@ -227,7 +219,7 @@ myGroup:insert(textFail)
 local textTime = display.newText( "TIEMPO", 60, 710, native.systemFontBold, 25 )
 textTime:setFillColor( 117, 76, 36 )
 myGroup:insert(textTime)
-local textExpTime = display.newText( "Indica el tiempo transcurrido en proporcionar una respuesta correcta valor de tiempo medio esperado : 1.50 seg", 180, 710, 800, 0, native.systemFont, 25 )
+local textExpTime = display.newText( "Indica el tiempo transcurrido en proporcionar una respuesta correcta valor de tiempo medio esperado : 2.50 seg", 180, 710, 800, 0, native.systemFont, 25 )
 textExpTime:setFillColor( 117, 76, 36 )
 myGroup:insert(textExpTime)
 --[[
@@ -291,7 +283,7 @@ end
             local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_23", "fade" ) 
             end 
-            timerStash.newTimer_791 = timer.performWithDelay(0, myClosure_switch, 1) 
+            timerStash.newTimer_208 = timer.performWithDelay(0, myClosure_switch, 1) 
          end 
        end 
 

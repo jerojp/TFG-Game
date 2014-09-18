@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 47 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -51,16 +47,31 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
 
 _G.Level = 4
 _G.Phase = 1
+local audioHandle
 
-local aud = {"exp_ja7.mp3"}
-local sub = {"El guardia está dormido. Entremos sin hacer ruido."}
+local function playSceneRes( )
+	-- body
+	local aud = {"exp_ja7.mp3"}
+	local sub = {"El guardia está dormido. Entremos sin hacer ruido."}
 
-addCharacter(nil, aud, sub)
+	addCharacter(nil, aud, sub)
 
-local sec = {1}
-setSecuence( sec )
+	local sec = {1}
+	setSecuence( sec )
 
-playScene( "page_48" ) 
+	playScene( "page_48" )
+end
+
+function onCompleteSoundDor(event)
+	-- body
+	audio.dispose( audioHandle )
+	audioHandle = nil
+	if (event.completed) then
+		playSceneRes()
+	end
+end
+audioHandle = audio.loadSound( audioDir.."dormido.mp3" )
+audio.play( audioHandle ,{time = 5000, channel = 1, onComplete = onCompleteSoundDor} ) 
 
        -- FondoCazador positioning 
        FondoCazador = display.newImageRect( imgDir.. "p47_fondocazador.png", 1280, 800 ); 

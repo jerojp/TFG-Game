@@ -1,18 +1,35 @@
 require( "ControlScene" )
 
+function onCompleteSoundCamion(event)
+	-- body
+	audio.dispose( audioHandle )
+	audioHandle = nil
+end
+
 local function translateTruck( fun )
 	-- body
 	local oldX = kwktruckf.x
 	local function onCompleteTruckT( )
 		-- body
+		if ( audio.isChannelActive( 1 ) ) then
+			audio.stop( 1 )
+			onCompleteSoundCamion()
+		end
 		fun(300)
 	end
 	local function onCompleteTruckF( )
 		-- body
-		transition.to( kwktruckt, {time = 2000, x = oldX, onComplete = onCompleteTruckT } )		
+		if ( audio.isChannelActive( 1 ) ) then
+			audio.stop( 1 )
+		end
+		audioHandle = audio.loadSound( audioDir.."camion.mp3" )
+		audio.play( audioHandle, { channel = 1, fadein = 2000, onComplete = onCompleteSoundCamion} )
+		transitionStash.cam = transition.to( kwktruckt, {time = 4000, x = oldX, onComplete = onCompleteTruckT } )		
 	end
-
-	transition.to( kwktruckf, {time = 2000, x = -kwktruckf.contentWidth, onComplete = onCompleteTruckF } )
+	audioHandle = audio.loadSound( audioDir.."camion.mp3" )
+	audio.play( audioHandle, { channel = 1, onComplete = onCompleteSoundCamion} )
+	audio.fade( { channel=1, time=3000, volume=0.5 } )
+	transitionStash.cam = transition.to( kwktruckf, {time = 3000, x = -kwktruckf.contentWidth, onComplete = onCompleteTruckF } )
 end
 
 kwkexp:pause( )

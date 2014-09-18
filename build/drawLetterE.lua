@@ -96,7 +96,7 @@
       gp_totalLetter:insert(gp_letter)
       gp_totalLetter:insert(gp_point)
       gp_totalLetter:insert( arrow )
-
+      
       gp_totalLetter.anchorChildren = true
 
       addExtra( menuGroup, gp_letter, gp_point, radius, arrow, gp_totalLetter )   

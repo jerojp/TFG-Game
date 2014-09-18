@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 43 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -166,7 +162,7 @@ local sub = {"Al fin hemos encontrado el tesoro. Muchas gracias Anori.",
 
 addCharacter(kwkexp, aud, sub)
 
-aud = {"esquimal_7.mp3"}
+aud = {"anori_7.mp3"}
 sub = {"De nada. Vuelve siempre que quieras."}
 
 addCharacter(kwkesq, aud, sub)

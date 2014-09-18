@@ -8,7 +8,7 @@ local secuence = {}
 local events = nil
 local cont = 0
 local page = nil
-local panelNext = nil
+local panelNext
 local posX
 local moveRight = false
 local isMoveGenio = false
@@ -18,7 +18,9 @@ local arrow
 local completeArrowOff
 local completeArrowOn
 local arrowCreated = false
+local panelAdvanceCreated = false
 local removeArrow
+local playingMyScene
 
 local function onCompleteGenioMove( )
 	-- body
@@ -28,7 +30,6 @@ end
 local function moveGenio( event )
 	-- body
 	if (gtStash.gt_mypathGenMove) then
-		print( "EXISTEEEEEE" )
 		--gtStash.gt_mypathGenMove:play()
 	else
 		if (allCharacter[secuence[cont]].sprite) then
@@ -105,32 +106,41 @@ end
 
 function createPanelAutoAdvance( )
 	-- body
-	if (not panelNext) then
-		
-		print( "Creando panel auto avance...." )
+	if (not panelAdvanceCreated) then
 		panelNext = display.newRect( 0, 0, display.contentWidth , display.contentHeight )
 		panelNext.alpha = 0.01
 		panelNext:addEventListener( "touch", nextScene )
+		--menuGroup:insert(panelNext)
+		panelAdvanceCreated = true
+	else
+		--print( "NO SE CREA EL PANEL AUTO ADVANCE" )
 	end
+end
+
+function isPlayMyScene( )
+	-- body
+	return playingMyScene
 end
 
 function isCreatedPanelAutoAdvance( )
 	-- body
-	if (panelNext) then
-		return true
-	else
-		return false
-	end
+	return panelAdvanceCreated
 end
 
 function removePanelAutoAdvance( sceneNotComplete )
 	-- body
-	panelNext:removeSelf( )
-	panelNext = nil
-	moveRight = false
-	removeArrow( )
-	if (not audio.isChannelActive( 1 ) and sceneNotComplete ) then
-		checkEvents("autoAdvance")
+	if (panelAdvanceCreated) then
+		--menuGroup:remove(panelNext)
+		if (panelNext) then
+			panelNext:removeSelf( )
+			panelNext = nil
+		end
+		panelAdvanceCreated = false
+		moveRight = false
+		removeArrow( )
+		if (not audio.isChannelActive( 1 ) and sceneNotComplete ) then
+			checkEvents("autoAdvance")
+		end
 	end
 end
 
@@ -172,25 +182,24 @@ end
 local function checkTimer(time)
 	-- body
 	if (_G.Subtitle or not _G.AutoNextPage) then
-		if(not panelNext) then
-			createPanelAutoAdvance( )
-		end
+		createPanelAutoAdvance( )
 	end
 	local function completeTimer( event )
 			-- body
-		allCharacter[secuence[cont]]:clearObject()
-		playScene(nil)
+		if (cont ~= 0) then
+			allCharacter[secuence[cont]]:clearObject()
+			playScene(nil)
+		end
 	end
 	if (not time) then
 		time = 300
 	end
-	timerStash.timer_waitNext = timer.performWithDelay( time, completeTimer )
+	timerStash.timer_waitNext2 = timer.performWithDelay( time, completeTimer )
 end
 
 checkEvents = function( origin )
 	-- body
 	if ((_G.Subtitle or not _G.AutoNextPage) and origin=="panelAdvance" and not inEvent ) or ((not _G.Subtitle and _G.AutoNextPage) and origin=="autoAdvance") then
-		print( "Entra checkEvents "..origin )
 		removeArrow( )
 		if (events and events[cont]) then
 			inEvent = true
@@ -198,7 +207,7 @@ checkEvents = function( origin )
 				events[cont].value[2]( checkTimer )
 			elseif (events[cont].mytype == "image" and events[cont].value[1] == 1) then
 				allCharacter[secuence[cont]]:addImage(events[cont].value[2])
-				checkTimer(2300)
+				checkTimer(4300)
 			else
 				inEvent = false
 				checkTimer(300)	
@@ -212,6 +221,7 @@ end
 function onCompleteCharacter(event)
 	if (event.completed) then
 		if (_G.Subtitle or not _G.AutoNextPage) then
+			createPanelAutoAdvance( )
 			createArrow( )
 		end
 		if (allCharacter[secuence[cont]]) then
@@ -223,9 +233,8 @@ end
 
 function finalizeScene( notGoNextPage )
 	-- body
-	print("*******FINALIZAR ESCENA*********")
 	if (notGoNextPage) then
-		if ( table.maxn( allCharacter ) > 0 ) then
+		if ( table.maxn( allCharacter ) > 0 and cont > 0) then
 			allCharacter[secuence[cont]]:clearObject()
 		end
 	end
@@ -235,9 +244,8 @@ function finalizeScene( notGoNextPage )
 		isMoveGenio = false
 	end
 
-	if (panelNext) then
-		removePanelAutoAdvance()
-	end
+	removePanelAutoAdvance(false)
+	
 	table.remove( allCharacter )
 	allCharacter = nil
 	_G.gSprites = nil
@@ -245,11 +253,12 @@ function finalizeScene( notGoNextPage )
 
 	events = nil
 	secuence = nil
+
+	playingMyScene = false
 	if (page == -1) then
 		_G.FunctionDelHiddenPanel()
 	else
 		if (not notGoNextPage) then
-			print("*******CAMBIAR ESCENA*********")
 			if (_G.CurrentPage == 26) then
 				director:changeScene( page)
 			else
@@ -286,6 +295,7 @@ function playScene( p, param )
 	-- body
 	inEvent = false
 	if (p) then
+		playingMyScene = true
 		cont = 0
 		page = p
 		parameters = param

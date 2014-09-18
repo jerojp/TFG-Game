@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 44 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -174,7 +170,7 @@ local sub = {"!Qué lastima!, un oso panda ha sido secuestrado para venderlo. No
 addCharacter(kwkexp, aud, sub)
 
 local aud2 = {"exp_ja2.mp3"}
-local sub2 = {"!No! La tablet se ha roto. Espero que el Ali esté bien. Debe viajar rápido a Japón para poder arreglarla."}
+local sub2 = {"!No! La tablet se ha roto. Espero que el Ali esté bien. Debo viajar rápido a Japón para poder arreglarla."}
 
 addCharacter(kwkexphumo, aud2, sub2)
 

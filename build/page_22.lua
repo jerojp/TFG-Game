@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 22 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -194,7 +190,7 @@ local function playScene22( )
 	-- body
 
 	local aud = {"eli_6.mp3"}
-	local sub = {"La encontré cuando caminaba por la montaña, un viejo sabio del pueblo me ha dicho que tiene un poder grandioso."}
+	local sub = {"La encontré cuando caminaba por la montaña, un viejo sabio del pueblo me ha dicho que tiene un poder misterioso."}
 
 	addCharacter(nurse, aud, sub)
 
@@ -205,7 +201,7 @@ local function playScene22( )
 	addCharacter(explorer, aud, sub)
 
 	aud = {"genio_sz1.mp3"}
-	sub = {"Parece que no miente, esta llave está ligada a la caja que prometí darte si superabas todas tus aventura. Cuando consigas finalizar todas las aventuras te daré la caja misteriosa y al fin podremos ver que contiene."}
+	sub = {"Parece que no miente, esta llave está ligada a la caja que te prometí darte si superabas todas tus aventura. Cuando consigas finalizar todas las aventuras te daré la caja misteriosa y al fin podremos ver que contiene."}
 
 	addCharacter(gpGenius.genius, aud, sub, gpGenius)
 

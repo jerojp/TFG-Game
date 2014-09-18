@@ -27,8 +27,7 @@ local facebookImage = false
 local facebookTable = false
 local updateImage = false
 local updateTable = false
-
-print( "------------Pagina 21------------" )
+local hiddenPanel
 
 imageTable = display.newImageRect( imgDir.."tablaEstadistica.png", 1000, 1155)
 imageTable.x = display.contentCenterX ; imageTable.y = display.contentCenterY+200
@@ -56,10 +55,31 @@ menuGroup:insert(scrollView)
 
 local function goToStatistics( event )
 	-- body
-	print( "!!!!!SE PULSA EL BOTON DE VER ESTADISITICAS!!!!" )
 	_G.IndexStat = event.target.index
 	dispose()
 	director:changeScene( "page_24", "fade" )
+end
+
+local function createHiddenPanel( )
+	local function doNothing( event )
+	  -- body
+	  return true
+	end
+	-- body
+	hiddenPanel = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
+	hiddenPanel.alpha = 0.5
+	menuGroup:insert(hiddenPanel)
+	hiddenPanel:addEventListener( "touch", doNothing )
+	hiddenPanel:addEventListener( "tap", doNothing )
+end
+
+local function removeHiddenPanel( )
+	-- body
+	if (hiddenPanel) then
+	  menuGroup:remove(hiddenPanel)
+	  hiddenPanel:removeSelf( )
+	  hiddenPanel = nil
+	end
 end
 
 local function closeImage( event )
@@ -72,6 +92,7 @@ local function closeImage( event )
 	imageClose = nil
 	scrollView.alpha = 1.0
 	scrollView._view._isVerticalScrollingDisabled = false
+	removeHiddenPanel( )
 end
 
 local function viewImage( event )
@@ -80,6 +101,7 @@ local function viewImage( event )
 	local path = system.pathForFile( "screen"..object.level..object.phase..".jpg", system.DocumentsDirectory )
 	local file = io.open( path )
 	if file then
+		createHiddenPanel( )
 		scrollView._view._isVerticalScrollingDisabled = true
 
 		rectBehindImage = display.newRoundedRect( 0, 0, 670, 330, 25 )
@@ -104,6 +126,7 @@ end
 local function onCompleteSound( event )
 		-- body
 	scrollView.alpha = 1.0
+	removeHiddenPanel( )
 end
 
 local function playAudio( event )
@@ -114,13 +137,13 @@ local function playAudio( event )
     if file then 
       io.close(file) 
       scrollView.alpha = 0.8
+      createHiddenPanel( )
       media.playSound("audioExLet"..object.level..object.phase..".wav", system.DocumentsDirectory, onCompleteSound ) 
     end  
 end
 
 local function uploadPhotoTable( )
 	-- body
-	print("------Entra a subir foto tabla------")
     local attachmentTable = {
     	name = "Reise, el viaje de las vocales",
         message = "Resultado de ".._G.NameUser.." para el ejercicio de igualacion de la muestra",
@@ -145,7 +168,7 @@ local function uploadPhotoDraw( )
 end
 
 local function onLoginSuccess()
-    print( "Funcion onLoginSuccess" )
+    --print( "Funcion onLoginSuccess" )
     if (_G.UploadImageDraw) then
     	uploadPhotoDraw( )
     elseif (_G.UploadImageTable) then
@@ -165,7 +188,7 @@ local function fbListener( event )
 					
 		onLoginSuccess()
 	elseif ( "request" == event.type ) then
-		print( event.response )
+		--print( event.response )
 		if ( not event.isError ) then
 			--Hay que resetear _G.UploadImageTable y _G.UploadImageDraw
 			if (_G.UploadImageDraw) then
@@ -176,11 +199,9 @@ local function fbListener( event )
 			elseif(_G.UploadImageTable) then
 				_G.UploadImageTable = false
 			end
-			native.showAlert( "EXITO", response, { "OK" } )
+			native.showAlert( "EXITO", "La foto ha sido subida con éxito", { "OK" } )
 		else
 			native.showAlert( "ERROR", "Ha ocurrido un error al subir la foto, intentelo más tarde", { "OK" } )
-			native.showAlert( "ERROR", response, { "OK" } )
-						
 		end
 	end
 
@@ -206,7 +227,6 @@ function confirmUpdate( event )
     	_G.IndexStat = object.index
     	_G.TakePhoto = true
     	_G.UploadImageTable = true
-    	print( "------CAMBIO A ESCENA 22------" )
     	local myClosure_switch = function() 
                 dispose(); director:changeScene( "page_24" )
         end 
@@ -274,13 +294,9 @@ local function updateFacebook( event )
 		local object = event.target
 		
 		if (object.id == "checkTable") then
-			print("Check IG")
 			updateTable = object.isOn	
-			print( updateTable )
 		else
-			print("Check DRAW")
 			updateImage = object.isOn
-			print(updateImage)
 		end	
 	end
 
@@ -395,7 +411,6 @@ local function updateFacebook( event )
 
 	if (object.index) then
 		buttonConfirm.index = object.index
-		print( "Introduce INDEX : "..buttonConfirm.index )
 	end
 
 	local buttonCancel = widget.newButton{
@@ -416,6 +431,8 @@ local function updateFacebook( event )
 end
 
 -- Program
+local objetosMuestra = { "objeto111.png", "objeto112.png", "objeto221.png", "objeto222.png", "objeto331.png", "objeto332.png", "objeto441.png", "objeto442.png", "objeto551.png", "objeto552.png"}
+local imgIG
 
 for i=1,10 do
 	level = math.ceil(i/2)
@@ -424,9 +441,11 @@ for i=1,10 do
 	else 
 		phase = 1
 	end
+	imgIG = display.newImageRect( imgDir..objetosMuestra[i], 60, 50 )
+	imgIG.x = 330; imgIG.y = heightInic + (height*(i-1)) + 10
+	scrollView:insert(imgIG)
 
 	if(_G.Results[i]) then
-		print( "Inserta TABLA" )
 		facebookTable = true
 		local objectTab = display.newText( "Mostrar tabla", 417, heightInic + (height*(i-1)), native.systemFont, 25 )
 		objectTab:setFillColor( color.R, color.G, color.B ) 
@@ -441,7 +460,6 @@ for i=1,10 do
 	fhd = io.open( path )
 	if fhd then
 			facebookImage = true
-			print( "Inserta Imagen" )
    			local objectImage = display.newText( "Ver imagen", 604, heightInic + (height*(i-1)), native.systemFont, 25 )
 			objectImage:setFillColor( color.R, color.G, color.B )
 			objectImage.level = level
@@ -474,7 +492,6 @@ for i=1,10 do
 		objectFacebook:setFillColor( 19, 135, 255 )
 		if (facebookTable) then
 			objectFacebook.index = i
-			print( "Introuce index : "..objectFacebook.index )
 			facebookTable = false
 		end
 		if (facebookImage) then
@@ -495,8 +512,6 @@ for i=1,myTabla.numChildren do
 	myTabla[i]:addEventListener( "tap", goToStatistics )
 end
 
-print( "Antes del if de Tomar foto" )
 if (_G.IsTakePhoto) then
-	print( "-----Llama a subir la foto" )
 	confirmUpdate(nil)
 end

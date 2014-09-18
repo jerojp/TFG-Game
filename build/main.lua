@@ -2,7 +2,7 @@
 -- Copyright (C) 2012 kwiksher.com. All Rights Reserved. 
 -- uses Director class, by Ricardo Rauber 
 -- uses DMC classes, by David McCuskey 
--- Exported on Mon Sep 08 2014 21:50:32 GMT+0200 
+-- Exported on Fri Sep 12 2014 01:10:45 GMT+0200 
 -- uses gTween class, by Josh Tynjala (modified by Kwiksher) 
 
 _G.kwk_readMe = 0 
@@ -16,7 +16,6 @@ json = require("json")
 local function versionCheck(event) if "clicked" == event.action then if event.index == 2 then system.openURL( "https://developer.coronalabs.com/downloads/coronasdk" ) end end end 
 if ( system.getInfo("environment") =="simulator" and system.getInfo("build") ~="2013.2100" ) then native.showAlert("Corona SDK Incompatible Version","Your Corona SDK version is different than the certified one with Kwik. Install build 2013.2100 or you may have issues in your project.",{"OK", "Download"}, versionCheck) end 
 
-Navigation = require("kNavi") 
 local gtween = require("gtween") 
 
 display.setStatusBar( display.HiddenStatusBar ) 
@@ -175,7 +174,6 @@ function pauseMyTimers( )
 	-- body
 	local k, v
 
-    print( "Pausados TODOS los TIMERS" )
     for k,v in pairs(timerStash) do
         timer.pause( v )
     end
@@ -205,7 +203,6 @@ function savedTable(filename )
         local contents = json.encode(t)
         file:write( contents )
         io.close( file )
-        print( "Juego GUARDADO" )
         --printTable(t)
         return true
     else
@@ -232,7 +229,6 @@ function loadSettingGame( )
 	-- body
 	local gameSettingsVars = loadTable("saveGame.json")
 	if (gameSettingsVars) then
-		print( "--------CARGANDO--------" )
 		--printTable(gameSettingsVars)
 		_G.GameStarted = gameSettingsVars.gameStarted
 		_G.NameUser = gameSettingsVars.nameUser
@@ -252,7 +248,6 @@ function loadSettingGame( )
     _G.UploadImageDraw = gameSettingsVars.uploadDraw
     _G.DrawLevel = gameSettingsVars.drawLevel
     _G.DrawPhase = gameSettingsVars.drawPhase
-    _G.SecondFaseDraw = gameSettingsVars.secondFaseDraw
     _G.Subtitle = gameSettingsVars.subtitule
     _G.Age = gameSettingsVars.age
     _G.AutoNextPage = gameSettingsVars.autoNextPage
@@ -269,9 +264,14 @@ function loadSettingGame( )
     _G.firstDrawLetter = gameSettingsVars.firstDrawLetter
     _G.firstSampleSel = gameSettingsVars.firstSampleSel
     _G.firstRecAudio = gameSettingsVars.firstRecAudio
+    _G.firstViewToy = gameSettingsVars.firstViewToy
+    _G.firstStoreToy = gameSettingsVars.firstStoreToy
+    _G.goBackEndLevel = gameSettingsVars.goBackEndLevel
+    _G.LevelCompleted = gameSettingsVars.levelCompleted
+    _G.ScaleDraw = gameSettingsVars.scaleDraw
+    _G.LastDifDraw = gameSettingsVars.changeDifDraw
     --_G.MyCurrentSubtitle = gameSettingsVars.currentSubtitles
 	else
-		print( "--------JUEGO INICIAL--------" )
 		_G.NameUser = "Pedro" -- Name of the user 
         _G.Phase = 1 -- Phase of Level : 1=normal or 2=advance 
         _G.Level = 2 -- Level selected by user, [1,5] 
@@ -282,7 +282,6 @@ function loadSettingGame( )
         _G.numDigCoin = 4 --  
         _G.CurrentPage = 1 --
         _G.LastPage = nil  
-        _G.MyCurrentSubtitle = nil
         _G.GameStarted = false -- 
         _G.IndexStat = 0 
         _G.TakePhoto = false  -- if true screenshot of the result table is taken equalization exercise
@@ -291,7 +290,6 @@ function loadSettingGame( )
         _G.UploadImageDraw = false
         _G.DrawLevel = 0
         _G.DrawPhase = 0
-        _G.SecondFaseDraw = {false, false, false, false, false}
         if (_G.Subtitle == nil) then
             _G.Subtitle = false
         end
@@ -311,15 +309,23 @@ function loadSettingGame( )
         _G.goBackForExercise = false
         _G.FirstVisitMap = true
         _G.goBackEnd = false
+        _G.goBackEndLevel = false
         _G.firstSampleSel = true
         _G.firstDrawLetter = true
         _G.firstRecAudio = true
-        _G.LetterInSyllable = false
+        _G.firstViewToy = true
+        _G.firstStoreToy = true
+        _G.LetterInSyllable = true
+        _G.LevelCompleted = {false, false, false, false, false}
+        _G.ScaleDraw = 1
+        _G.LastDifDraw = 2
+        _G.MyCurrentSubtitle = nil
+        _G.FunctionDelHiddenPanel = nil
+        _G.InPanelOptions = false
   end
 end
 
 createTableSetting = function ()
-	print( "-------------Entra a crear tabla.....--------------" )
 	local gameSettingsVars = {}
 
 	gameSettingsVars.gameStarted = _G.GameStarted
@@ -339,7 +345,6 @@ createTableSetting = function ()
   gameSettingsVars.uploadTable = _G.UploadImageTable
   gameSettingsVars.drawLevel = _G.DrawLevel
   gameSettingsVars.drawPhase = _G.DrawPhase
-  gameSettingsVars.secondFaseDraw = _G.SecondFaseDraw
   gameSettingsVars.subtitule = _G.Subtitle
   gameSettingsVars.age = _G.Age
   gameSettingsVars.autoNextPage = _G.AutoNextPage
@@ -353,18 +358,22 @@ createTableSetting = function ()
   gameSettingsVars.goBackForExercise =  _G.goBackForExercise
   gameSettingsVars.firstVisitMap = _G.FirstVisitMap
   gameSettingsVars.goBackEnd =  _G.goBackEnd
+  gameSettingsVars.goBackEndLevel = _G.goBackEndLevel
   gameSettingsVars.letterInSyllable = _G.LetterInSyllable
   gameSettingsVars.firstDrawLetter = _G.firstDrawLetter
   gameSettingsVars.firstSampleSel = _G.firstSampleSel
   gameSettingsVars.firstRecAudio = _G.firstRecAudio
-
+  gameSettingsVars.firstViewToy = _G.firstViewToy
+  gameSettingsVars.firstStoreToy = _G.firstStoreToy
+  gameSettingsVars.levelCompleted = _G.LevelCompleted
+  gameSettingsVars.scaleDraw = _G.ScaleDraw
+  gameSettingsVars.lastDifDraw = _G.LastDifDraw
 	--printTable(gameSettingsVars)
 	return gameSettingsVars
 end
 
 continueGame = function ( event )
 	-- body
-	print( "Continuar juego ...." )
 	local object = event.target
 
   	if event.phase == "began" then
@@ -372,13 +381,11 @@ continueGame = function ( event )
         object.isFocus = true
     elseif object.isFocus then
       if event.phase == "ended" or event.phase == "cancelled" then
-          local notAutoAdv = {2, 3, 4, 6, 7, 11, 19, 30, 62, 63}
+          local notAutoAdv = {1, 2, 3, 4, 6, 7, 12, 19, 23, 24, 30, 40, 62, 63, 65}
           if (table.indexOf( notAutoAdv, _G.CurrentPage ) == nil) then
-              if ( (_G.Subtitle or not _G.AutoNextPage) and not isCreatedPanelAutoAdvance( )) then
-                print( "Se crea panel de AVANCE AUTO PAGINA ")
+              if ( (_G.Subtitle or not _G.AutoNextPage) and isPlayMyScene())then
                 createPanelAutoAdvance( )
-              elseif ( not _G.Subtitle and _G.AutoNextPage and isCreatedPanelAutoAdvance( ) ) then
-                print( "Se elimina panel de AVANCE AUTO PAGINA " )
+              elseif ( not _G.Subtitle and _G.AutoNextPage and isCreatedPanelAutoAdvance( )) then
                 removePanelAutoAdvance( true )
               end
           end
@@ -414,7 +421,6 @@ end
 
 backMainMenu = function( event )
 	-- body
-	print( "backMainMenu" )
 	local object = event.target
 	if event.phase == "began" then
 
@@ -424,6 +430,8 @@ backMainMenu = function( event )
         if event.phase == "ended" or event.phase == "cancelled" then
         	--guardad y cambiar escena
           finalizeScene( true )
+          audio.stop( 1 )
+          audio.stop( 2 )
     			savedTable("saveGame.json")
     			removePauseMenu()
     			display.getCurrentStage():setFocus( nil )
@@ -444,7 +452,6 @@ continueExercise = function ( event )
         object.isFocus = true
     elseif object.isFocus then
       if event.phase == "ended" or event.phase == "cancelled" then
-          print( "Continuar juego ...." )
           resumeAllTransition()
           resumeMyTimers()
           audio.resume( 1 )
@@ -473,7 +480,6 @@ local function backMainMenuExer( event )
         	if event.phase == "ended" or event.phase == "cancelled" then
         		--guardad y cambiar escena
               _G.Coin = _G.Coin - _G.TotalAddCoinEx
-              print( "----Nuevo COIN : ".._G.Coin )
               audio.stop( 1 )
               audio.stop( 2 )
       				savedTable("saveGame.json")
@@ -712,23 +718,25 @@ onKeyEvent = function ( event )
     if ((system.getInfo("environment")=="device" and "back" == keyName and event.phase == "up") or system.getInfo("environment")=="simulator") then
             if (_G.CurrentPage ~= 1) then
                 local pageExercise = {15, 17, 18, 29, 38, 49, 57}
-                print( "Indice Tabla pausa: ".._G.CurrentPage )
-                print( table.indexOf( pageExercise, _G.CurrentPage ) )
+ 
                 if (table.indexOf( pageExercise, _G.CurrentPage ) ~= nil) then
                     createPauseMenu(true)
                 elseif ( _G.CurrentPage == 24) then
                     cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
                     director:changeScene("page_23")
                 elseif ( _G.CurrentPage == 23 or _G.CurrentPage == 65) then
-                    cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions() 
+                    cancelAllTweens() ; cancelAllTimers(); cancelAllTransitions()
+                    audio.stop( 1 ) 
                     director:changeScene("page_1")
                 else
                     createPauseMenu(false)
                 end
             else
-                facebook.logout()
-                savedTable("saveGame.json")
-                native.requestExit()
+                if (not _G.InPanelOptions) then
+                  facebook.logout()
+                  savedTable("saveGame.json")
+                  native.requestExit()
+                end
             end
             return true
     end 
@@ -750,13 +758,25 @@ if system.getInfo("environment")=="device" then
 else
 	local rectangle2 = display.newRoundedRect( 100, 100, 100, 100, 10 )
     rectangle2.name = "RectPause"
+    rectangle2.alpha = 0.1
 	rectangle2:addEventListener( "tap", onKeyEvent )
 end
 
+--[[
+if ( system.getInfo("environment") =="simulator" ) then 
+   local function monitorMem() 
+       collectgarbage() 
+       print( "MemUsage: " .. collectgarbage("count") ) 
+       local textMem = system.getInfo( "textureMemoryUsed" ) / 1000000 
+       print( "TexMem:   " .. textMem ) 
+   end 
+   Runtime:addEventListener("enterFrame", monitorMem) 
+]]--
 loadSettingGame( ) 
 _G.EnterGame = true
 _G.MyCurrentSubtitle = nil
 _G.FunctionDelHiddenPanel = nil
+_G.InPanelOptions = false
 --Runtime:addEventListener( "key", onKeyEvent ) -- Al salir del juego hay que quitar el evento 
 
    director:changeScene("page_"..goPage)

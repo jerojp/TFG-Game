@@ -103,7 +103,6 @@
 
        local function onCompleteSound( )
          -- body
-         print( "FIN DE REPRODUCIR...." )
          --audio.dispose( audioHandle )
          --audioHandle = nil
          removeHiddenPanel( )
@@ -235,7 +234,6 @@
         local file = io.open(filePath, "r")
         if file then 
           --print( file )
-          print( "REPRODUCIR SONIDO...." )
           io.close(file) 
           createHiddenPanel( )
           media.playSound( dataFileName, system.DocumentsDirectory, onCompleteSound )
@@ -315,8 +313,20 @@
        menuGroup:insert(letra) 
        letra:addEventListener( "tap", playSoundExampleFun )
 
+       local l
+       if(_G.Level==1) then
+        l = "A"
+       elseif(_G.Level==2) then
+        l = "E"
+       elseif(_G.Level==3) then
+        l = "I"
+       elseif(_G.Level==4) then
+        l = "O"
+       else
+        l = "U"
+       end
        -- Grabacion_de_la positioning
-       local textPr = display.newText( "Grabacion de la letra ".._G.Level, display.contentCenterX, display.contentCenterY-300, native.systemFontBold, 34 )
+       local textPr = display.newText( "Grabacion de la letra "..l, display.contentCenterX, display.contentCenterY-300, native.systemFontBold, 34 )
        textPr.x = display.contentCenterX
        textPr:setFillColor( 0 )
        menuGroup:insert( textPr )

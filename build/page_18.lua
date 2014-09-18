@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 18 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -87,6 +83,7 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
        _G.TotalAddCoinEx = 0
        local hiddenPanel
        local timerCont
+       local audioHandleExp
 
        -- (TOP) External code will render here 
         local function finalize( )
@@ -151,7 +148,7 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
         end
       end
 
-       local function onCompleteSoundExample( )
+       function onCompleteSoundExampleRec( )
          -- body
          audio.dispose( audioHandleExample )
          audioHandleExample = nil
@@ -166,12 +163,11 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
          createHiddenPanel( )
          --media.playSound( dataFile, { onComplete=onCompleteSoundExample })
          audioHandleExample = audio.loadSound( dataFile )
-         audio.play( audioHandleExample, {channel = audioChannel, onComplete = onCompleteSoundExample} )
+         audio.play( audioHandleExample, {channel = audioChannel, onComplete = onCompleteSoundExampleRec} )
        end
 
        local function onCompleteSound( )
          -- body
-         print( "FIN DE REPRODUCIR...." )
          --audio.dispose( audioHandle )
          --audioHandle = nil
          removeHiddenPanel( )
@@ -182,53 +178,58 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
          -- body
           local finalAudioHandle
 
-          local function onCompleteSoundExp( event )
+          function onCompleteSoundExp( event )
            -- body
             audio.dispose( finalAudioHandle )
-            local myDialog
-            local function onCompleteSoundNo(  )
-              -- body
-              onCompleteSound()
-              audio.dispose( finalAudioHandle )
+            if (not event.completed) then
               finalAudioHandle = nil
-            end
-
-            local function onCompleteCanc( event )
-                  -- body
-              local object = event.target
-              if event.phase == "began" then
-                     display.getCurrentStage():setFocus(object)
-                     object.isFocus = true
-              elseif object.isFocus then
-                     if event.phase == "ended" or event.phase == "cancelled" then
-                            display.getCurrentStage():setFocus( nil )
-                            object.isFocus = false
-                            deleteMyDialog(myDialog)
-                            finalAudioHandle = audio.loadSound( audioDir.."genius_vozNo.mp3" )
-                            audio.play( finalAudioHandle, {channel = audioChannel, onComplete = onCompleteSoundNo} )
-                     end
+              onCompleteSound()
+            else
+              local myDialog
+              function onCompleteSoundNo(  )
+                -- body
+                onCompleteSound()
+                audio.dispose( finalAudioHandle )
+                finalAudioHandle = nil
               end
-              return true
-            end
 
-            local function onCompleteCon( event )
-                  -- body
-              local object = event.target
-              if event.phase == "began" then
-                     display.getCurrentStage():setFocus(object)
-                     object.isFocus = true
-              elseif object.isFocus then
-                     if event.phase == "ended" or event.phase == "cancelled" then
-                            display.getCurrentStage():setFocus( nil )
-                            object.isFocus = false
-                            deleteMyDialog(myDialog)
-                            onCompleteSound()
-                            finalize()
-                     end
+              local function onCompleteCanc( event )
+                    -- body
+                local object = event.target
+                if event.phase == "began" then
+                       display.getCurrentStage():setFocus(object)
+                       object.isFocus = true
+                elseif object.isFocus then
+                       if event.phase == "ended" or event.phase == "cancelled" then
+                              display.getCurrentStage():setFocus( nil )
+                              object.isFocus = false
+                              deleteMyDialog(myDialog)
+                              finalAudioHandle = audio.loadSound( audioDir.."genius_vozNo.mp3" )
+                              audio.play( finalAudioHandle, {channel = audioChannel, onComplete = onCompleteSoundNo} )
+                       end
+                end
+                return true
               end
-              return true
+
+              local function onCompleteCon( event )
+                    -- body
+                local object = event.target
+                if event.phase == "began" then
+                       display.getCurrentStage():setFocus(object)
+                       object.isFocus = true
+                elseif object.isFocus then
+                       if event.phase == "ended" or event.phase == "cancelled" then
+                              display.getCurrentStage():setFocus( nil )
+                              object.isFocus = false
+                              deleteMyDialog(myDialog)
+                              onCompleteSound()
+                              finalize()
+                       end
+                end
+                return true
+              end
+              myDialog = createMyDialog("RESPONDE AL GENIO", "¿Has pronunciado bien la vocal?", nil, "Si", onCompleteCon, "No", onCompleteCanc)
             end
-            myDialog = createMyDialog("RESPONDE AL GENIO", "Â¿Has pronunciado bien la vocal?", nil, "Si", onCompleteCon, "No", onCompleteCanc)
           end
 
         finalAudioHandle = audio.loadSound( audioDir.."genius_voz".._G.Level..".mp3" )
@@ -276,7 +277,7 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
                   end
                   return true
                 end
-                myDialog = createMyDialog("Aviso", "!Vas muy rÃ¡pido! Pronucia la vocal con mayor tranquilidad.", nil, "Confirmar", onCompleteCon)
+                myDialog = createMyDialog("AVISO", "!Vas muy rápido! Pronuncia la vocal con mayor tranquilidad.", nil, "Confirmar", onCompleteCon)
               else
                 local filePath = system.pathForFile(dataFileName, system.DocumentsDirectory ) 
                 local file = io.open(filePath, "r") 
@@ -303,28 +304,33 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
         local file = io.open(filePath, "r")
         if file then 
           --print( file )
-          print( "REPRODUCIR SONIDO...." )
           io.close(file) 
           createHiddenPanel( )
           media.playSound( dataFileName, system.DocumentsDirectory, onCompleteSound )
         end   
        end 
 
-      local function playSoundExp( )
-        -- body
-        local audioHandleExp
-        local function onCompleteSound2()
+        function onCompleteSound2()
           -- body
           audio.dispose( audioHandleExp )
           audioHandleExp = nil
           removeHiddenPanel()
         end
-        local function onCompleteSound1()
+        function onCompleteSound1(event)
           -- body
           audio.dispose( audioHandleExp )
-          audioHandleExp = audio.loadSound( audioDir.."geniusVOZ2.mp3" )
-          audio.play( audioHandleExp , {channel = audioChannel, onComplete = onCompleteSound2} )
+          if (event.completed) then
+            audioHandleExp = audio.loadSound( audioDir.."geniusVOZ2.mp3" )
+            audio.play( audioHandleExp , {channel = audioChannel, onComplete = onCompleteSound2} )
+          else
+            audioHandleExp = nil
+            removeHiddenPanel()
+          end
+          
         end
+
+      local function playSoundExp( )
+        -- body
         createHiddenPanel()
         if (_G.firstRecAudio) then
           _G.firstRecAudio = false
@@ -356,6 +362,7 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
         labelYOffset = 50,
         fontSize = 25,
         onEvent = but_recAudio
+        --onEvent = finalize
        }
        recAudio.x = display.contentCenterX-200; recAudio.y = 518;
        menuGroup:insert( recAudio )
@@ -383,8 +390,20 @@ _G.LastPageLevel[_G.Level].phase = _G.Phase
        menuGroup:insert(letra) 
        letra:addEventListener( "tap", playSoundExampleFun )
 
+       local l
+       if(_G.Level==1) then
+        l = "A"
+       elseif(_G.Level==2) then
+        l = "E"
+       elseif(_G.Level==3) then
+        l = "I"
+       elseif(_G.Level==4) then
+        l = "O"
+       else
+        l = "U"
+       end
        -- Grabacion_de_la positioning
-       local textPr = display.newText( "Grabacion de la letra ".._G.Level, display.contentCenterX, display.contentCenterY-300, native.systemFontBold, 34 )
+       local textPr = display.newText( "Grabacion de la letra "..l, display.contentCenterX, display.contentCenterY-300, native.systemFontBold, 34 )
        textPr.x = display.contentCenterX
        textPr:setFillColor( 0 )
        menuGroup:insert( textPr )

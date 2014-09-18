@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 6 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -129,7 +125,6 @@ function new()
                   object.isFocus = true
                 elseif object.isFocus then
                   if event.phase == "ended" or event.phase == "cancelled" then
-                      print( "SE borra todo....." )
                       display.getCurrentStage():setFocus( nil )
                       object.isFocus = false
                       deleteMyDialog( myDialog )

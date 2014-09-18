@@ -10,7 +10,7 @@ local function nothingTap( event )
 	return true
 end
 
-function createMyDialog ( labelPr, labelSec, color, labelC, listenerC, labelD, listenerD)
+function createMyDialog ( labelPr, labelSec, color, labelC, listenerC, labelD, listenerD, sizeLabelSec)
 	-- body
 	local mygroup = display.newGroup( )
 
@@ -28,12 +28,12 @@ function createMyDialog ( labelPr, labelSec, color, labelC, listenerC, labelD, l
 	end
 	mygroup:insert( rect )
 
-	local textPr = display.newText( labelPr, display.contentCenterX, display.contentCenterY-180, native.systemFontBold, 40 )
-	textPr.x = display.contentCenterX
+	local textPr = display.newText( labelPr, display.contentCenterX, rect.y-rect.contentHeight/2+10 , native.systemFontBold, 35 )
+	textPr.x = rect.x
 	mygroup:insert( textPr )
 
-	local textSec = display.newText( labelSec, display.contentCenterX, display.contentCenterY-120 , rect.width-30, 80, native.systemFont, 32 )
-	textSec.x = display.contentCenterX
+	local textSec = display.newText( labelSec, display.contentCenterX, textPr.y+textPr.contentHeight/2+10 , rect.width-30, rect.contentHeight/4 * 2, native.systemFont, 24 )
+	textSec.x = rect.x
 	mygroup:insert( textSec )
 
 	local colorLabelBtn = {R=10, G=25, B=106}
@@ -48,12 +48,12 @@ function createMyDialog ( labelPr, labelSec, color, labelC, listenerC, labelD, l
     	fontSize = 25,
     	onEvent = listenerC,
 	}
-	continue.y = display.contentCenterY + 45
+	continue.y = textSec.y+textSec.contentHeight/2 + 45
 	continue:setFillColor(  255,248,143 )
 	mygroup:insert( continue )
 
 	if (listenerD) then
-		continue.x = display.contentCenterX - 150
+		continue.x = rect.x - 150
 
 		local cancel = widget.newButton{
 			width = 150,
@@ -66,20 +66,19 @@ function createMyDialog ( labelPr, labelSec, color, labelC, listenerC, labelD, l
     		onEvent = listenerD,
 		}
 
-		cancel.x = display.contentCenterX + 150
-		cancel.y = display.contentCenterY + 45
+		cancel.x = rect.x + 150
+		cancel.y = continue.y
 		cancel:setFillColor( 253,87,110 )
 		mygroup:insert( cancel )
 
 	else
-		continue.x = display.contentCenterX
+		continue.x = rect.x
 	end
-	print( "CREADO DIALOG" )
+
 	return mygroup
 end
 
 function deleteMyDialog ( mygroup )
-	print( "Dialog borrado" )
 	-- body
 	display.remove( mygroup )
 	mygroup = nil

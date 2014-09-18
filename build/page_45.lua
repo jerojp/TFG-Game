@@ -12,10 +12,6 @@ function new()
     local drawScreen = function() 
 
        local curPage = 45 
-
-       Navigation.new("page", { backColor = {255, 255, 255}, anim=1, timer=1,  totPages = numPages, curPage = curPage, thumbW = 200, thumbH = 125, alpha = 1, imageDir = imgDir, dire = "top", audio={} } ) 
-       Navigation.hide() 
-
        if (tonumber(kBookmark) == 1) then 
           local path = system.pathForFile( "book.txt", system.DocumentsDirectory ) 
           local file = io.open( path, "w+" ) 
@@ -203,21 +199,22 @@ end
 local aud = {"exp_ja3.mp3", "exp_ja4.mp3", "exp_ja5.mp3"}
 local sub = {"!Hola! Sakura, me alegro de verte.",
 			"¿Puedes ayudarme a reparar mi tablet?",
-			"Claro, en marcha. La caza de animales debería estar prohibida. Pero antes de salir quiero asegurarme. ¿Un oso panda es es esto? Nunca he visto uno."}
+			"Claro, en marcha. La caza de animales debería estar prohibida. Pero antes de salir quiero asegurarme. ¿Un oso panda es esto? Nunca he visto uno."}
 
 addCharacter(kwkexp, aud, sub)
 
 local aud2 = {"sakura_ja1.mp3", "sakura_ja2.mp3", "sakura_ja3.mp3"}
 local sub2 = {"Hola, yo también me alegro.",
 			 "Ya está arreglada. Ahora necesito tu ayuda para rescatar al oso panda secuestrado por unos cazadores furtivos.",
-			 "No eso es un koala. Un oso panda es un oso de color blanco y negro. Su nombre empieza por la letra O."}
+			 "No, eso es un koala. Un oso panda es un oso de color blanco y negro. Su nombre empieza por la letra O."}
 
 addCharacter(kwkjap, aud2, sub2)
 
 local sec = {1, 2, 1, 2, 1, 2}
 setSecuence( sec )
 
-local events = { nil, nil, {mytype = "effects", value = {1, changeAlpha} }, nil, nil, nil }
+local img = {path = imgDir.."koala.jpg"}
+local events = { nil, nil, {mytype = "effects", value = {1, changeAlpha} }, nil, {mytype = "image", value = {1, img }}, nil }
 setEventsControlScene(events)
 
 playScene( "page_15" ) 
